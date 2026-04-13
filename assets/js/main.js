@@ -17,9 +17,9 @@ function filterAccordions() {
 
         // Check if the button text contains the search term
         if (accordionText.includes(searchTerm)) {
-            accordionItem.style.visibility = 'visible'; // Show the accordion button
+            accordionItem.style.display = ''; // Show the accordion button
         } else {
-            accordionItem.style.visibility = 'hidden'; // Hide the accordion button but keep space
+            accordionItem.style.display = 'none'; // Hide the accordion button
         }
     });
 }
@@ -31,7 +31,7 @@ searchInput.addEventListener('input', filterAccordions);
 searchInput.addEventListener('input', () => {
     if (searchInput.value === '') {
         accordions.forEach((accordionItem) => {
-            accordionItem.style.visibility = 'visible'; // Show all accordion buttons when search is cleared
+            accordionItem.style.display = ''; // Show all accordion buttons when search is cleared
         });
     }
 });
