@@ -1,1 +1,1 @@
-# kr1tesh.github.io
+# singhkritesh.github.io/portfolio
