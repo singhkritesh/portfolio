@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <nav class="fixed top-0 w-full z-50 glass-nav">
@@ -16,7 +17,7 @@ import Icon from './Icon.astro';
       <a href="#achievements" class="nav-link" data-section="achievements">Achievements</a>
       <a href="#blog"         class="nav-link" data-section="blog">Blog</a>
       <a href="#contact"      class="nav-link" data-section="contact">Contact</a>
-      <a href="/photography/"
+      <a href={`${base}/photography/`}
          class="nav-link" style="display:inline-flex;align-items:center;gap:5px;">
         <Icon name="photo_camera" size={14} />
         Photography
@@ -25,7 +26,7 @@ import Icon from './Icon.astro';
 
     <div class="flex items-center gap-3">
       <a
-        href="/Resume/Resume_Kritesh_Singh_Product.pdf"
+        href={`${base}/Resume/Resume_Kritesh_Singh_Product.pdf`}
         target="_blank"
         rel="noopener noreferrer"
         class="inline-flex items-center gap-1.5 px-5 py-2 bg-primary text-[#131313]
@@ -59,7 +60,7 @@ import Icon from './Icon.astro';
         <a href="#achievements" class="mobile-nav-link" data-section="achievements">Achievements</a>
         <a href="#blog"         class="mobile-nav-link" data-section="blog">Blog</a>
         <a href="#contact"      class="mobile-nav-link" data-section="contact">Contact</a>
-        <a href="/photography/"
+        <a href={`${base}/photography/`}
            class="mobile-nav-link" style="display:inline-flex;align-items:center;gap:6px;">
           <Icon name="photo_camera" size={14} />
           Photography

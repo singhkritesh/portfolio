@@ -1,5 +1,6 @@
 ---
 import Icon from '../Icon.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const socials = [
   { href: 'https://www.linkedin.com/in/singhkritesh/', icon: 'fa-brands fa-linkedin', label: 'LinkedIn' },
   { href: 'https://github.com/singhkritesh', icon: 'fa-brands fa-github', label: 'GitHub' },
@@ -71,7 +72,7 @@ const socials = [
            class="flex items-center gap-2 text-neutral-500 hover:text-primary transition-colors text-sm">
           <Icon name="mail" size={17} /> Email
         </a>
-        <a href="/photography/"
+        <a href={`${base}/photography/`}
            class="flex items-center gap-2 text-neutral-500 hover:text-primary transition-colors text-sm">
           <Icon name="photo_camera" size={17} /> Photography
         </a>
