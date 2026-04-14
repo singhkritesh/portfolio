@@ -1,0 +1,112 @@
+---
+import { getCollection } from 'astro:content';
+import Icon from '../Icon.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const rendered = await Promise.all(posts.map(p => p.render()));
+---
+
+<section id="blog" class="pt-20 pb-32 px-6 md:px-12 bg-background">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="mb-16">
+      <h2 class="font-headline text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6">Blog</h2>
+      <p class="text-neutral-400 text-base leading-relaxed">
+        Insights on AI and Product Management — exploring how these fields intersect
+        and evolve, with a focus on continuous innovation and customer delight.
+      </p>
+    </div>
+
+    <div class="relative mb-8">
+      <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-600" style="display:inline-flex;">
+        <Icon name="search" size={18} />
+      </span>
+      <input type="text" id="blog-search" placeholder="Search articles…" class="search-input" />
+    </div>
+
+    <div id="blog-list" class="space-y-3" aria-live="polite">
+      {posts.map((post, i) => {
+        const { Content } = rendered[i];
+        return (
+          <div class="blog-item" data-title={post.data.title.toLowerCase()}>
+            <button class="acc-btn" id={`acc-btn-${i}`} aria-expanded="false" aria-controls={`acc-content-${i}`}>
+              <span>{post.data.title}</span>
+              <Icon name="expand_more" size={24} class="acc-icon" />
+            </button>
+            <div class="acc-content" id={`acc-content-${i}`} role="region" aria-labelledby={`acc-btn-${i}`}>
+              <div class="acc-inner">
+                <div class="acc-body blog-prose">
+                  <Content />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <p id="blog-empty" class="hidden text-neutral-600 text-sm text-center py-8">
+      No articles match your search.
+    </p>
+
+  </div>
+</section>
+
+<script>
+  // ── Accordion ────────────────────────────────────────────
+  document.querySelectorAll<HTMLButtonElement>('.acc-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const content = btn.nextElementSibling as HTMLElement;
+      const isOpen = btn.classList.contains('open');
+
+      document.querySelectorAll('.acc-btn.open').forEach((b) => {
+        b.classList.remove('open');
+        b.setAttribute('aria-expanded', 'false');
+        (b.nextElementSibling as HTMLElement).classList.remove('open');
+      });
+
+      if (!isOpen) {
+        btn.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        content.classList.add('open');
+      }
+    });
+  });
+
+  // ── Blog search ──────────────────────────────────────────
+  const searchInput = document.getElementById('blog-search') as HTMLInputElement;
+  const emptyState  = document.getElementById('blog-empty') as HTMLParagraphElement;
+
+  searchInput?.addEventListener('input', () => {
+    const term = searchInput.value.toLowerCase().trim();
+    let anyVisible = false;
+
+    document.querySelectorAll<HTMLElement>('.blog-item').forEach((item) => {
+      const titleEl  = item.querySelector<HTMLElement>('.acc-btn span:first-child');
+      const original = item.dataset.title ?? '';
+      const match    = original.includes(term) || item.textContent?.toLowerCase().includes(term);
+
+      item.style.display = match ? '' : 'none';
+      if (match) anyVisible = true;
+
+      if (titleEl) {
+        if (term && match) {
+          const regex    = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+          const orig = titleEl.dataset.originalText ?? titleEl.textContent ?? '';
+          titleEl.dataset.originalText = orig;
+          titleEl.innerHTML = orig.replace(
+            regex,
+            '<mark style="background:rgba(138,235,255,0.2);color:#8aebff;border-radius:2px;padding:0 1px;">$1</mark>'
+          );
+        } else {
+          titleEl.innerHTML = titleEl.dataset.originalText ?? titleEl.textContent ?? '';
+        }
+      }
+    });
+
+    emptyState.classList.toggle('hidden', anyVisible || !term);
+  });
+</script>

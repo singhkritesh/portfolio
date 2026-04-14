@@ -1,0 +1,173 @@
+---
+import Icon from './Icon.astro';
+---
+
+<nav class="fixed top-0 w-full z-50 glass-nav">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 md:px-12 py-5">
+
+    <a href="#home" class="font-headline text-lg font-bold tracking-tighter text-white">KS</a>
+
+    <!-- Desktop nav -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#home"         class="nav-link active" data-section="home">Home</a>
+      <a href="#work"         class="nav-link" data-section="work">Work</a>
+      <a href="#education"    class="nav-link" data-section="education">Education</a>
+      <a href="#projects"     class="nav-link" data-section="projects">Projects</a>
+      <a href="#achievements" class="nav-link" data-section="achievements">Achievements</a>
+      <a href="#blog"         class="nav-link" data-section="blog">Blog</a>
+      <a href="#contact"      class="nav-link" data-section="contact">Contact</a>
+      <a href="/photography/"
+         class="nav-link" style="display:inline-flex;align-items:center;gap:5px;">
+        <Icon name="photo_camera" size={14} />
+        Photography
+      </a>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a
+        href="/Resume/Resume_Kritesh_Singh_Product.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 px-5 py-2 bg-primary text-[#131313]
+               rounded-lg font-headline text-xs font-bold uppercase tracking-wider
+               hover:bg-primary-dim transition-colors duration-200"
+      >
+        <Icon name="download" size={15} />
+        Resume
+      </a>
+
+      <!-- Hamburger (mobile only) -->
+      <button id="mobile-menu-btn"
+              class="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8 flex-shrink-0"
+              aria-label="Toggle menu" aria-expanded="false">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Mobile drawer -->
+  <div id="mobile-menu" class="mobile-menu md:hidden">
+    <div class="mobile-menu-inner">
+      <div class="px-6 pb-6 pt-2 flex flex-col gap-1 border-t border-white/5">
+        <a href="#home"         class="mobile-nav-link" data-section="home">Home</a>
+        <a href="#work"         class="mobile-nav-link" data-section="work">Work</a>
+        <a href="#education"    class="mobile-nav-link" data-section="education">Education</a>
+        <a href="#projects"     class="mobile-nav-link" data-section="projects">Projects</a>
+        <a href="#achievements" class="mobile-nav-link" data-section="achievements">Achievements</a>
+        <a href="#blog"         class="mobile-nav-link" data-section="blog">Blog</a>
+        <a href="#contact"      class="mobile-nav-link" data-section="contact">Contact</a>
+        <a href="/photography/"
+           class="mobile-nav-link" style="display:inline-flex;align-items:center;gap:6px;">
+          <Icon name="photo_camera" size={14} />
+          Photography
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-link[data-section]');
+  const sections  = Array.from(document.querySelectorAll<HTMLElement>('section[id]'));
+
+  // ── Helpers ────────────────────────────────────────────────
+  function setNavActive(id: string) {
+    navLinks.forEach((l) => l.classList.remove('active'));
+    document.querySelector<HTMLAnchorElement>(`.nav-link[data-section="${id}"]`)
+      ?.classList.add('active');
+  }
+
+  function currentSectionId(): string {
+    const threshold = window.innerHeight * 0.4;
+    let current = sections[0];
+    for (const s of sections) {
+      if (s.getBoundingClientRect().top < threshold) current = s;
+      else break;
+    }
+    return current.id;
+  }
+
+  // ── Scrollspy (nav highlight) ──────────────────────────────
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setNavActive(entry.target.id);
+      });
+    },
+    { rootMargin: '-15% 0px -75% 0px', threshold: 0 }
+  );
+  sections.forEach((s) => observer.observe(s));
+
+  // ── Nav highlight sync on load ──────────────────────────────
+  // Native browser scroll restoration handles the actual scroll position.
+  // We only need to sync the nav highlight to match wherever the browser lands.
+  function initActive() {
+    setNavActive(currentSectionId());
+  }
+  if (document.readyState === 'complete') initActive();
+  else window.addEventListener('load', initActive);
+
+  // ── Persist current section for scroll restoration ─────────
+  // sessionStorage survives reload and hard reload within the same tab.
+  // Written on scroll (debounced) and immediately on nav click so the
+  // value is always current when a reload happens.
+  // The actual restoration is done by the inline script in Layout.astro
+  // which runs synchronously before first paint.
+  let saveTimer: number;
+  window.addEventListener('scroll', () => {
+    clearTimeout(saveTimer);
+    saveTimer = window.setTimeout(() => {
+      sessionStorage.setItem('_sk', currentSectionId());
+    }, 150);
+  }, { passive: true });
+
+  // ── Smooth scroll ──────────────────────────────────────────
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const target = document.querySelector<HTMLElement>(a.getAttribute('href')!);
+      if (target) {
+        e.preventDefault();
+        closeMobileMenu();
+        sessionStorage.setItem('_sk', target.id);
+        setNavActive(target.id);
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ── Mobile menu ────────────────────────────────────────────
+  const btn  = document.getElementById('mobile-menu-btn')!;
+  const menu = document.getElementById('mobile-menu')!;
+
+  function openMobileMenu() {
+    menu.classList.add('open');
+    btn.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileMenu() {
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', () => {
+    menu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.classList.contains('open')) closeMobileMenu();
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    const nav = document.querySelector('nav')!;
+    if (!nav.contains(e.target as Node)) closeMobileMenu();
+  });
+</script>

@@ -1,133 +1,299 @@
-<!DOCTYPE HTML>
-<!--
-	Parallelism by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>The Darkroom | Kritesh's Photography Portfolio</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="icon" type="image/x-icon" href="images/favicon.ico">
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
-		<div id="bg">
-			<!-- Your existing background elements -->
-			<div class="overlay"></div>
-		</div>
-		<!-- Back Button -->
-		
-		<header id="header">
-			<button id="back-button" onclick="window.history.back()">Back</button>
-		</header>
-		<!-- Wrapper -->
-			<div id="wrapper">
-    <!-- Fixed header with back button -->
- 
-				<!-- Main -->
-					<header id="main">	
-					<!--	<a href="../index.html" class="back-button">Go back to Kritesh's Portfolio</a> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>The Darkroom | Kritesh Singh</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 
-						<!-- Items -->
-							<div class="items">
+  <!-- Fonts (matching main portfolio) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 
-								<div class="item intro span-2">
-									<h1>Welcome to The Darkroom</h1>
-									<p>Take a look at the world through my lens<br />
-									</p>
-								</div>
+  <!-- Gallery CSS (HTML5 UP Parallelism — untouched) -->
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-								<article class="item thumb span-1">
-									<h2>The Watcher</h2>
-									<a href="photographs/DSC3064.jpg" class="image"><img src="photographs/DSC3064.jpg" alt="" loading="lazy"></a>
-								</article>
-								
-								<article class="item thumb span-1">
-									<h2>The Witness</h2>
-									<a href="photographs/DSC3042.jpg" class="image"><img src="photographs/DSC3042.jpg" alt="" loading="lazy"></a>
-								</article>
+  <style>
+    /* ── Design-language overrides ──────────────────────────── */
+    :root {
+      --bg:          #131313;
+      --surface-mid: #1f1f1f;
+      --primary:     #8aebff;
+      --outline-dim: #3c3c3c;
+    }
 
-								<article class="item thumb span-2">
-									<h2>Kingdom of the Wind</h2>
-									<a href="photographs/DSC3120.jpg" class="image"><img src="photographs/DSC3120.jpg" alt="" loading="lazy"></a>
-								</article>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
 
-								<article class="item thumb span-1">
-									<h2>Different.</h2>
-									<a href="photographs/DSC3127.jpg" class="image"><img src="photographs/DSC3127.jpg" alt="" loading="lazy"></a>
-								</article>
+    /* Give room for the fixed nav */
+    body { padding-top: 72px; }
 
-								<article class="item thumb span-2">
-									<h2>Elysium</h2>
-									<a href="photographs/DSC3143.jpg" class="image"><img src="photographs/DSC3143.jpg" alt="" loading="lazy"></a>
-								</article>
+    /* ── Glassmorphic nav ───────────────────────────────────── */
+    .ks-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 3rem;
+      height: 72px;
+      background: rgba(19, 19, 19, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-family: 'Space Grotesk', sans-serif;
+    }
 
-								<article class="item thumb span-3">
-									<h2>The Contemplation</h2>
-									<a href="photographs/DSC_0013.jpg" class="image"><img src="photographs/DSC_0013.jpg" alt="" loading="lazy"></a>
-								</article>
+    .ks-nav__logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #fff;
+      text-decoration: none;
+    }
 
-								<article class="item thumb span-1">
-									<h2>The Protector</h2>
-									<a href="photographs/AMN_1896-2.jpg" class="image"><img src="photographs/AMN_1896-2.jpg" alt="" loading="lazy"></a>
-								</article>
+    .ks-nav__links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
 
-								<article class="item thumb span-2">
-									<h2>The Intent</h2>
-									<a href="photographs/AMN_1804-2.jpg" class="image"><img src="photographs/AMN_1804-2.jpg" alt="" loading="lazy"></a>
-								</article>
-								
+    .ks-nav__links a {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b7280;
+      text-decoration: none;
+      padding-bottom: 3px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .ks-nav__links a:hover { color: #e2e2e2; }
+    .ks-nav__links a.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
 
-							
-							</div>
+    .ks-nav__resume {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.45rem 1.1rem;
+      background: var(--primary);
+      color: #131313;
+      border-radius: 0.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+    .ks-nav__resume:hover { background: #5dd4f0; }
 
-						<!-- Items -->
-							<div class="items">
+    /* ── Gallery intro override ─────────────────────────────── */
+    #main .items .item.intro {
+      font-family: 'Space Grotesk', sans-serif !important;
+    }
+    #main .items .item.intro h1 {
+      font-family: 'Space Grotesk', sans-serif !important;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    #main .items .item.intro p {
+      font-family: 'Inter', sans-serif !important;
+      font-weight: 300;
+      color: #9ca3af;
+    }
 
-								<article class="item thumb span-3"><h2>Kingdom of Snow</h2><a href="photographs/IMG_20191103_192250_252_4.jpg" class="image"><img src="photographs/IMG_20191103_192250_252_4.jpg" alt="" loading="lazy"></a></article>
-								<article class="item thumb span-2"><h2>The Cloudy Horizon</h2><a href="photographs/LRM_EXPORT_20191106_161452.jpg" class="image"><img src="photographs/LRM_EXPORT_20191106_161452.jpg" alt="" loading="lazy"></a></article>
-								<article class="item thumb span-2"><h2>The Spectators</h2><a href="photographs/LRM_EXPORT_20200206_120246.jpg" class="image"><img src="photographs/LRM_EXPORT_20200206_120246.jpg" alt="" loading="lazy"></a></article>
-								<article class="item thumb span-1"><h2>Sunset</h2><a href="photographs/DSC3031.jpg" class="image"><img src="photographs/DSC3031.jpg" alt="" loading="lazy"></a></article>
-								<article class="item thumb span-1"><h2>The Shades of Man</h2><a href="photographs/IMG_0071.jpg" class="image"><img src="photographs/IMG_0071.jpg" alt="" loading="lazy"></a></article>
-								<article class="item thumb span-2"><h2>Stargazer</h2><a href="photographs/LRM_EXPORT_20191028_021029.jpg" class="image"><img src="photographs/LRM_EXPORT_20191028_021029.jpg" alt="" loading="lazy"></a></article>
-								<article class="item thumb span-1"><h2>The Pathfinder</h2><a href="photographs/DSC_8836.jpg" class="image"><img src="photographs/DSC_8836.jpg" alt="" loading="lazy"></a></article>
-								<article class="item thumb span-2"><h2>The Guide</h2><a href="photographs/IMG_1110.jpg" class="image"><img src="photographs/IMG_1110.jpg" alt="" loading="lazy"></a></article>
-								<article class="item thumb span-1"><h2>The Pursuit</h2><a href="photographs/AMN_2122.jpg" class="image"><img src="photographs/AMN_2122.jpg" alt="" loading="lazy"></a></article>
+    /* ── Footer ─────────────────────────────────────────────── */
+    .ks-footer {
+      background: var(--surface-mid);
+      border-top: 1px solid var(--outline-dim);
+      padding: 2rem 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      font-family: 'Space Grotesk', sans-serif;
+    }
 
-							</div>
+    .ks-footer__brand {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #fff;
+      text-decoration: none;
+    }
 
-					</header>
+    .ks-footer__copy {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #4b5563;
+    }
 
-				<!-- Footer 
-					<section id="footer">
-						<section>
-							</section>
-							<section>
-							<ul class="icons">
-								<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-								<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-								<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-								<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-							</ul>
-							<ul class="copyright">
-								<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
-						</section>
-					</section>
-				-->
-			</div>
+    .ks-footer__links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.poptrox.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+    .ks-footer__links a {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #4b5563;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .ks-footer__links a:hover { color: var(--primary); }
 
-	</body>
+    @media (max-width: 700px) {
+      .ks-nav { padding: 0 1.25rem; }
+      .ks-nav__links { display: none; }
+      .ks-footer { padding: 1.5rem 1.25rem; }
+    }
+  </style>
+</head>
+
+<body class="is-preload">
+
+<!-- ── Nav ──────────────────────────────────────────────────────── -->
+<nav class="ks-nav">
+  <a href="../index.html" class="ks-nav__logo">KS</a>
+
+  <ul class="ks-nav__links">
+    <li><a href="../index.html#home">Home</a></li>
+    <li><a href="../index.html#work">Work</a></li>
+    <li><a href="../index.html#education">Education</a></li>
+    <li><a href="../index.html#projects">Projects</a></li>
+    <li><a href="../index.html#blog">Blog</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+    <li>
+      <a href="index.html" class="active">
+        <span class="material-symbols-outlined" style="font-size:14px;line-height:1">photo_camera</span>
+        Photography
+      </a>
+    </li>
+  </ul>
+
+  <a href="../Resume/Resume_Kritesh_Singh_Product.pdf" target="_blank" class="ks-nav__resume">
+    <span class="material-symbols-outlined" style="font-size:14px;line-height:1">download</span>
+    Resume
+  </a>
+</nav>
+
+<!-- ── Gallery (HTML5 UP Parallelism — structure untouched) ─────── -->
+<div id="bg">
+  <div class="overlay"></div>
+</div>
+
+<div id="wrapper">
+  <header id="main">
+
+    <div class="items">
+
+      <div class="item intro span-2">
+        <h1>The Darkroom</h1>
+        <p>Take a look at the world through my lens</p>
+      </div>
+
+      <article class="item thumb span-1">
+        <h2>The Watcher</h2>
+        <a href="photographs/DSC3064.jpg" class="image"><img src="photographs/DSC3064.jpg" alt="The Watcher" loading="lazy" /></a>
+      </article>
+
+      <article class="item thumb span-1">
+        <h2>The Witness</h2>
+        <a href="photographs/DSC3042.jpg" class="image"><img src="photographs/DSC3042.jpg" alt="The Witness" loading="lazy" /></a>
+      </article>
+
+      <article class="item thumb span-2">
+        <h2>Kingdom of the Wind</h2>
+        <a href="photographs/DSC3120.jpg" class="image"><img src="photographs/DSC3120.jpg" alt="Kingdom of the Wind" loading="lazy" /></a>
+      </article>
+
+      <article class="item thumb span-1">
+        <h2>Different.</h2>
+        <a href="photographs/DSC3127.jpg" class="image"><img src="photographs/DSC3127.jpg" alt="Different." loading="lazy" /></a>
+      </article>
+
+      <article class="item thumb span-2">
+        <h2>Elysium</h2>
+        <a href="photographs/DSC3143.jpg" class="image"><img src="photographs/DSC3143.jpg" alt="Elysium" loading="lazy" /></a>
+      </article>
+
+      <article class="item thumb span-3">
+        <h2>The Contemplation</h2>
+        <a href="photographs/DSC_0013.jpg" class="image"><img src="photographs/DSC_0013.jpg" alt="The Contemplation" loading="lazy" /></a>
+      </article>
+
+      <article class="item thumb span-1">
+        <h2>The Protector</h2>
+        <a href="photographs/AMN_1896-2.jpg" class="image"><img src="photographs/AMN_1896-2.jpg" alt="The Protector" loading="lazy" /></a>
+      </article>
+
+      <article class="item thumb span-2">
+        <h2>The Intent</h2>
+        <a href="photographs/AMN_1804-2.jpg" class="image"><img src="photographs/AMN_1804-2.jpg" alt="The Intent" loading="lazy" /></a>
+      </article>
+
+    </div>
+
+    <div class="items">
+      <article class="item thumb span-3"><h2>Kingdom of Snow</h2><a href="photographs/IMG_20191103_192250_252_4.jpg" class="image"><img src="photographs/IMG_20191103_192250_252_4.jpg" alt="Kingdom of Snow" loading="lazy" /></a></article>
+      <article class="item thumb span-2"><h2>The Cloudy Horizon</h2><a href="photographs/LRM_EXPORT_20191106_161452.jpg" class="image"><img src="photographs/LRM_EXPORT_20191106_161452.jpg" alt="The Cloudy Horizon" loading="lazy" /></a></article>
+      <article class="item thumb span-2"><h2>The Spectators</h2><a href="photographs/LRM_EXPORT_20200206_120246.jpg" class="image"><img src="photographs/LRM_EXPORT_20200206_120246.jpg" alt="The Spectators" loading="lazy" /></a></article>
+      <article class="item thumb span-1"><h2>Sunset</h2><a href="photographs/DSC3031.jpg" class="image"><img src="photographs/DSC3031.jpg" alt="Sunset" loading="lazy" /></a></article>
+      <article class="item thumb span-1"><h2>The Shades of Man</h2><a href="photographs/IMG_0071.jpg" class="image"><img src="photographs/IMG_0071.jpg" alt="The Shades of Man" loading="lazy" /></a></article>
+      <article class="item thumb span-2"><h2>Stargazer</h2><a href="photographs/LRM_EXPORT_20191028_021029.jpg" class="image"><img src="photographs/LRM_EXPORT_20191028_021029.jpg" alt="Stargazer" loading="lazy" /></a></article>
+      <article class="item thumb span-1"><h2>The Pathfinder</h2><a href="photographs/DSC_8836.jpg" class="image"><img src="photographs/DSC_8836.jpg" alt="The Pathfinder" loading="lazy" /></a></article>
+      <article class="item thumb span-2"><h2>The Guide</h2><a href="photographs/IMG_1110.jpg" class="image"><img src="photographs/IMG_1110.jpg" alt="The Guide" loading="lazy" /></a></article>
+      <article class="item thumb span-1"><h2>The Pursuit</h2><a href="photographs/AMN_2122.jpg" class="image"><img src="photographs/AMN_2122.jpg" alt="The Pursuit" loading="lazy" /></a></article>
+    </div>
+
+  </header>
+</div>
+
+<!-- ── Footer ────────────────────────────────────────────────────── -->
+<footer class="ks-footer">
+  <a href="../index.html" class="ks-footer__brand">Kritesh Singh</a>
+  <p class="ks-footer__copy">© 2025 · The Darkroom</p>
+  <ul class="ks-footer__links">
+    <li><a href="../index.html">Portfolio</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+    <li><a href="../Resume/Resume_Kritesh_Singh_Product.pdf" target="_blank">Resume</a></li>
+  </ul>
+</footer>
+
+<!-- Gallery scripts (untouched) -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.poptrox.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
 </html>

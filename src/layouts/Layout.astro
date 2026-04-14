@@ -1,0 +1,105 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Kritesh Singh | Product Manager',
+  description = 'Kritesh Singh — Product Manager with 4 years of experience building AI-driven, customer-centric solutions. Master of Engineering Management at Dartmouth.',
+} = Astro.props;
+
+const siteUrl = 'https://singhkritesh.github.io';
+const ogImage = `${siteUrl}/images/og-image.png`;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+
+  <!-- Font preloads — must come before any stylesheet so fonts are in-flight
+       before the browser parses CSS. With swap, they'll be ready at first paint. -->
+  <link rel="preload" href="/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/inter-300.woff2"     as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/inter-400.woff2"     as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/inter-500.woff2"     as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/inter-600.woff2"     as="font" type="font/woff2" crossorigin />
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+
+  <!-- OpenGraph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content={siteUrl} />
+  <meta property="og:title"       content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image"       content={ogImage} />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image"       content={ogImage} />
+
+  <!-- Font Awesome — loaded async so it never blocks first paint or scroll restoration.
+       FA only affects Contact section icons at the bottom; safe to load after render. -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  </noscript>
+
+  <!-- Hide page before first paint if we have a saved section to restore.
+       Prevents the flash of home before the scroll position is applied.
+       Safety timeout re-shows the page after 300ms in case something goes wrong. -->
+  <script is:inline>
+    (function () {
+      // Take ownership of scroll restoration so the browser never auto-scrolls
+      // to Y=0 (or a cached position) after our body-end inline script runs.
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      // Suppress CSS transitions during initial page load so they don't
+      // fire when visibility flushes from hidden → visible on page restore.
+      document.documentElement.classList.add('preload');
+      var id = sessionStorage.getItem('_sk');
+      if (id && id !== 'home') {
+        document.documentElement.style.visibility = 'hidden';
+        setTimeout(function () { document.documentElement.style.visibility = ''; }, 300);
+      }
+    })();
+  </script>
+
+</head>
+<body class="bg-background text-neutral-200 antialiased">
+  <a href="#home"
+     class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100]
+            focus:px-4 focus:py-2 focus:bg-primary focus:text-[#131313] focus:rounded-lg
+            focus:font-headline focus:text-xs focus:font-bold focus:uppercase focus:tracking-wider">
+    Skip to content
+  </a>
+  <slot />
+  <!-- Inline restore — runs synchronously after all sections are in the DOM,
+       before the deferred module scripts run. Scrolls to saved section instantly. -->
+  <script is:inline>
+    (function () {
+      var id = sessionStorage.getItem('_sk');
+      if (!id || id === 'home') {
+        document.documentElement.style.visibility = '';
+      } else {
+        var el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
+        document.documentElement.style.visibility = '';
+      }
+      // Remove the preload class after two animation frames so transitions
+      // are available for user interactions but didn't fire during page restore.
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          document.documentElement.classList.remove('preload');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
