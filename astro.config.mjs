@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   site: 'https://singhkritesh.github.io',
-  base: '/',
+  base: '/portfolio',
   integrations: [
     tailwind({ applyBaseStyles: false }),
   ],
