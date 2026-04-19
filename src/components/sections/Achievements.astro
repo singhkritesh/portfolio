@@ -28,8 +28,14 @@ const achievements: {
   {
     logo: mnnitImg,
     alt: 'MNNIT',
-    title: '2× 3rd Place — Eloquence 2020',
-    body: "Secured 3rd rank in both 'Lapse' (time-lapse videography) and 'Once Upon a Time' (picture tale photography) at MNNIT Allahabad's annual literary fest.",
+    title: "3rd Place — 'Lapse', Eloquence 2020",
+    body: "Secured 3rd rank in 'Lapse' (time-lapse videography) at MNNIT Allahabad's annual literary fest.",
+  },
+  {
+    logo: mnnitImg,
+    alt: 'MNNIT',
+    title: "3rd Place — 'Once Upon a Time', Eloquence 2020",
+    body: "Secured 3rd rank in 'Once Upon a Time' (picture tale photography) at MNNIT Allahabad's annual literary fest.",
   },
 ];
 ---
@@ -41,7 +47,7 @@ const achievements: {
       <h2 class="font-headline text-4xl md:text-5xl font-bold tracking-tighter">Achievements</h2>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {achievements.map(a => (
         <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim flex flex-col gap-4">
           <div class="flex items-center gap-3">

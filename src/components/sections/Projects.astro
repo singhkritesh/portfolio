@@ -1,5 +1,90 @@
 ---
 import Icon from '../Icon.astro';
+
+const independent = [
+  {
+    span: 'md:col-span-7',
+    tags: [
+      { label: 'Gen AI', accent: true },
+      { label: 'Content Strategy', accent: false },
+    ],
+    title: 'LinkedIn Content Generation App',
+    summary: 'Generative AI tool to create personalised LinkedIn content, optimising for audience engagement and content relevance. Designed prompt frameworks, content strategies, and iterative testing workflows.',
+    bullets: [
+      'Developed a generative AI tool to create personalized LinkedIn content, optimizing for audience engagement and content relevance.',
+      'Designed prompt frameworks and content strategies to improve post quality, consistency, and user interaction.',
+      'Focused on enhancing user engagement through tailored content recommendations and iterative testing.',
+    ],
+    date: 'April 2026',
+  },
+  {
+    span: 'md:col-span-5',
+    tags: [
+      { label: 'AI Automation', accent: true },
+      { label: 'Lead Gen', accent: false },
+    ],
+    title: 'AI Lead Generation Platform',
+    summary: 'AI-driven platform using Exa APIs to identify high-intent prospects, auto-draft personalised emails, and score leads through intelligent workflow automation.',
+    bullets: [
+      'Built an AI-driven lead generation application to identify and prioritize high-intent prospects using automated data from Exa APIs.',
+      'Designed end-to-end user workflows enabling discovery of leads, auto drafting and sending emails, improving conversion potential.',
+    ],
+    date: 'March 2026',
+  },
+  {
+    span: 'md:col-span-12',
+    tags: [
+      { label: 'Local LLM', accent: true },
+      { label: 'EdTech', accent: false },
+      { label: 'Full PRD', accent: false },
+      { label: 'Microservices', accent: false },
+      { label: 'Privacy-First', accent: false },
+    ],
+    title: 'AI-First Learning Management System',
+    summary: 'Authored a full PRD covering user personas, system architecture, guardrails, and non-functional requirements — then prototyped the system. Features audio interaction and voice/text queries for real-time course access. Powered by Qwen 3.5 via Ollama, pgvector for retrieval, and containerised microservices.',
+    bullets: [
+      'Authored PRD for user personas, system architecture, guardrails, and non-functional requirements, and prototyped using Antigravity.',
+      'Engineered an interface featuring audio interaction and voice/text queries, enabling real-time course access to enhance the student education experience, powered by a local LLM (Qwen3.5 via Ollama), pgvector for retrieval, and containerized microservices.',
+    ],
+    date: 'February 2026',
+  },
+];
+
+const academic = [
+  {
+    span: 'md:col-span-6',
+    tags: [
+      { label: 'AI Research', accent: true },
+      { label: 'Fine-tuning', accent: false },
+      { label: 'Python', accent: false },
+    ],
+    title: 'LLM Hallucination Detection — FastHalluCheck',
+    summary: 'Research project evaluating hallucination detection models on QA benchmarks using threshold optimisation and supervised fine-tuning. Explored ensemble approaches across in-domain and cross-domain datasets.',
+    bullets: [
+      'Evaluated Vectara HHEM v2 and DeBERTa-v3-small on HaluEval and PHANTOM Financial benchmarks using PyTorch and Hugging Face.',
+      'Achieved 98.2% accuracy (F1: 0.9818) with ensemble method on in-domain dataset.',
+      'Surfaced key cross-domain generalisation gap (F1 drop of -0.378), showing task-specific training outweighs model scale.',
+    ],
+    date: 'Dartmouth · 2025',
+  },
+  {
+    span: 'md:col-span-6',
+    tags: [
+      { label: 'Market Analysis', accent: true },
+      { label: 'GTM Strategy', accent: false },
+      { label: 'Consulting', accent: false },
+    ],
+    title: 'Graduate Student Consultant — Cisco Spaces',
+    summary: 'Consulted on product strategy in the $20B Smart Buildings industry, identifying high-potential launch opportunities across 5 venue types and informing go-to-market and partner prioritisation for Cisco Spaces.',
+    bullets: [
+      'Conducted market analysis across 5 venue types in the Smart Buildings industry to identify high-potential product launch opportunities.',
+      'Aligned customer needs with market trends to inform go-to-market strategy and partner prioritisation for Cisco Spaces.',
+    ],
+    date: 'Sep – Nov 2025',
+  },
+];
+
+const allProjects = [...independent, ...academic];
 ---
 
 <section id="projects" class="pt-20 pb-32 px-6 md:px-12 bg-background">
@@ -8,85 +93,210 @@ import Icon from '../Icon.astro';
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-20">
       <div>
         <h2 class="font-headline text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter">
-          Selected<br />Projects
+          Projects
         </h2>
       </div>
       <p class="text-neutral-500 text-sm max-w-xs leading-relaxed">
-        Personal builds at the intersection of AI, product thinking, and engineering —
-        scoped, designed, and shipped independently.
+        Personal builds and academic work at the intersection of AI, product thinking, and engineering.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-
-      <!-- Project 1: 7 cols -->
-      <div class="md:col-span-7 bg-surface-mid p-8 rounded-xl border border-outline-dim flex flex-col justify-between min-h-72">
-        <div>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/10 border border-primary/20 text-primary">Gen AI</span>
-            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-surface-high text-neutral-400">Content Strategy</span>
-          </div>
-          <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">LinkedIn Content Generation App</h3>
-          <p class="text-neutral-400 text-sm leading-relaxed">Generative AI tool to create personalised LinkedIn content, optimising for audience engagement and content relevance. Designed prompt frameworks, content strategies, and iterative testing workflows.</p>
-        </div>
-        <div class="flex items-center justify-between mt-6 pt-4 border-t border-outline-dim">
-          <span class="text-neutral-600 text-xs font-headline uppercase tracking-wider">April 2026</span>
-          <Icon name="arrow_outward" size={20} class="text-primary" />
-        </div>
-      </div>
-
-      <!-- Project 2: 5 cols -->
-      <div class="md:col-span-5 bg-surface-mid p-8 rounded-xl border border-outline-dim flex flex-col justify-between min-h-72">
-        <div>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/10 border border-primary/20 text-primary">AI Automation</span>
-            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-surface-high text-neutral-400">Lead Gen</span>
-          </div>
-          <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">AI Lead Generation Platform</h3>
-          <p class="text-neutral-400 text-sm leading-relaxed">AI-driven platform using Exa APIs to identify high-intent prospects, auto-draft personalised emails, and score leads through intelligent workflow automation.</p>
-        </div>
-        <div class="flex items-center justify-between mt-6 pt-4 border-t border-outline-dim">
-          <span class="text-neutral-600 text-xs font-headline uppercase tracking-wider">March 2026</span>
-          <Icon name="arrow_outward" size={20} class="text-primary" />
-        </div>
-      </div>
-
-      <!-- Project 3: Full width -->
-      <div class="md:col-span-12 bg-surface-mid p-8 rounded-xl border border-outline-dim">
-        <div class="flex flex-col md:flex-row gap-8 items-start">
-          <div class="flex-1">
-            <div class="flex flex-wrap gap-2 mb-6">
-              {['Local LLM','EdTech','Full PRD','Microservices'].map((t, i) => (
-                <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${i === 0 ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-400'}`}>
-                  {t}
-                </span>
-              ))}
+    <!-- Independent Builds -->
+    <div class="mb-16">
+      <p class="font-headline text-lg font-semibold tracking-tight text-neutral-300 mb-6">Personal Ventures</p>
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        {independent.map((p, i) => (
+          <button
+            class={`${p.span} bg-surface-mid rounded-xl border border-outline-dim flex flex-col text-left bento-card cursor-pointer group`}
+            data-proj-open={i}
+            aria-haspopup="dialog"
+          >
+            <div class="p-8 flex flex-col flex-1 w-full">
+              <div class="flex flex-wrap gap-2 mb-6">
+                {p.tags.map(t => (
+                  <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-400'}`}>
+                    {t.label}
+                  </span>
+                ))}
+              </div>
+              <div class="flex flex-col flex-1">
+                <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed">{p.summary}</p>
+              </div>
             </div>
-            <h3 class="font-headline text-xl md:text-3xl font-bold mb-3">AI-First Learning Management System</h3>
-            <p class="text-neutral-400 text-sm leading-relaxed">
-              Authored a full PRD covering user personas, system architecture, guardrails, and
-              non-functional requirements — then prototyped the system. Features audio interaction
-              and voice/text queries for real-time course access. Powered by Qwen 3.5 via Ollama,
-              pgvector for retrieval, and containerised microservices.
-            </p>
-          </div>
-          <div class="flex md:flex-col gap-4 flex-shrink-0">
-            <div class="bg-surface-high px-5 py-4 rounded-lg">
-              <div class="font-headline text-base font-bold text-primary">Full PRD</div>
-              <div class="text-[10px] uppercase tracking-wider text-neutral-600 mt-0.5">Spec Coverage</div>
+            <div class="px-8 py-4 border-t border-outline-dim w-full">
+              <span class="text-neutral-400 text-xs font-headline uppercase tracking-wider">{p.date}</span>
             </div>
-            <div class="bg-surface-high px-5 py-4 rounded-lg">
-              <div class="font-headline text-base font-bold text-primary">Privacy-First</div>
-              <div class="text-[10px] uppercase tracking-wider text-neutral-600 mt-0.5">Local LLM</div>
-            </div>
-          </div>
-        </div>
-        <div class="flex items-center justify-between mt-6 pt-4 border-t border-outline-dim">
-          <span class="text-neutral-600 text-xs font-headline uppercase tracking-wider">February 2026</span>
-          <Icon name="arrow_outward" size={20} class="text-primary" />
-        </div>
+          </button>
+        ))}
       </div>
-
     </div>
+
+    <!-- Academic Projects -->
+    <div>
+      <p class="font-headline text-lg font-semibold tracking-tight text-neutral-300 mb-6">Academic Projects</p>
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        {academic.map((p, i) => (
+          <button
+            class={`${p.span} bg-surface-mid rounded-xl border border-outline-dim flex flex-col text-left bento-card cursor-pointer group`}
+            data-proj-open={independent.length + i}
+            aria-haspopup="dialog"
+          >
+            <div class="p-8 flex flex-col flex-1 w-full">
+              <div class="flex flex-wrap gap-2 mb-6">
+                {p.tags.map(t => (
+                  <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-400'}`}>
+                    {t.label}
+                  </span>
+                ))}
+              </div>
+              <div class="flex flex-col flex-1">
+                <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed">{p.summary}</p>
+              </div>
+            </div>
+            <div class="px-8 py-4 border-t border-outline-dim w-full">
+              <span class="text-neutral-400 text-xs font-headline uppercase tracking-wider">{p.date}</span>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+
   </div>
 </section>
+
+<!-- Modal overlay -->
+<div id="proj-modal" class="proj-modal" role="dialog" aria-modal="true" aria-labelledby="proj-modal-title">
+  <div class="proj-modal-backdrop"></div>
+  <div class="proj-modal-card">
+    <div class="flex items-start justify-between gap-4 mb-6">
+      <div>
+        <div id="proj-modal-tags" class="flex flex-wrap gap-2 mb-3"></div>
+        <h3 id="proj-modal-title" class="font-headline text-2xl md:text-3xl font-bold"></h3>
+      </div>
+      <button id="proj-modal-close" aria-label="Close"
+              class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg
+                     bg-surface-high hover:bg-surface-highest text-neutral-400 hover:text-white
+                     transition-colors duration-150 mt-1">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <p id="proj-modal-summary" class="text-neutral-400 text-sm leading-relaxed mb-8"></p>
+    <ul id="proj-modal-bullets" class="space-y-4"></ul>
+    <div id="proj-modal-date" class="mt-8 pt-6 border-t border-outline-dim text-neutral-400 text-xs font-headline uppercase tracking-wider"></div>
+  </div>
+</div>
+
+<script>
+  const projectData = [
+    {
+      tags: [{ label: 'Gen AI', accent: true }, { label: 'Content Strategy', accent: false }],
+      title: 'LinkedIn Content Generation App',
+      summary: 'Generative AI tool to create personalised LinkedIn content, optimising for audience engagement and content relevance. Designed prompt frameworks, content strategies, and iterative testing workflows.',
+      bullets: [
+        'Developed a generative AI tool to create personalized LinkedIn content, optimizing for audience engagement and content relevance.',
+        'Designed prompt frameworks and content strategies to improve post quality, consistency, and user interaction.',
+        'Focused on enhancing user engagement through tailored content recommendations and iterative testing.',
+      ],
+      date: 'April 2026',
+    },
+    {
+      tags: [{ label: 'AI Automation', accent: true }, { label: 'Lead Gen', accent: false }],
+      title: 'AI Lead Generation Platform',
+      summary: 'AI-driven platform using Exa APIs to identify high-intent prospects, auto-draft personalised emails, and score leads through intelligent workflow automation.',
+      bullets: [
+        'Built an AI-driven lead generation application to identify and prioritize high-intent prospects using automated data from Exa APIs.',
+        'Designed end-to-end user workflows enabling discovery of leads, auto drafting and sending emails, improving conversion potential.',
+      ],
+      date: 'March 2026',
+    },
+    {
+      tags: [{ label: 'Local LLM', accent: true }, { label: 'EdTech', accent: false }, { label: 'Full PRD', accent: false }, { label: 'Microservices', accent: false }],
+      title: 'AI-First Learning Management System',
+      summary: 'Authored a full PRD covering user personas, system architecture, guardrails, and non-functional requirements — then prototyped the system. Features audio interaction and voice/text queries for real-time course access.',
+      bullets: [
+        'Authored PRD for user personas, system architecture, guardrails, and non-functional requirements, and prototyped using Antigravity.',
+        'Engineered an interface featuring audio interaction and voice/text queries, enabling real-time course access to enhance the student education experience, powered by a local LLM (Qwen3.5 via Ollama), pgvector for retrieval, and containerized microservices.',
+      ],
+      date: 'February 2026',
+    },
+    {
+      tags: [{ label: 'AI Research', accent: true }, { label: 'Fine-tuning', accent: false }, { label: 'Python', accent: false }],
+      title: 'LLM Hallucination Detection — FastHalluCheck',
+      summary: 'Research project evaluating hallucination detection models on QA benchmarks using threshold optimisation and supervised fine-tuning. Explored ensemble approaches across in-domain and cross-domain datasets.',
+      bullets: [
+        'Evaluated Vectara HHEM v2 and DeBERTa-v3-small on HaluEval and PHANTOM Financial benchmarks using PyTorch and Hugging Face.',
+        'Achieved 98.2% accuracy (F1: 0.9818) with ensemble method on in-domain dataset.',
+        'Surfaced key cross-domain generalisation gap (F1 drop of -0.378), showing task-specific training outweighs model scale.',
+      ],
+      date: 'Dartmouth · 2025',
+    },
+    {
+      tags: [{ label: 'Market Analysis', accent: true }, { label: 'GTM Strategy', accent: false }, { label: 'Consulting', accent: false }],
+      title: 'Graduate Student Consultant — Cisco Spaces',
+      summary: 'Consulted on product strategy in the $20B Smart Buildings industry, identifying high-potential launch opportunities across 5 venue types and informing go-to-market and partner prioritisation for Cisco Spaces.',
+      bullets: [
+        'Conducted market analysis across 5 venue types in the Smart Buildings industry to identify high-potential product launch opportunities.',
+        'Aligned customer needs with market trends to inform go-to-market strategy and partner prioritisation for Cisco Spaces.',
+      ],
+      date: 'Sep – Nov 2025',
+    },
+  ];
+
+  const modal     = document.getElementById('proj-modal')!;
+  const backdrop  = modal.querySelector('.proj-modal-backdrop')!;
+  const closeBtn  = document.getElementById('proj-modal-close')!;
+  const titleEl   = document.getElementById('proj-modal-title')!;
+  const tagsEl    = document.getElementById('proj-modal-tags')!;
+  const summaryEl = document.getElementById('proj-modal-summary')!;
+  const bulletsEl = document.getElementById('proj-modal-bullets')!;
+  const dateEl    = document.getElementById('proj-modal-date')!;
+
+  function openModal(index: number) {
+    const p = projectData[index];
+
+    tagsEl.innerHTML = p.tags.map(t =>
+      `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+        t.accent
+          ? 'bg-primary/10 border border-primary/20 text-primary'
+          : 'bg-surface-high text-neutral-400'
+      }">${t.label}</span>`
+    ).join('');
+
+    titleEl.textContent   = p.title;
+    summaryEl.textContent = p.summary;
+    dateEl.textContent    = p.date;
+
+    bulletsEl.innerHTML = p.bullets.map(b => `
+      <li class="flex gap-3 text-sm text-neutral-300 leading-relaxed">
+        <svg class="flex-shrink-0 mt-0.5 text-primary" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.59L5.41 12 4 13.41l5.99 6 10-10L18.58 8l-8.58 8.59z"/>
+        </svg>
+        <span>${b}</span>
+      </li>
+    `).join('');
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => closeBtn.focus());
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-proj-open]').forEach((btn) => {
+    btn.addEventListener('click', () => openModal(Number(btn.dataset.projOpen)));
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+</script>

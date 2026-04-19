@@ -11,7 +11,7 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
 
     <div class="mb-20">
       <h2 class="font-headline text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter">
-        Professional<br />Experience
+        Professional Experience
       </h2>
     </div>
 
@@ -19,19 +19,19 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
 
       <!-- Left: company deck tabs -->
-      <div class="lg:col-span-4">
+      <div class="lg:col-span-3">
         <div class="lg:sticky lg:top-28 space-y-3" role="tablist" aria-label="Work experience">
 
           <!-- Care Health -->
           <button class="work-tab active w-full text-left" data-tab="care-health"
                   role="tab" aria-selected="true" aria-controls="panel-care-health">
-            <div class="flex items-center gap-4">
-              <div class="w-10 h-10 bg-surface-high rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden p-1">
-                <Image src={careHealthImg} alt="Care Health" width={40} height={40} class="w-full h-full object-contain" />
+            <div class="flex items-center gap-5">
+              <div class="w-14 h-14 bg-surface-high rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden p-1.5">
+                <Image src={careHealthImg} alt="Care Health" width={56} height={56} class="w-full h-full object-contain" />
               </div>
               <div class="min-w-0">
-                <p class="font-headline text-sm font-semibold text-white">Care Health Insurance</p>
-                <p class="font-body text-[11px] text-neutral-500 mt-0.5">Jun 2021 – Aug 2025</p>
+                <p class="font-headline text-base font-semibold text-white">Care Health Insurance</p>
+                <p class="font-body text-xs text-neutral-500 mt-0.5">Jun 2021 – Aug 2025</p>
               </div>
             </div>
           </button>
@@ -39,15 +39,13 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
           <!-- Parsa National Park -->
           <button class="work-tab w-full text-left" data-tab="parsa"
                   role="tab" aria-selected="false" aria-controls="panel-parsa">
-            <div class="flex items-center gap-4">
-              <div class="flex gap-1 flex-shrink-0">
-                <div class="w-10 h-10 bg-surface-high rounded-lg flex items-center justify-center overflow-hidden p-1">
-                  <Image src={parsaImg} alt="Parsa" width={40} height={40} class="w-full h-full object-contain" />
-                </div>
+            <div class="flex items-center gap-5">
+              <div class="w-14 h-14 bg-surface-high rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden p-1.5">
+                <Image src={parsaImg} alt="Parsa" width={56} height={56} class="w-full h-full object-contain" />
               </div>
               <div class="min-w-0">
-                <p class="font-headline text-sm font-semibold text-neutral-400">Parsa National Park</p>
-                <p class="font-body text-[11px] text-neutral-600 mt-0.5">Nov 2023 – Oct 2024</p>
+                <p class="font-headline text-base font-semibold text-neutral-400">Parsa National Park</p>
+                <p class="font-body text-xs text-neutral-400 mt-0.5">Nov 2023 – Oct 2024</p>
               </div>
             </div>
           </button>
@@ -56,7 +54,7 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
       </div>
 
       <!-- Right: role detail panels -->
-      <div class="lg:col-span-8">
+      <div class="lg:col-span-9">
 
         <!-- Care Health panel: two roles stacked -->
         <div class="role-panel active" data-role="care-health" id="panel-care-health" role="tabpanel">
@@ -96,7 +94,7 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
           <!-- Divider with progression indicator -->
           <div class="flex items-center gap-3 mb-8">
             <div class="h-px flex-1 bg-outline-dim"></div>
-            <span class="text-[10px] font-headline uppercase tracking-widest text-neutral-600 px-2">Promoted</span>
+            <span class="text-[10px] font-headline uppercase tracking-widest text-neutral-400 px-2">Promoted</span>
             <div class="h-px flex-1 bg-outline-dim"></div>
           </div>
 
