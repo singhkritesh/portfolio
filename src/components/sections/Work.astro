@@ -242,11 +242,11 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
         panel.classList.add('role-panel--entering');
         panel.addEventListener('animationend', () => panel.classList.remove('role-panel--entering'), { once: true });
       }
-      // If the section heading is above the viewport, scroll back to section top
+      // If the section heading is above the viewport, snap back to section top
       requestAnimationFrame(() => {
         const section = document.getElementById('work')!;
         if (section.getBoundingClientRect().top < 80) {
-          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          section.scrollIntoView({ behavior: 'instant', block: 'start' });
         }
       });
     }
