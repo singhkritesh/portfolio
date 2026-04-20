@@ -62,7 +62,7 @@
    so browser scroll restoration on reload is instant, not animated */
 
 body {
-  background-color: #131313;
+  background-color: #0d0d0d;
   color: #e2e2e2;
   font-family: 'Inter', sans-serif;
 }
@@ -74,7 +74,7 @@ section[id] {
 
 /* ── Global focus-visible ring ───────────────────────────── */
 :focus-visible {
-  outline: 2px solid #FFE7A3;
+  outline: 2px solid #E8A444;
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -85,9 +85,21 @@ section[id] {
   color: #f5f5f5;
 }
 
+/* ── Grain overlay (Vercel-style noise texture) ──────────── */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
 /* ── Dot-grid hero texture ────────────────────────────────── */
 .dot-grid {
-  background-image: radial-gradient(rgba(255, 231, 163, 0.25) 0.5px, transparent 0.5px);
+  background-image: radial-gradient(rgba(232, 164, 68, 0.25) 0.5px, transparent 0.5px);
   background-size: 28px 28px;
 }
 
@@ -177,8 +189,8 @@ section[id] {
 }
 
 .nav-link.active {
-  color: #FFE7A3;
-  border-bottom-color: #FFE7A3;
+  color: #E8A444;
+  border-bottom-color: #E8A444;
 }
 
 /* ── Section label ────────────────────────────────────────── */
@@ -188,7 +200,7 @@ section[id] {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #FFE7A3;
+  color: #E8A444;
 }
 
 /* ── Hero tagline label — larger than section labels ─────── */
@@ -198,31 +210,37 @@ section[id] {
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #FFE7A3;
+  color: #E8A444;
 }
 
 /* ── Timeline dot glow ────────────────────────────────────── */
 .dot-active {
-  box-shadow: 0 0 0 4px rgba(255, 231, 163, 0.15);
+  box-shadow: 0 0 0 4px rgba(232, 164, 68, 0.15);
+}
+
+/* ── Glass edge on all surface cards ─────────────────────── */
+.rounded-xl.border {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 /* ── Bento card hover ─────────────────────────────────────── */
 .bento-card {
   transition: border-color 0.35s ease, transform 0.25s ease, box-shadow 0.35s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .bento-card:hover {
-  border-color: rgba(255, 231, 163, 0.22);
+  border-color: rgba(232, 164, 68, 0.22);
   transform: translateY(-2px);
   box-shadow:
-    0 0 0 1px rgba(255, 231, 163, 0.06),
-    0 8px 32px -8px rgba(255, 231, 163, 0.12),
+    0 0 0 1px rgba(232, 164, 68, 0.06),
+    0 8px 32px -8px rgba(232, 164, 68, 0.12),
     0 2px 8px -2px rgba(0, 0, 0, 0.4);
 }
 .bento-card:active {
   transform: translateY(0);
-  border-color: rgba(255, 231, 163, 0.3);
-  box-shadow: 0 0 0 1px rgba(255, 231, 163, 0.1);
+  border-color: rgba(232, 164, 68, 0.3);
+  box-shadow: 0 0 0 1px rgba(232, 164, 68, 0.1);
 }
 
 /* ── Work side-tab navigation ────────────────────────────── */
@@ -239,9 +257,13 @@ section[id] {
   background: rgba(255, 255, 255, 0.03);
 }
 
+.work-tab:not(.active):hover p {
+  color: #e5e5e5;
+}
+
 .work-tab.active {
-  background: rgba(255, 231, 163, 0.06);
-  border-color: rgba(255, 231, 163, 0.18);
+  background: rgba(232, 164, 68, 0.06);
+  border-color: rgba(232, 164, 68, 0.18);
 }
 
 .role-panel {
@@ -273,21 +295,50 @@ section[id] {
 #work,
 #projects {
   background-image:
-    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(255, 231, 163, 0.04) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 30% at 10% 80%, rgba(255, 231, 163, 0.025) 0%, transparent 60%);
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(232, 164, 68, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 10% 80%, rgba(232, 164, 68, 0.025) 0%, transparent 60%);
 }
 
 #education,
 #achievements {
   background-image:
-    radial-gradient(ellipse 50% 35% at 15% 25%, rgba(255, 231, 163, 0.035) 0%, transparent 65%),
-    radial-gradient(ellipse 35% 25% at 85% 75%, rgba(255, 231, 163, 0.02) 0%, transparent 55%);
+    radial-gradient(ellipse 50% 35% at 15% 25%, rgba(232, 164, 68, 0.035) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 25% at 85% 75%, rgba(232, 164, 68, 0.02) 0%, transparent 55%);
 }
 
 #blog,
 #contact {
   background-image:
-    radial-gradient(ellipse 55% 40% at 90% 15%, rgba(255, 231, 163, 0.03) 0%, transparent 65%);
+    radial-gradient(ellipse 55% 40% at 90% 15%, rgba(232, 164, 68, 0.03) 0%, transparent 65%);
+}
+
+/* ── Work section stagger (section-level trigger) ────────── */
+/* Uses animation (not transition) so fill-mode keeps the final
+   state and the reveal isn't blocked by .preload's transition:none */
+@keyframes staggerIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+[data-stagger] {
+  opacity: 0;
+}
+
+[data-stagger].in {
+  animation: staggerIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ── Scroll reveal ────────────────────────────────────────── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ── Suppress all transitions during initial page load ───── */
@@ -319,7 +370,7 @@ section[id] {
 .proj-modal {
   position: fixed;
   inset: 0;
-  z-index: 200;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -345,7 +396,7 @@ section[id] {
 .proj-modal-card {
   position: relative;
   z-index: 1;
-  background: #1f1f1f;
+  background: #191919;
   border: 1px solid #3c3c3c;
   border-radius: 1rem;
   padding: 2rem;
@@ -367,8 +418,8 @@ section[id] {
   justify-content: space-between;
   width: 100%;
   padding: 1.125rem 1.25rem;
-  background: #1f1f1f;
-  border: 1px solid #2a2a2a;
+  background: #191919;
+  border: 1px solid #242424;
   border-radius: 0.75rem;
   cursor: pointer;
   text-align: left;
@@ -385,14 +436,14 @@ section[id] {
 
 .acc-btn.open {
   background: #1a2527;
-  border-color: rgba(255, 231, 163, 0.22);
+  border-color: rgba(232, 164, 68, 0.22);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
 .acc-icon {
   flex-shrink: 0;
-  color: #FFE7A3;
+  color: #E8A444;
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -403,7 +454,7 @@ section[id] {
 .acc-body {
   padding: 1.5rem 1.25rem;
   background: #141f21;
-  border: 1px solid rgba(255, 231, 163, 0.18);
+  border: 1px solid rgba(232, 164, 68, 0.18);
   border-top: none;
   border-bottom-left-radius: 0.75rem;
   border-bottom-right-radius: 0.75rem;
@@ -430,9 +481,9 @@ section[id] {
 }
 
 .contact-toast--success {
-  background: rgba(255, 231, 163, 0.08);
-  border: 1px solid rgba(255, 231, 163, 0.25);
-  color: #FFE7A3;
+  background: rgba(232, 164, 68, 0.08);
+  border: 1px solid rgba(232, 164, 68, 0.25);
+  color: #E8A444;
 }
 
 .contact-toast--error {
@@ -491,8 +542,8 @@ section[id] {
 
 /* ── Inputs ───────────────────────────────────────────────── */
 .search-input {
-  background: #1f1f1f;
-  border: 1px solid #2a2a2a;
+  background: #191919;
+  border: 1px solid #242424;
   border-radius: 0.75rem;
   padding: 0.75rem 1rem 0.75rem 2.75rem;
   color: #e2e2e2;
@@ -504,7 +555,7 @@ section[id] {
 
 .search-input:focus {
   outline: none;
-  border-color: rgba(255, 231, 163, 0.35);
+  border-color: rgba(232, 164, 68, 0.35);
 }
 
 .search-input::placeholder {
@@ -512,8 +563,8 @@ section[id] {
 }
 
 .form-input {
-  background: #1f1f1f;
-  border: 1px solid #2a2a2a;
+  background: #191919;
+  border: 1px solid #242424;
   border-radius: 0.75rem;
   padding: 0.875rem 1rem;
   color: #e2e2e2;
@@ -525,7 +576,7 @@ section[id] {
 
 .form-input:focus {
   outline: none;
-  border-color: rgba(255, 231, 163, 0.35);
+  border-color: rgba(232, 164, 68, 0.35);
 }
 
 .form-input::placeholder {

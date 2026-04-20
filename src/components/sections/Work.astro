@@ -9,7 +9,7 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
 <section id="work" class="pt-20 pb-32 px-6 md:px-12 bg-background">
   <div class="max-w-7xl mx-auto">
 
-    <div class="mb-20">
+    <div class="mb-20" data-reveal>
       <h2 class="font-headline text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter">
         Professional Experience
       </h2>
@@ -24,7 +24,8 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
 
           <!-- Care Health -->
           <button class="work-tab active w-full text-left" data-tab="care-health"
-                  role="tab" aria-selected="true" aria-controls="panel-care-health">
+                  role="tab" aria-selected="true" aria-controls="panel-care-health"
+                  data-stagger data-stagger-delay="0">
             <div class="flex items-center gap-5">
               <div class="w-14 h-14 bg-surface-high rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden p-1.5">
                 <Image src={careHealthImg} alt="Care Health" width={56} height={56} class="w-full h-full object-contain" />
@@ -38,7 +39,8 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
 
           <!-- Parsa National Park -->
           <button class="work-tab w-full text-left" data-tab="parsa"
-                  role="tab" aria-selected="false" aria-controls="panel-parsa">
+                  role="tab" aria-selected="false" aria-controls="panel-parsa"
+                  data-stagger data-stagger-delay="100">
             <div class="flex items-center gap-5">
               <div class="w-14 h-14 bg-surface-high rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden p-1.5">
                 <Image src={parsaImg} alt="Parsa" width={56} height={56} class="w-full h-full object-contain" />
@@ -60,87 +62,79 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
         <div class="role-panel active" data-role="care-health" id="panel-care-health" role="tabpanel">
 
           <!-- Role 1: PM AI Strategy (most recent) -->
-          <div class="mb-8">
-            <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-2">
+          <div class="mb-5" data-stagger data-stagger-delay="160">
+            <div class="flex flex-wrap items-baseline gap-2 mb-1">
               <h3 class="font-headline text-xl md:text-2xl font-bold">Product Manager — AI Strategy</h3>
-              <span class="inline-flex items-center px-3 py-1 bg-primary/10 text-primary
-                           rounded-full text-xs font-headline font-bold uppercase tracking-wider flex-shrink-0">
-                Apr 2023 – Aug 2025
-              </span>
+              <span class="text-neutral-500 font-body text-sm">· Apr 2023 – Aug 2025</span>
             </div>
-            <p class="text-neutral-500 text-sm font-body mb-5">Care Health Insurance Ltd · India</p>
-            <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim">
-              <ul class="space-y-4">
-                <li class="flex gap-3">
-                  <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
-                  <span class="text-sm text-neutral-300">Architected and executed the strategic roadmap for AI portfolio of <strong class="text-primary">6 products</strong>, managing <strong class="text-primary">3 PMs</strong> and partnering across <strong class="text-primary">13 teams</strong> to align C-suite on long-term OKRs across fraud, document intelligence, medical data, KYC and CRM</span>
-                </li>
-                <li class="flex gap-3">
-                  <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
-                  <span class="text-sm text-neutral-300">Built a 0 to 1 claims automation platform, leading problem discovery, model selection, and production rollout, then scaled to <strong class="text-primary">1M+ cases</strong>, reduced latency <strong class="text-primary">20%</strong>, and generated <strong class="text-primary">$1.1M+ in savings</strong> (Best Innovation Award, AWS AI Impact 2026)</span>
-                </li>
-                <li class="flex gap-3">
-                  <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
-                  <span class="text-sm text-neutral-300">Analyzed customer insights and developed prototype for grievance summarization, using Claude API, Python, and prompt engineering to reduce case resolution time by <strong class="text-primary">45%</strong>, with planned integration to CRM, improving customer satisfaction</span>
-                </li>
-                <li class="flex gap-3">
-                  <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
-                  <span class="text-sm text-neutral-300">Led organization-wide GenAI implementation in a highly regulated environment, implementing equitable and transparent AI practices, partnering with C-suite, engineering, and compliance teams for governance and responsible AI adoption</span>
-                </li>
-              </ul>
-            </div>
+            <p class="text-neutral-500 text-sm font-body">Care Health Insurance Ltd · India</p>
+          </div>
+          <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim mb-8" data-stagger data-stagger-delay="260">
+            <ul class="space-y-4">
+              <li class="flex gap-3">
+                <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
+                <span class="text-sm text-neutral-300">Architected and executed the strategic roadmap for AI portfolio of <strong class="text-primary">6 products</strong>, managing <strong class="text-primary">3 PMs</strong> and partnering across <strong class="text-primary">13 teams</strong> to align C-suite on long-term OKRs across fraud, document intelligence, medical data, KYC and CRM</span>
+              </li>
+              <li class="flex gap-3">
+                <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
+                <span class="text-sm text-neutral-300">Built a 0 to 1 claims automation platform, leading problem discovery, model selection, and production rollout, then scaled to <strong class="text-primary">1M+ cases</strong>, reduced latency <strong class="text-primary">20%</strong>, and generated <strong class="text-primary">$1.1M+ in savings</strong> (Best Innovation Award, AWS AI Impact 2026)</span>
+              </li>
+              <li class="flex gap-3">
+                <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
+                <span class="text-sm text-neutral-300">Analyzed customer insights and developed prototype for grievance summarization, using Claude API, Python, and prompt engineering to reduce case resolution time by <strong class="text-primary">45%</strong>, with planned integration to CRM, improving customer satisfaction</span>
+              </li>
+              <li class="flex gap-3">
+                <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
+                <span class="text-sm text-neutral-300">Led organization-wide GenAI implementation in a highly regulated environment, implementing equitable and transparent AI practices, partnering with C-suite, engineering, and compliance teams for governance and responsible AI adoption</span>
+              </li>
+            </ul>
           </div>
 
           <!-- Divider with progression indicator -->
-          <div class="flex items-center gap-3 mb-8">
+          <div class="flex items-center gap-3 mb-8" data-stagger data-stagger-delay="400">
             <div class="h-px flex-1 bg-outline-dim"></div>
             <span class="text-[10px] font-headline uppercase tracking-widest text-neutral-400 px-2">Promoted</span>
             <div class="h-px flex-1 bg-outline-dim"></div>
           </div>
 
           <!-- Role 2: APM Claims -->
-          <div>
-            <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-2">
+          <div class="mb-5" data-stagger data-stagger-delay="500">
+            <div class="flex flex-wrap items-baseline gap-2 mb-1">
               <h3 class="font-headline text-xl md:text-2xl font-bold">Associate Product Manager — Claims</h3>
-              <span class="inline-flex items-center px-3 py-1 bg-primary/10 text-primary
-                           rounded-full text-xs font-headline font-bold uppercase tracking-wider flex-shrink-0">
-                Jun 2021 – Mar 2023
-              </span>
+              <span class="text-neutral-500 font-body text-sm">· Jun 2021 – Mar 2023</span>
             </div>
-            <p class="text-neutral-500 text-sm font-body mb-5">Care Health Insurance Ltd · India</p>
-            <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim">
-              <ul class="space-y-4">
-                <li class="flex gap-3">
-                  <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
-                  <span class="text-sm text-neutral-300">Conducted <strong class="text-primary">40 customer interviews</strong>, analyzed <strong class="text-primary">200+ support tickets</strong>, and performed competitive analysis to uncover core user pain points; partnered with design and marketing to redesign the mobile journey, increasing completion and engagement by <strong class="text-primary">70%</strong></span>
-                </li>
-                <li class="flex gap-3">
-                  <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
-                  <span class="text-sm text-neutral-300">Reviewed claims payment processes with finance team, identified bottlenecks, and designed a new payment engine leading 3 engineers and 2 business analysts, cutting payout time from <strong class="text-primary">2 days to 5 secs</strong>, enabling <strong class="text-primary">$15M+ disbursements</strong></span>
-                </li>
-                <li class="flex gap-3">
-                  <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
-                  <span class="text-sm text-neutral-300">Conducted product discovery and authored PRD to ship an MVP for data extraction from health reports and integrated a prediction model with 2 engineers to proactively identify high-risk customers, reducing financial risk for the company</span>
-                </li>
-                <li class="flex gap-3">
-                  <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
-                  <span class="text-sm text-neutral-300">Scaled the digital ecosystem by leading the integration of <strong class="text-primary">96+ APIs</strong> across partner and hospital networks, reducing claims processing time by <strong class="text-primary">75%</strong> and increasing digital engagement by <strong class="text-primary">18%</strong></span>
-                </li>
-              </ul>
-            </div>
+            <p class="text-neutral-500 text-sm font-body">Care Health Insurance Ltd · India</p>
+          </div>
+          <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim" data-stagger data-stagger-delay="600">
+            <ul class="space-y-4">
+              <li class="flex gap-3">
+                <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
+                <span class="text-sm text-neutral-300">Conducted <strong class="text-primary">40 customer interviews</strong>, analyzed <strong class="text-primary">200+ support tickets</strong>, and performed competitive analysis to uncover core user pain points; partnered with design and marketing to redesign the mobile journey, increasing completion and engagement by <strong class="text-primary">70%</strong></span>
+              </li>
+              <li class="flex gap-3">
+                <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
+                <span class="text-sm text-neutral-300">Reviewed claims payment processes with finance team, identified bottlenecks, and designed a new payment engine leading 3 engineers and 2 business analysts, cutting payout time from <strong class="text-primary">2 days to 5 secs</strong>, enabling <strong class="text-primary">$15M+ disbursements</strong></span>
+              </li>
+              <li class="flex gap-3">
+                <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
+                <span class="text-sm text-neutral-300">Conducted product discovery and authored PRD to ship an MVP for data extraction from health reports and integrated a prediction model with 2 engineers to proactively identify high-risk customers, reducing financial risk for the company</span>
+              </li>
+              <li class="flex gap-3">
+                <Icon name="check_circle" size={18} class="text-primary mt-0.5 flex-shrink-0" />
+                <span class="text-sm text-neutral-300">Scaled the digital ecosystem by leading the integration of <strong class="text-primary">96+ APIs</strong> across partner and hospital networks, reducing claims processing time by <strong class="text-primary">75%</strong> and increasing digital engagement by <strong class="text-primary">18%</strong></span>
+              </li>
+            </ul>
           </div>
 
         </div>
 
         <!-- Parsa panel -->
         <div class="role-panel" data-role="parsa" id="panel-parsa" role="tabpanel" style="display:none">
-          <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-2">
+          <div class="flex flex-wrap items-baseline gap-2 mb-1">
             <h3 class="font-headline text-xl md:text-2xl font-bold">Volunteer — Conservation</h3>
-            <span class="inline-flex items-center px-3 py-1 bg-primary/10 text-primary
-                         rounded-full text-xs font-headline font-bold uppercase tracking-wider flex-shrink-0">
-              Nov–Dec '23 · Sep–Oct '24
-            </span>
+            <span class="text-neutral-500 font-body text-sm">· Nov–Dec '23 · Sep–Oct '24</span>
           </div>
+          <p class="text-neutral-500 text-sm font-body mb-5">Parsa National Park · Nepal</p>
           <div class="flex items-center gap-3 mb-5">
             <div class="w-9 h-9 bg-surface-high rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden p-1">
               <Image src={parsaImg} alt="Parsa" width={36} height={36} class="w-full h-full object-contain" />
@@ -148,7 +142,6 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
             <div class="w-9 h-9 bg-surface-high rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden p-1">
               <Image src={dnpwcImg} alt="DNPWC" width={36} height={36} class="w-full h-full object-contain" />
             </div>
-            <span class="text-neutral-500 text-sm font-body">Parsa National Park · Nepal</span>
           </div>
           <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim">
             <p class="text-neutral-400 text-sm leading-relaxed">
@@ -163,7 +156,7 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
     </div>
 
     <!-- Full-width skills strip -->
-    <div class="bg-surface-mid p-8 rounded-xl border border-outline-dim">
+    <div class="bg-surface-mid p-8 rounded-xl border border-outline-dim" data-stagger data-stagger-delay="700">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <p class="section-label mb-4">Product Management</p>
@@ -192,6 +185,38 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
 </section>
 
 <script>
+  // ── Section-level stagger reveal ─────────────────────────────
+  // Watches the #work section. When it enters view, each [data-stagger]
+  // child reveals after its own explicit data-stagger-delay (ms).
+  // Fires once only — observer disconnects on first trigger.
+  (function () {
+    const section = document.getElementById('work');
+    if (!section) return;
+
+    const items = Array.from(
+      section.querySelectorAll<HTMLElement>('[data-stagger]')
+    );
+
+    let fired = false;
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || fired) return;
+        fired = true;
+        obs.disconnect();
+
+        items.forEach((el) => {
+          const delay = parseInt(el.dataset.staggerDelay ?? '0', 10);
+          setTimeout(() => el.classList.add('in'), delay);
+        });
+      },
+      { threshold: 0.08 }
+    );
+
+    obs.observe(section);
+  })();
+
+  // ── Tab navigation ────────────────────────────────────────────
   const tabs   = Array.from(document.querySelectorAll<HTMLButtonElement>('.work-tab'));
   const panels = document.querySelectorAll<HTMLDivElement>('.role-panel');
 
@@ -217,6 +242,13 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
         panel.classList.add('role-panel--entering');
         panel.addEventListener('animationend', () => panel.classList.remove('role-panel--entering'), { once: true });
       }
+      // If the section heading is above the viewport, scroll back to section top
+      requestAnimationFrame(() => {
+        const section = document.getElementById('work')!;
+        if (section.getBoundingClientRect().top < 80) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
     }
   }
 

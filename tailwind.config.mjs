@@ -4,16 +4,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        background:          '#131313',
-        surface:             '#1a1a1a',
-        'surface-low':       '#1b1b1b',
-        'surface-mid':       '#1f1f1f',
-        'surface-high':      '#2a2a2a',
-        'surface-highest':   '#353535',
-        primary:             '#FFE7A3',
-        'primary-dim':       '#E6C870',
+        background:          '#0d0d0d',
+        surface:             '#141414',
+        'surface-low':       '#141414',
+        'surface-mid':       '#191919',
+        'surface-high':      '#242424',
+        'surface-highest':   '#2e2e2e',
+        primary:             '#E8A444',
+        'primary-dim':       '#C98830',
         outline:             '#988e90',
-        'outline-dim':       '#3c3c3c',
+        'outline-dim':       '#2a2a2a',
       },
       fontFamily: {
         headline: ['Space Grotesk Variable', 'Space Grotesk', 'sans-serif'],

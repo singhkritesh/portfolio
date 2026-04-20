@@ -74,6 +74,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 </head>
 <body class="bg-background text-neutral-200 antialiased">
+  <!-- Grain overlay — fixed, pointer-events off, above everything except modals -->
+  <div class="grain-overlay" aria-hidden="true"></div>
   <a href="#home"
      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100]
             focus:px-4 focus:py-2 focus:bg-primary focus:text-[#131313] focus:rounded-lg
@@ -81,6 +83,31 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     Skip to content
   </a>
   <slot />
+
+  <script>
+    const timers = new WeakMap<Element, ReturnType<typeof setTimeout>>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const el = entry.target as HTMLElement;
+          if (entry.isIntersecting) {
+            const delay = parseInt(el.dataset.revealDelay || '0', 10);
+            const t = setTimeout(() => el.classList.add('revealed'), delay);
+            timers.set(el, t);
+          } else {
+            clearTimeout(timers.get(el));
+            el.classList.remove('revealed');
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -48px 0px' }
+    );
+
+    document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) => {
+      observer.observe(el);
+    });
+  </script>
   <!-- Inline restore — runs synchronously after all sections are in the DOM,
        before the deferred module scripts run. Scrolls to saved section instantly. -->
   <script is:inline>

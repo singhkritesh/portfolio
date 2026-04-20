@@ -9,7 +9,7 @@ import microsoftImg  from '../../assets/images/microsoft.png';
 <section id="education" class="pt-20 pb-32 px-6 md:px-12 bg-background">
   <div class="max-w-7xl mx-auto">
 
-    <div class="mb-20">
+    <div class="mb-20" data-reveal>
       <h2 class="font-headline text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter">
         Academic Background
       </h2>
@@ -18,7 +18,7 @@ import microsoftImg  from '../../assets/images/microsoft.png';
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
 
       <!-- Dartmouth -->
-      <div class="bg-surface-mid p-8 rounded-xl border border-outline-dim">
+      <div class="bg-surface-mid p-8 rounded-xl border border-outline-dim" data-reveal data-reveal-delay="50">
         <div class="flex items-center gap-4 mb-6">
           <Image src={dartmouthImg} alt="Dartmouth" width={48} height={48}
                  class="h-12 w-12 object-contain flex-shrink-0" />
@@ -41,7 +41,7 @@ import microsoftImg  from '../../assets/images/microsoft.png';
       </div>
 
       <!-- MNNIT -->
-      <div class="bg-surface-mid p-8 rounded-xl border border-outline-dim">
+      <div class="bg-surface-mid p-8 rounded-xl border border-outline-dim" data-reveal data-reveal-delay="120">
         <div class="flex items-center gap-4 mb-6">
           <Image src={mnnitImg} alt="MNNIT" width={48} height={48}
                  class="h-12 w-12 object-contain flex-shrink-0" />
@@ -67,12 +67,13 @@ import microsoftImg  from '../../assets/images/microsoft.png';
 
     <!-- Certifications -->
     <div>
-      <p class="section-label mb-6">Certifications</p>
+      <p class="section-label mb-6" data-reveal data-reveal-delay="50">Certifications</p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         <a href="https://www.coursera.org/account/accomplishments/specialization/KCW4VLSU6TPY"
            target="_blank" rel="noopener noreferrer"
-           class="bg-surface-mid p-6 rounded-xl border border-outline-dim bento-card flex gap-5 items-start group">
+           class="bg-surface-mid p-6 rounded-xl border border-outline-dim bento-card flex gap-5 items-start group"
+           data-reveal data-reveal-delay="80">
           <Image src={googleImg} alt="Google" width={48} height={48}
                  class="flex-shrink-0 object-contain" />
           <div>
@@ -87,7 +88,8 @@ import microsoftImg  from '../../assets/images/microsoft.png';
 
         <a href="https://www.coursera.org/account/accomplishments/specialization/O089QDOBZA29"
            target="_blank" rel="noopener noreferrer"
-           class="bg-surface-mid p-6 rounded-xl border border-outline-dim bento-card flex gap-5 items-start group">
+           class="bg-surface-mid p-6 rounded-xl border border-outline-dim bento-card flex gap-5 items-start group"
+           data-reveal data-reveal-delay="150">
           <Image src={microsoftImg} alt="Microsoft" width={48} height={48}
                  class="flex-shrink-0 object-contain" />
           <div>

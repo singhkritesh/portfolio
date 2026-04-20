@@ -12,7 +12,7 @@ const rendered = await Promise.all(posts.map(p => p.render()));
 <section id="blog" class="pt-20 pb-32 px-6 md:px-12 bg-background">
   <div class="max-w-3xl mx-auto">
 
-    <div class="mb-16">
+    <div class="mb-16" data-reveal>
       <h2 class="font-headline text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6">Blog</h2>
       <p class="text-neutral-400 text-base leading-relaxed">
         Insights on AI and Product Management — exploring how these fields intersect
@@ -20,14 +20,14 @@ const rendered = await Promise.all(posts.map(p => p.render()));
       </p>
     </div>
 
-    <div class="relative mb-8">
+    <div class="relative mb-8" data-reveal data-reveal-delay="50">
       <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" style="display:inline-flex;">
         <Icon name="search" size={18} />
       </span>
       <input type="text" id="blog-search" placeholder="Search articles…" class="search-input" />
     </div>
 
-    <div id="blog-list" class="space-y-3" aria-live="polite">
+    <div id="blog-list" class="space-y-3" aria-live="polite" data-reveal data-reveal-delay="80">
       {posts.map((post, i) => {
         const { Content } = rendered[i];
         return (

@@ -90,7 +90,7 @@ const allProjects = [...independent, ...academic];
 <section id="projects" class="pt-20 pb-32 px-6 md:px-12 bg-background">
   <div class="max-w-7xl mx-auto">
 
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-20">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-20" data-reveal>
       <div>
         <h2 class="font-headline text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter">
           Projects
@@ -103,29 +103,28 @@ const allProjects = [...independent, ...academic];
 
     <!-- Independent Builds -->
     <div class="mb-16">
-      <p class="font-headline text-lg font-semibold tracking-tight text-neutral-300 mb-6">Personal Ventures</p>
+      <p class="font-headline text-lg font-semibold tracking-tight text-neutral-300 mb-6" data-reveal>Personal Ventures</p>
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
         {independent.map((p, i) => (
           <button
             class={`${p.span} bg-surface-mid rounded-xl border border-outline-dim flex flex-col text-left bento-card cursor-pointer group`}
             data-proj-open={i}
             aria-haspopup="dialog"
+            data-reveal data-reveal-delay={i * 80}
           >
             <div class="p-8 flex flex-col flex-1 w-full">
-              <div class="flex flex-wrap gap-2 mb-6">
+              <div class="flex flex-wrap items-center gap-2 mb-6">
                 {p.tags.map(t => (
                   <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-400'}`}>
                     {t.label}
                   </span>
                 ))}
+                <span class="ml-auto text-[10px] font-headline uppercase tracking-wider text-neutral-500">{p.date}</span>
               </div>
               <div class="flex flex-col flex-1">
                 <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
                 <p class="text-neutral-400 text-sm leading-relaxed">{p.summary}</p>
               </div>
-            </div>
-            <div class="px-8 py-4 border-t border-outline-dim w-full">
-              <span class="text-neutral-400 text-xs font-headline uppercase tracking-wider">{p.date}</span>
             </div>
           </button>
         ))}
@@ -134,29 +133,28 @@ const allProjects = [...independent, ...academic];
 
     <!-- Academic Projects -->
     <div>
-      <p class="font-headline text-lg font-semibold tracking-tight text-neutral-300 mb-6">Academic Projects</p>
+      <p class="font-headline text-lg font-semibold tracking-tight text-neutral-300 mb-6" data-reveal>Academic Projects</p>
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
         {academic.map((p, i) => (
           <button
             class={`${p.span} bg-surface-mid rounded-xl border border-outline-dim flex flex-col text-left bento-card cursor-pointer group`}
             data-proj-open={independent.length + i}
             aria-haspopup="dialog"
+            data-reveal data-reveal-delay={i * 80}
           >
             <div class="p-8 flex flex-col flex-1 w-full">
-              <div class="flex flex-wrap gap-2 mb-6">
+              <div class="flex flex-wrap items-center gap-2 mb-6">
                 {p.tags.map(t => (
                   <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-400'}`}>
                     {t.label}
                   </span>
                 ))}
+                <span class="ml-auto text-[10px] font-headline uppercase tracking-wider text-neutral-500">{p.date}</span>
               </div>
               <div class="flex flex-col flex-1">
                 <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
                 <p class="text-neutral-400 text-sm leading-relaxed">{p.summary}</p>
               </div>
-            </div>
-            <div class="px-8 py-4 border-t border-outline-dim w-full">
-              <span class="text-neutral-400 text-xs font-headline uppercase tracking-wider">{p.date}</span>
             </div>
           </button>
         ))}
