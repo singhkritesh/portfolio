@@ -197,6 +197,18 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
       section.querySelectorAll<HTMLElement>('[data-stagger]')
     );
 
+    // If the section is already in the viewport on page load (e.g. session restore
+    // scrolled here before JS ran), skip the animation and force elements visible.
+    // Inline opacity overrides the CSS [data-stagger]{opacity:0} and is not
+    // blocked by the .preload animation suppression.
+    if (section.getBoundingClientRect().top < window.innerHeight * 0.9) {
+      items.forEach((el) => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+      return;
+    }
+
     let fired = false;
 
     const obs = new IntersectionObserver(

@@ -4,3 +4,6 @@ dist/
 .astro/
 .dev.pid
 *.pid
+CLAUDE.md
+.env
+.env.local

@@ -6,7 +6,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <nav class="fixed top-0 w-full z-50 glass-nav">
   <div class="max-w-7xl mx-auto flex justify-between items-center px-6 md:px-12 py-5">
 
-    <a href="#home" class="font-headline text-lg font-bold tracking-tighter text-white">KS</a>
+    <a href="#home" aria-label="Home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="56" height="22" aria-hidden="true">
+        <path fill="#E8A444" d="M0,80 L0,62 L18,55 L30,48 L45,40 L55,32 L65,20 L72,10 L78,4 L83,10 L88,18 L94,28 L100,36 L108,26 L114,18 L120,22 L126,30 L132,38 L140,44 L150,50 L162,46 L170,38 L176,42 L182,50 L190,56 L200,60 L200,80 Z"/>
+      </svg>
+    </a>
 
     <!-- Desktop nav -->
     <div class="hidden md:flex items-center gap-8">

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { background: #131313; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; gap: 56px; font-family: sans-serif; color: #555; padding: 48px 0; }
+  .section { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  .row { display: flex; align-items: flex-end; gap: 48px; }
+  .box { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #444; }
+  .title { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #666; }
+  .nav-sim {
+    background: rgba(19,19,19,0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    border-radius: 8px;
+    width: 560px;
+  }
+  .nav-link { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #6b7280; }
+  .divider { width: 560px; height: 1px; background: rgba(255,255,255,0.05); }
+</style>
+</head>
+<body>
+
+<!-- ── Option A: SVGRepo Everest 516174 (jagged range, stroke→fill) ── -->
+<div class="section">
+  <div class="title">A — SVGRepo Everest (jagged range)</div>
+  <div class="nav-sim">
+    <svg width="32" height="32" viewBox="0 0 48 48" fill="#E8A444" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4.5 40.02L19.37 7.98l6.37 11.51 3.4-6.25 14.35 26.75-39 .03Z"/>
+    </svg>
+    <span class="nav-link">Work</span>
+    <span class="nav-link">Projects</span>
+    <span class="nav-link">Contact</span>
+  </div>
+  <div class="row">
+    <div class="box">
+      <svg width="20" height="20" viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.5 40.02L19.37 7.98l6.37 11.51 3.4-6.25 14.35 26.75-39 .03Z"/>
+      </svg>
+      <div class="label">20px</div>
+    </div>
+    <div class="box">
+      <svg width="40" height="40" viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.5 40.02L19.37 7.98l6.37 11.51 3.4-6.25 14.35 26.75-39 .03Z"/>
+      </svg>
+      <div class="label">40px</div>
+    </div>
+    <div class="box">
+      <svg width="80" height="80" viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.5 40.02L19.37 7.98l6.37 11.51 3.4-6.25 14.35 26.75-39 .03Z"/>
+      </svg>
+      <div class="label">80px</div>
+    </div>
+    <div class="box">
+      <svg width="80" height="80" viewBox="0 0 48 48" fill="#E8A444" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.5 40.02L19.37 7.98l6.37 11.51 3.4-6.25 14.35 26.75-39 .03Z"/>
+      </svg>
+      <div class="label">amber</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── Option B: Mountain Range 53890 (two peaks, solid fill) ── -->
+<div class="section">
+  <div class="title">B — Two peaks (solid fill)</div>
+  <div class="nav-sim">
+    <svg width="36" height="20" viewBox="0 0 493 493" fill="#E8A444" xmlns="http://www.w3.org/2000/svg">
+      <path d="M206.196,119.342L0,373.92h221.797l95.299-117.658L206.196,119.342z M219.59,230.766l-13.394,52.459l-13.394-52.459l-52.157,19.027l65.551-80.93l65.552,80.93L219.59,230.766z"/>
+      <path d="M372.152,224.391L251.04,373.918l242.222,0.002L372.152,224.391z M372.152,320.648l-7.867-30.812l-30.637,11.176l38.504-47.535l38.5,47.535l-30.635-11.176L372.152,320.648z"/>
+    </svg>
+    <span class="nav-link">Work</span>
+    <span class="nav-link">Projects</span>
+    <span class="nav-link">Contact</span>
+  </div>
+  <div class="row">
+    <div class="box">
+      <svg width="36" height="20" viewBox="0 0 493 493" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M206.196,119.342L0,373.92h221.797l95.299-117.658L206.196,119.342z M219.59,230.766l-13.394,52.459l-13.394-52.459l-52.157,19.027l65.551-80.93l65.552,80.93L219.59,230.766z"/>
+        <path d="M372.152,224.391L251.04,373.918l242.222,0.002L372.152,224.391z M372.152,320.648l-7.867-30.812l-30.637,11.176l38.504-47.535l38.5,47.535l-30.635-11.176L372.152,320.648z"/>
+      </svg>
+      <div class="label">nav</div>
+    </div>
+    <div class="box">
+      <svg width="72" height="40" viewBox="0 0 493 493" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M206.196,119.342L0,373.92h221.797l95.299-117.658L206.196,119.342z M219.59,230.766l-13.394,52.459l-13.394-52.459l-52.157,19.027l65.551-80.93l65.552,80.93L219.59,230.766z"/>
+        <path d="M372.152,224.391L251.04,373.918l242.222,0.002L372.152,224.391z M372.152,320.648l-7.867-30.812l-30.637,11.176l38.504-47.535l38.5,47.535l-30.635-11.176L372.152,320.648z"/>
+      </svg>
+      <div class="label">40px</div>
+    </div>
+    <div class="box">
+      <svg width="72" height="40" viewBox="0 0 493 493" fill="#E8A444" xmlns="http://www.w3.org/2000/svg">
+        <path d="M206.196,119.342L0,373.92h221.797l95.299-117.658L206.196,119.342z M219.59,230.766l-13.394,52.459l-13.394-52.459l-52.157,19.027l65.551-80.93l65.552,80.93L219.59,230.766z"/>
+        <path d="M372.152,224.391L251.04,373.918l242.222,0.002L372.152,224.391z M372.152,320.648l-7.867-30.812l-30.637,11.176l38.504-47.535l38.5,47.535l-30.635-11.176L372.152,320.648z"/>
+      </svg>
+      <div class="label">amber</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── Option C: Hand-authored Everest profile ── -->
+<div class="section">
+  <div class="title">C — Hand-authored Everest profile (most realistic)</div>
+  <div class="nav-sim">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="50" height="20">
+      <path fill="#E8A444" d="M0,80 L0,62 L18,55 L30,48 L45,40 L55,32 L65,20 L72,10 L78,4 L83,10 L88,18 L94,28 L100,36 L108,26 L114,18 L120,22 L126,30 L132,38 L140,44 L150,50 L162,46 L170,38 L176,42 L182,50 L190,56 L200,60 L200,80 Z"/>
+    </svg>
+    <span class="nav-link">Work</span>
+    <span class="nav-link">Projects</span>
+    <span class="nav-link">Contact</span>
+  </div>
+  <div class="row">
+    <div class="box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="50" height="20">
+        <path fill="white" d="M0,80 L0,62 L18,55 L30,48 L45,40 L55,32 L65,20 L72,10 L78,4 L83,10 L88,18 L94,28 L100,36 L108,26 L114,18 L120,22 L126,30 L132,38 L140,44 L150,50 L162,46 L170,38 L176,42 L182,50 L190,56 L200,60 L200,80 Z"/>
+      </svg>
+      <div class="label">nav</div>
+    </div>
+    <div class="box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="100" height="40">
+        <path fill="white" d="M0,80 L0,62 L18,55 L30,48 L45,40 L55,32 L65,20 L72,10 L78,4 L83,10 L88,18 L94,28 L100,36 L108,26 L114,18 L120,22 L126,30 L132,38 L140,44 L150,50 L162,46 L170,38 L176,42 L182,50 L190,56 L200,60 L200,80 Z"/>
+      </svg>
+      <div class="label">40px</div>
+    </div>
+    <div class="box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="200" height="80">
+        <path fill="white" d="M0,80 L0,62 L18,55 L30,48 L45,40 L55,32 L65,20 L72,10 L78,4 L83,10 L88,18 L94,28 L100,36 L108,26 L114,18 L120,22 L126,30 L132,38 L140,44 L150,50 L162,46 L170,38 L176,42 L182,50 L190,56 L200,60 L200,80 Z"/>
+      </svg>
+      <div class="label">80px</div>
+    </div>
+    <div class="box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="200" height="80">
+        <path fill="#E8A444" d="M0,80 L0,62 L18,55 L30,48 L45,40 L55,32 L65,20 L72,10 L78,4 L83,10 L88,18 L94,28 L100,36 L108,26 L114,18 L120,22 L126,30 L132,38 L140,44 L150,50 L162,46 L170,38 L176,42 L182,50 L190,56 L200,60 L200,80 Z"/>
+      </svg>
+      <div class="label">amber</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
