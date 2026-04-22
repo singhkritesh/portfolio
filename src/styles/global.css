@@ -62,7 +62,7 @@
    so browser scroll restoration on reload is instant, not animated */
 
 body {
-  background-color: #0d0d0d;
+  background-color: #000;
   color: #e2e2e2;
   font-family: 'Inter', sans-serif;
 }
@@ -164,10 +164,21 @@ section[id] {
 
 /* ── Glassmorphic nav ─────────────────────────────────────── */
 .glass-nav {
-  background: rgba(19, 19, 19, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ── Nav inner — transitions padding on scroll shrink ─────── */
+.nav-inner {
+  transition: padding-top 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              padding-bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-nav.scrolled .nav-inner {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
 }
 
 /* ── Scrollspy nav links ──────────────────────────────────── */
@@ -178,7 +189,7 @@ section[id] {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #6b7280;
-  transition: color 0.2s ease;
+  transition: color 0.25s ease, border-bottom-color 0.25s ease;
   padding-bottom: 3px;
   border-bottom: 2px solid transparent;
   text-decoration: none;
@@ -193,6 +204,22 @@ section[id] {
   border-bottom-color: #E8A444;
 }
 
+/* ── Resume button elevation ──────────────────────────────── */
+.resume-btn {
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease !important;
+}
+
+.resume-btn:hover {
+  background-color: #C98830 !important;
+  box-shadow: 0 4px 20px -4px rgba(232, 164, 68, 0.5), 0 2px 8px -2px rgba(232, 164, 68, 0.25);
+  transform: translateY(-1px);
+}
+
+.resume-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px -4px rgba(232, 164, 68, 0.4);
+}
+
 /* ── Section label ────────────────────────────────────────── */
 .section-label {
   font-family: 'Space Grotesk', sans-serif;
@@ -200,7 +227,7 @@ section[id] {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #E8A444;
+  color: rgba(255, 255, 255, 0.38);
 }
 
 /* ── Hero tagline label — larger than section labels ─────── */
@@ -230,17 +257,15 @@ section[id] {
 }
 
 .bento-card:hover {
-  border-color: rgba(232, 164, 68, 0.22);
-  transform: translateY(-2px);
-  box-shadow:
-    0 0 0 1px rgba(232, 164, 68, 0.06),
-    0 8px 32px -8px rgba(232, 164, 68, 0.12),
-    0 2px 8px -2px rgba(0, 0, 0, 0.4);
+  border-color: rgba(232, 164, 68, 0.25);
+  transform: translateY(-6px);
+  box-shadow: 0 0 16px -2px rgba(232, 164, 68, 0.35);
 }
+
 .bento-card:active {
   transform: translateY(0);
   border-color: rgba(232, 164, 68, 0.3);
-  box-shadow: 0 0 0 1px rgba(232, 164, 68, 0.1);
+  box-shadow: 0 2px 10px -4px rgba(232, 164, 68, 0.4);
 }
 
 /* ── Work side-tab navigation ────────────────────────────── */
