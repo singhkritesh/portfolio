@@ -25,6 +25,14 @@
     setTimeout(function () { document.body.classList.remove('is-preload'); }, 100);
   });
 
+  // ── Nav shrink on scroll ─────────────────────────────────────────
+  var ksNav = document.querySelector('.ks-nav');
+  function updateNavScroll() {
+    if (ksNav) ksNav.classList.toggle('scrolled', window.scrollY > 60);
+  }
+  window.addEventListener('scroll', updateNavScroll, { passive: true });
+  updateNavScroll();
+
   // ── Random stagger delay classes on thumbnails ──────────────────
   document.querySelectorAll('.item.thumb').forEach(function (el) {
     el.classList.add('delay-' + (Math.floor(Math.random() * 6) + 1));

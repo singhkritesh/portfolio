@@ -1,0 +1,265 @@
+---
+import PhotoLayout from '../../layouts/PhotoLayout.astro';
+import Nav from '../../components/Nav.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<PhotoLayout title="The Darkroom | Kritesh Singh">
+  <Nav />
+
+  <style is:global>
+    /* ── Body offset & background ──────────────────────────── */
+    body { padding-top: 74px; background-color: #000; }
+
+    /* ── Gallery intro font override ───────────────────────── */
+    #main .items .item.intro {
+      font-family: 'Space Grotesk', sans-serif !important;
+    }
+    #main .items .item.intro h1 {
+      font-family: 'Space Grotesk', sans-serif !important;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    #main .items .item.intro p {
+      font-family: 'Inter', sans-serif !important;
+      font-weight: 300;
+      color: #9ca3af;
+    }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    .ks-footer {
+      background: #141414;
+      border-top: 1px solid #2a2a2a;
+      padding: 2rem 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .ks-footer__brand {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #fff;
+      text-decoration: none;
+    }
+    .ks-footer__copy {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #4b5563;
+    }
+    .ks-footer__links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .ks-footer__links a {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #4b5563;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .ks-footer__links a:hover { color: #E8A444; }
+    @media (max-width: 700px) {
+      .ks-footer { padding: 1.5rem 1.25rem; }
+    }
+
+    /* ── Lightbox ───────────────────────────────────────────── */
+    #ks-lb {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    #ks-lb.open { display: flex; }
+
+    .lb-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(13, 13, 13, 0.95);
+    }
+
+    .lb-stage {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      max-width: calc(100vw - 4rem);
+      max-height: calc(100vh - 8rem);
+    }
+
+    .lb-img-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lb-img {
+      display: block;
+      max-width: calc(100vw - 10rem);
+      max-height: calc(100vh - 8rem);
+      object-fit: contain;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .lb-spinner {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border: 2.5px solid rgba(255,255,255,0.15);
+      border-top-color: #E8A444;
+      border-radius: 50%;
+      animation: lb-spin 0.7s linear infinite;
+      display: none;
+    }
+    @keyframes lb-spin { to { transform: rotate(360deg); } }
+
+    .lb-caption {
+      position: relative;
+      z-index: 1;
+      margin-top: 1rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .lb-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      flex-shrink: 0;
+    }
+    .lb-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+    .lb-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      z-index: 2;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0.5rem;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .lb-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+    body.lb-open { overflow: hidden; }
+  </style>
+
+  <!-- ── Gallery (HTML5UP Parallelism) ─────────────────────────── -->
+  <div id="bg">
+    <div class="overlay"></div>
+  </div>
+
+  <div id="wrapper">
+    <header id="main">
+
+      <div class="items">
+
+        <div class="item intro span-2">
+          <h1>The Darkroom</h1>
+          <p>Take a look at the world through my lens</p>
+        </div>
+
+        <article class="item thumb span-1">
+          <h2>The Watcher</h2>
+          <a href={`${base}/photography/photographs/DSC3064.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC3064.webp`} alt="The Watcher" loading="lazy" /></a>
+        </article>
+
+        <article class="item thumb span-1">
+          <h2>The Witness</h2>
+          <a href={`${base}/photography/photographs/DSC3042.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC3042.webp`} alt="The Witness" loading="lazy" /></a>
+        </article>
+
+        <article class="item thumb span-2">
+          <h2>Kingdom of the Wind</h2>
+          <a href={`${base}/photography/photographs/DSC3120.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC3120.webp`} alt="Kingdom of the Wind" loading="lazy" /></a>
+        </article>
+
+        <article class="item thumb span-1">
+          <h2>Different.</h2>
+          <a href={`${base}/photography/photographs/DSC3127.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC3127.webp`} alt="Different." loading="lazy" /></a>
+        </article>
+
+        <article class="item thumb span-2">
+          <h2>Elysium</h2>
+          <a href={`${base}/photography/photographs/DSC3143.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC3143.webp`} alt="Elysium" loading="lazy" /></a>
+        </article>
+
+        <article class="item thumb span-3">
+          <h2>The Contemplation</h2>
+          <a href={`${base}/photography/photographs/DSC_0013.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC_0013.webp`} alt="The Contemplation" loading="lazy" /></a>
+        </article>
+
+        <article class="item thumb span-1">
+          <h2>The Protector</h2>
+          <a href={`${base}/photography/photographs/AMN_1896-2.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/AMN_1896-2.webp`} alt="The Protector" loading="lazy" /></a>
+        </article>
+
+        <article class="item thumb span-2">
+          <h2>The Intent</h2>
+          <a href={`${base}/photography/photographs/AMN_1804-2.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/AMN_1804-2.webp`} alt="The Intent" loading="lazy" /></a>
+        </article>
+
+      </div>
+
+      <div class="items">
+        <article class="item thumb span-3"><h2>Kingdom of Snow</h2><a href={`${base}/photography/photographs/IMG_20191103_192250_252_4.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/IMG_20191103_192250_252_4.webp`} alt="Kingdom of Snow" loading="lazy" /></a></article>
+        <article class="item thumb span-2"><h2>The Cloudy Horizon</h2><a href={`${base}/photography/photographs/LRM_EXPORT_20191106_161452.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/LRM_EXPORT_20191106_161452.webp`} alt="The Cloudy Horizon" loading="lazy" /></a></article>
+        <article class="item thumb span-2"><h2>The Spectators</h2><a href={`${base}/photography/photographs/LRM_EXPORT_20200206_120246.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/LRM_EXPORT_20200206_120246.webp`} alt="The Spectators" loading="lazy" /></a></article>
+        <article class="item thumb span-1"><h2>Sunset</h2><a href={`${base}/photography/photographs/DSC3031.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC3031.webp`} alt="Sunset" loading="lazy" /></a></article>
+        <article class="item thumb span-1"><h2>The Shades of Man</h2><a href={`${base}/photography/photographs/IMG_0071.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/IMG_0071.webp`} alt="The Shades of Man" loading="lazy" /></a></article>
+        <article class="item thumb span-2"><h2>Stargazer</h2><a href={`${base}/photography/photographs/LRM_EXPORT_20191028_021029.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/LRM_EXPORT_20191028_021029.webp`} alt="Stargazer" loading="lazy" /></a></article>
+        <article class="item thumb span-1"><h2>The Pathfinder</h2><a href={`${base}/photography/photographs/DSC_8836.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC_8836.webp`} alt="The Pathfinder" loading="lazy" /></a></article>
+        <article class="item thumb span-2"><h2>The Guide</h2><a href={`${base}/photography/photographs/IMG_1110.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/IMG_1110.webp`} alt="The Guide" loading="lazy" /></a></article>
+        <article class="item thumb span-1"><h2>The Pursuit</h2><a href={`${base}/photography/photographs/AMN_2122.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/AMN_2122.webp`} alt="The Pursuit" loading="lazy" /></a></article>
+      </div>
+
+    </header>
+  </div>
+
+  <!-- ── Footer ─────────────────────────────────────────────────── -->
+  <footer class="ks-footer">
+    <a href={`${base}/`} class="ks-footer__brand">Kritesh Singh</a>
+    <p class="ks-footer__copy">© 2026 · The Darkroom</p>
+    <ul class="ks-footer__links">
+      <li><a href={`${base}/`}>Portfolio</a></li>
+      <li><a href={`${base}/#contact`}>Contact</a></li>
+      <li><a href={`${base}/Resume/Resume_Kritesh_Singh_Product.pdf`} target="_blank" rel="noopener noreferrer">Resume</a></li>
+    </ul>
+  </footer>
+
+  <script src={`${base}/photography/assets/js/gallery.js`}></script>
+</PhotoLayout>

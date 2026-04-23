@@ -6,7 +6,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <nav class="fixed top-0 w-full z-50 glass-nav">
   <div class="nav-inner max-w-7xl mx-auto flex justify-between items-center px-6 md:px-12 py-5">
 
-    <a href="#home" aria-label="Home">
+    <a href={`${base}/`} aria-label="Home">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="56" height="22" aria-hidden="true">
         <path fill="#E8A444" d="M0,80 L0,62 L18,55 L30,48 L45,40 L55,32 L65,20 L72,10 L78,4 L83,10 L88,18 L94,28 L100,36 L108,26 L114,18 L120,22 L126,30 L132,38 L140,44 L150,50 L162,46 L170,38 L176,42 L182,50 L190,56 L200,60 L200,80 Z"/>
       </svg>
@@ -14,13 +14,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     <!-- Desktop nav -->
     <div class="hidden md:flex items-center gap-8">
-      <a href="#home"         class="nav-link active" data-section="home">Home</a>
-      <a href="#work"         class="nav-link" data-section="work">Work</a>
-      <a href="#education"    class="nav-link" data-section="education">Education</a>
-      <a href="#projects"     class="nav-link" data-section="projects">Projects</a>
-      <a href="#achievements" class="nav-link" data-section="achievements">Achievements</a>
-      {/* <a href="#blog" class="nav-link" data-section="blog">Blog</a> */}
-      <a href="#contact"      class="nav-link" data-section="contact">Contact</a>
+      <a href={`${base}/#home`}         class="nav-link active" data-section="home">Home</a>
+      <a href={`${base}/#work`}         class="nav-link" data-section="work">Work</a>
+      <a href={`${base}/#education`}    class="nav-link" data-section="education">Education</a>
+      <a href={`${base}/#projects`}     class="nav-link" data-section="projects">Projects</a>
+      <a href={`${base}/#achievements`} class="nav-link" data-section="achievements">Achievements</a>
+      {/* <a href={`${base}/#blog`} class="nav-link" data-section="blog">Blog</a> */}
+      <a href={`${base}/#contact`}      class="nav-link" data-section="contact">Contact</a>
       <a href={`${base}/photography/`}
          class="nav-link" style="display:inline-flex;align-items:center;gap:5px;">
         <Icon name="photo_camera" size={14} />
@@ -56,13 +56,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div id="mobile-menu" class="mobile-menu md:hidden">
     <div class="mobile-menu-inner">
       <div class="px-6 pb-6 pt-2 flex flex-col gap-1 border-t border-white/5">
-        <a href="#home"         class="mobile-nav-link" data-section="home">Home</a>
-        <a href="#work"         class="mobile-nav-link" data-section="work">Work</a>
-        <a href="#education"    class="mobile-nav-link" data-section="education">Education</a>
-        <a href="#projects"     class="mobile-nav-link" data-section="projects">Projects</a>
-        <a href="#achievements" class="mobile-nav-link" data-section="achievements">Achievements</a>
-        {/* <a href="#blog" class="mobile-nav-link" data-section="blog">Blog</a> */}
-        <a href="#contact"      class="mobile-nav-link" data-section="contact">Contact</a>
+        <a href={`${base}/#home`}         class="mobile-nav-link" data-section="home">Home</a>
+        <a href={`${base}/#work`}         class="mobile-nav-link" data-section="work">Work</a>
+        <a href={`${base}/#education`}    class="mobile-nav-link" data-section="education">Education</a>
+        <a href={`${base}/#projects`}     class="mobile-nav-link" data-section="projects">Projects</a>
+        <a href={`${base}/#achievements`} class="mobile-nav-link" data-section="achievements">Achievements</a>
+        {/* <a href={`${base}/#blog`} class="mobile-nav-link" data-section="blog">Blog</a> */}
+        <a href={`${base}/#contact`}      class="mobile-nav-link" data-section="contact">Contact</a>
         <a href={`${base}/photography/`}
            class="mobile-nav-link" style="display:inline-flex;align-items:center;gap:6px;">
           <Icon name="photo_camera" size={14} />
@@ -79,12 +79,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   // ── Helpers ────────────────────────────────────────────────
   function setNavActive(id: string) {
+    if (!id) return;
     navLinks.forEach((l) => l.classList.remove('active'));
     document.querySelector<HTMLAnchorElement>(`.nav-link[data-section="${id}"]`)
       ?.classList.add('active');
   }
 
   function currentSectionId(): string {
+    if (sections.length === 0) return '';
     const threshold = window.innerHeight * 0.4;
     let current = sections[0];
     for (const s of sections) {
@@ -128,21 +130,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   window.addEventListener('scroll', () => {
     clearTimeout(saveTimer);
     saveTimer = window.setTimeout(() => {
-      sessionStorage.setItem('_sk', currentSectionId());
+      const id = currentSectionId();
+      if (id) sessionStorage.setItem('_sk', id);
     }, 150);
   }, { passive: true });
 
   // ── Smooth scroll ──────────────────────────────────────────
-  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+  // Works with both relative (#section) and absolute (/base/#section) hrefs.
+  // Only intercepts when the target element exists on the current page;
+  // otherwise lets the browser navigate normally (e.g. photography → home).
+  document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
-      const target = document.querySelector<HTMLElement>(a.getAttribute('href')!);
-      if (target) {
-        e.preventDefault();
-        closeMobileMenu();
-        sessionStorage.setItem('_sk', target.id);
-        setNavActive(target.id);
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      const href = a.getAttribute('href')!;
+      const hashIdx = href.indexOf('#');
+      if (hashIdx === -1) return;
+      const id = href.substring(hashIdx + 1);
+      const target = document.getElementById(id);
+      if (!target) return; // section not on this page — browser navigates normally
+      e.preventDefault();
+      closeMobileMenu();
+      sessionStorage.setItem('_sk', id);
+      setNavActive(id);
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
