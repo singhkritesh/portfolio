@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import embassyImg from '../../assets/images/embassyofindia.png';
 import cultfitImg  from '../../assets/images/cultfit.png';
 import mnnitImg    from '../../assets/images/mnnitlogo.png';
 
@@ -12,12 +11,6 @@ const achievements: {
   title: string;
   body: string;
 }[] = [
-  {
-    logo: embassyImg,
-    alt: 'Embassy of India',
-    title: 'Scholarship from the Embassy of India',
-    body: 'Merit-based scholarship covering 100% of tuition fees and a monthly stipend, selected from 10,000 applicants with a 1% grant rate by the Embassy of India and EdCil.',
-  },
   {
     logo: cultfitImg,
     alt: 'Cult.fit',
@@ -52,8 +45,8 @@ const achievements: {
         <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim flex flex-col gap-4"
              data-reveal data-reveal-delay={i * 70}>
           <div class="flex items-center gap-3">
-            <Image src={a.logo} alt={a.alt} width={36} height={36} loading="eager"
-                   class={`object-contain flex-shrink-0 ${a.rounded ? 'rounded-lg' : ''}`} />
+            <Image src={a.logo} alt={a.alt} width={144} height={144} loading="eager"
+                   class={`w-9 h-9 object-contain flex-shrink-0 ${a.rounded ? 'rounded-lg' : ''}`} />
             <div class="flex-1 h-px bg-primary/30"></div>
           </div>
           <h3 class="font-headline text-base font-bold">{a.title}</h3>
