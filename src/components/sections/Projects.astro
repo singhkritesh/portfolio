@@ -104,9 +104,10 @@ const allProjects = [...independent, ...academic];
       <p class="font-headline text-lg font-semibold tracking-tight text-neutral-300 mb-6" data-reveal>Personal Ventures</p>
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
         {independent.map((p, i) => (
-          <div
-            class={`${p.span} proj-card bg-surface-mid rounded-xl border border-outline-dim flex flex-col bento-card cursor-default`}
-            data-proj-idx={i}
+          <button
+            class={`${p.span} bg-surface-mid rounded-xl border border-outline-dim flex flex-col text-left bento-card cursor-pointer group`}
+            data-proj-open={i}
+            aria-haspopup="dialog"
             data-reveal data-reveal-delay={i * 80}
           >
             <div class="p-8 flex flex-col flex-1 w-full">
@@ -122,8 +123,16 @@ const allProjects = [...independent, ...academic];
                 <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
                 <p class="text-neutral-400 text-sm leading-relaxed">{p.summary}</p>
               </div>
+              <!-- Hover hint -->
+              <div class="mt-5 flex items-center gap-1.5 text-primary/70 text-xs font-headline uppercase tracking-wider
+                          opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0">
+                <span>View details</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>
@@ -133,9 +142,10 @@ const allProjects = [...independent, ...academic];
       <p class="font-headline text-lg font-semibold tracking-tight text-neutral-300 mb-6" data-reveal>Academic Projects</p>
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
         {academic.map((p, i) => (
-          <div
-            class={`${p.span} proj-card bg-surface-mid rounded-xl border border-outline-dim flex flex-col bento-card cursor-default`}
-            data-proj-idx={independent.length + i}
+          <button
+            class={`${p.span} bg-surface-mid rounded-xl border border-outline-dim flex flex-col text-left bento-card cursor-pointer group`}
+            data-proj-open={independent.length + i}
+            aria-haspopup="dialog"
             data-reveal data-reveal-delay={i * 80}
           >
             <div class="p-8 flex flex-col flex-1 w-full">
@@ -151,30 +161,52 @@ const allProjects = [...independent, ...academic];
                 <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
                 <p class="text-neutral-400 text-sm leading-relaxed">{p.summary}</p>
               </div>
+              <!-- Hover hint -->
+              <div class="mt-5 flex items-center gap-1.5 text-primary/70 text-xs font-headline uppercase tracking-wider
+                          opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0">
+                <span>View details</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
             </div>
-          </div>
+          </button>
         ))}
       </div>
-    </div>
-
-    <!-- Detail strip -->
-    <div id="proj-detail"
-         class="mt-10 border-t border-outline-dim pt-8"
-         style="opacity:0; transition: opacity 0.2s ease;">
-      <div class="flex flex-wrap items-baseline justify-between gap-4 mb-5">
-        <h4 id="proj-detail-title" class="font-headline text-lg font-bold"></h4>
-        <span id="proj-detail-date" class="text-[10px] font-headline uppercase tracking-wider text-neutral-500"></span>
-      </div>
-      <ul id="proj-detail-bullets" class="grid grid-cols-1 md:grid-cols-2 gap-4"></ul>
     </div>
 
   </div>
 </section>
 
+<!-- Modal -->
+<div id="proj-modal" class="proj-modal" role="dialog" aria-modal="true" aria-labelledby="proj-modal-title">
+  <div class="proj-modal-backdrop"></div>
+  <div class="proj-modal-card">
+    <div class="flex items-start justify-between gap-4 mb-6">
+      <div>
+        <div id="proj-modal-tags" class="flex flex-wrap gap-2 mb-3"></div>
+        <h3 id="proj-modal-title" class="font-headline text-2xl md:text-3xl font-bold"></h3>
+      </div>
+      <button id="proj-modal-close" aria-label="Close"
+              class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg
+                     bg-surface-high hover:bg-surface-highest text-neutral-500 hover:text-white
+                     transition-colors duration-150 mt-1">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <ul id="proj-modal-bullets" class="space-y-4"></ul>
+    <div id="proj-modal-date" class="mt-8 pt-6 border-t border-outline-dim text-neutral-500 text-xs font-headline uppercase tracking-wider"></div>
+  </div>
+</div>
+
 <script>
   const projectData = [
     {
+      tags: [{ label: 'Gen AI', accent: true }, { label: 'Content Strategy', accent: false }],
       title: 'LinkedIn Content Generation App',
+      summary: 'Generative AI tool to create personalised LinkedIn content, optimising for audience engagement and content relevance. Designed prompt frameworks, content strategies, and iterative testing workflows.',
       bullets: [
         'Developed a generative AI tool to create personalized LinkedIn content, optimizing for audience engagement and content relevance.',
         'Designed prompt frameworks and content strategies to improve post quality, consistency, and user interaction.',
@@ -183,7 +215,9 @@ const allProjects = [...independent, ...academic];
       date: 'April 2026',
     },
     {
+      tags: [{ label: 'AI Automation', accent: true }, { label: 'Lead Gen', accent: false }],
       title: 'AI Lead Generation Platform',
+      summary: 'AI-driven platform using Exa APIs to identify high-intent prospects, auto-draft personalised emails, and score leads through intelligent workflow automation.',
       bullets: [
         'Built an AI-driven lead generation application to identify and prioritize high-intent prospects using automated data from Exa APIs.',
         'Designed end-to-end user workflows enabling discovery of leads, auto drafting and sending emails, improving conversion potential.',
@@ -191,15 +225,19 @@ const allProjects = [...independent, ...academic];
       date: 'March 2026',
     },
     {
+      tags: [{ label: 'Local LLM', accent: true }, { label: 'EdTech', accent: false }, { label: 'Full PRD', accent: false }, { label: 'Microservices', accent: false }],
       title: 'AI-First Learning Management System',
+      summary: 'Authored a full PRD covering user personas, system architecture, guardrails, and non-functional requirements, then prototyped the system. Features audio interaction and voice/text queries for real-time course access.',
       bullets: [
         'Authored PRD for user personas, system architecture, guardrails, and non-functional requirements, and prototyped using Antigravity.',
-        'Engineered an interface featuring audio interaction and voice/text queries, enabling real-time course access, powered by a local LLM (Qwen3.5 via Ollama), pgvector for retrieval, and containerized microservices.',
+        'Engineered an interface featuring audio interaction and voice/text queries, enabling real-time course access to enhance the student education experience, powered by a local LLM (Qwen3.5 via Ollama), pgvector for retrieval, and containerized microservices.',
       ],
       date: 'February 2026',
     },
     {
+      tags: [{ label: 'AI Research', accent: true }, { label: 'Fine-tuning', accent: false }, { label: 'Python', accent: false }],
       title: 'LLM Hallucination Detection — FastHalluCheck',
+      summary: 'Research project evaluating hallucination detection models on QA benchmarks using threshold optimisation and supervised fine-tuning. Explored ensemble approaches across in-domain and cross-domain datasets.',
       bullets: [
         'Evaluated Vectara HHEM v2 and DeBERTa-v3-small on HaluEval and PHANTOM Financial benchmarks using PyTorch and Hugging Face.',
         'Achieved 98.2% accuracy (F1: 0.9818) with ensemble method on in-domain dataset.',
@@ -208,7 +246,9 @@ const allProjects = [...independent, ...academic];
       date: 'Dartmouth · 2025',
     },
     {
+      tags: [{ label: 'Market Analysis', accent: true }, { label: 'GTM Strategy', accent: false }, { label: 'Consulting', accent: false }],
       title: 'Graduate Student Consultant — Cisco Spaces',
+      summary: 'Consulted on product strategy in the $20B Smart Buildings industry, identifying high-potential launch opportunities across 5 venue types and informing go-to-market and partner prioritisation for Cisco Spaces.',
       bullets: [
         'Conducted market analysis across 5 venue types in the Smart Buildings industry to identify high-potential product launch opportunities.',
         'Aligned customer needs with market trends to inform go-to-market strategy and partner prioritisation for Cisco Spaces.',
@@ -217,60 +257,56 @@ const allProjects = [...independent, ...academic];
     },
   ];
 
-  const allCards  = Array.from(document.querySelectorAll<HTMLElement>('.proj-card'));
-  const detail    = document.getElementById('proj-detail')!;
-  const titleEl   = document.getElementById('proj-detail-title')!;
-  const dateEl    = document.getElementById('proj-detail-date')!;
-  const bulletsEl = document.getElementById('proj-detail-bullets')!;
+  const modal     = document.getElementById('proj-modal')!;
+  const backdrop  = modal.querySelector('.proj-modal-backdrop')!;
+  const closeBtn  = document.getElementById('proj-modal-close')!;
+  const titleEl   = document.getElementById('proj-modal-title')!;
+  const tagsEl    = document.getElementById('proj-modal-tags')!;
+  const bulletsEl = document.getElementById('proj-modal-bullets')!;
+  const dateEl    = document.getElementById('proj-modal-date')!;
 
-  let activeIdx   = -1;
-  let leaveTimer: ReturnType<typeof setTimeout> | null = null;
+  function openModal(index: number) {
+    const p = projectData[index];
 
-  function show(idx: number) {
-    if (leaveTimer) { clearTimeout(leaveTimer); leaveTimer = null; }
+    tagsEl.innerHTML = p.tags.map(t =>
+      `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+        t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-400'
+      }">${t.label}</span>`
+    ).join('');
 
-    // Spotlight
-    allCards.forEach((c, i) => {
-      c.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-      c.style.opacity    = i === idx ? '1' : '0.35';
-      c.style.transform  = i === idx ? 'scale(1.015)' : 'scale(1)';
-    });
+    titleEl.textContent = p.title;
+    dateEl.textContent  = p.date;
 
-    if (idx !== activeIdx) {
-      activeIdx = idx;
-      const p = projectData[idx];
-      titleEl.textContent = p.title;
-      dateEl.textContent  = p.date;
-      bulletsEl.innerHTML = p.bullets.map((b, i) =>
-        `<li class="text-sm text-neutral-300 leading-relaxed border-l-2 border-primary/40 pl-3"
-             style="animation: bulletIn 0.25s ease both; animation-delay: ${i * 60}ms">${b}</li>`
-      ).join('');
-    }
+    bulletsEl.innerHTML = p.bullets.map((b, i) =>
+      `<li class="text-sm text-neutral-300 leading-relaxed border-l-2 border-primary/40 pl-3"
+           style="animation: bulletIn 0.3s ease both; animation-delay: ${i * 70}ms">${b}</li>`
+    ).join('');
 
-    detail.style.opacity = '1';
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => closeBtn.focus());
   }
 
-  function hide() {
-    leaveTimer = setTimeout(() => {
-      allCards.forEach((c) => {
-        c.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-        c.style.opacity    = '1';
-        c.style.transform  = 'scale(1)';
-      });
-      detail.style.opacity = '0';
-      activeIdx = -1;
-    }, 150);
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
   }
 
-  allCards.forEach((card) => {
-    card.addEventListener('mouseenter', () => show(Number(card.dataset.projIdx)));
-    card.addEventListener('mouseleave', hide);
+  document.querySelectorAll<HTMLButtonElement>('[data-proj-open]').forEach((btn) => {
+    btn.addEventListener('click', () => openModal(Number(btn.dataset.projOpen)));
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
 </script>
 
 <style>
   @keyframes bulletIn {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 </style>
