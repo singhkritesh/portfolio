@@ -76,6 +76,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <body class="bg-background text-neutral-200 antialiased">
   <!-- Grain overlay — fixed, pointer-events off, above everything except modals -->
   <div class="grain-overlay" aria-hidden="true"></div>
+  <!-- Cursor glow — follows mouse, primary amber tint -->
+  <div id="cursor-glow" aria-hidden="true"></div>
   <a href="#home"
      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100]
             focus:px-4 focus:py-2 focus:bg-primary focus:text-[#131313] focus:rounded-lg
@@ -108,6 +110,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       observer.observe(el);
     });
   </script>
+  <script>
+    const glow = document.getElementById('cursor-glow') as HTMLElement | null;
+    if (glow) {
+      let rx = -9999, ry = -9999;
+      let cx = -9999, cy = -9999;
+
+      window.addEventListener('mousemove', (e) => {
+        rx = e.clientX;
+        ry = e.clientY;
+      }, { passive: true });
+
+      function tick() {
+        cx += (rx - cx) * 0.12;
+        cy += (ry - cy) * 0.12;
+        glow!.style.transform = `translate(${cx}px, ${cy}px)`;
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+  </script>
+
   <!-- Inline restore — runs synchronously after all sections are in the DOM,
        before the deferred module scripts run. Scrolls to saved section instantly. -->
   <script is:inline>
