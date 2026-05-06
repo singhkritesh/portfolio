@@ -97,6 +97,13 @@ section[id] {
   background-size: 180px 180px;
 }
 
+/* ── Card tilt + spotlight ───────────────────────────────── */
+[data-tilt] {
+  will-change: transform;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+}
+
 /* ── X-ray cursor ────────────────────────────────────────── */
 /*
   mix-blend-mode: difference with white fill inverts every pixel beneath
@@ -312,52 +319,89 @@ section[id] {
 }
 
 /* ── Work side-tab navigation ────────────────────────────── */
+.work-tablist {
+  perspective: 800px;
+  perspective-origin: left center;
+}
+
 .work-tab {
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.875rem;
   border: 1px solid transparent;
   background: transparent;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition:
+    transform     0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity       0.4s  ease,
+    border-color  0.3s  ease,
+    background    0.3s  ease,
+    box-shadow    0.4s  ease,
+    filter        0.4s  ease;
 }
 
-.work-tab:hover {
-  background: rgba(255, 255, 255, 0.03);
+.work-tab:not(.active) {
+  transform: rotateY(38deg) translateZ(-16px);
+  opacity: 0.45;
+  background: rgba(255, 255, 255, 0.025);
+  border-color: rgba(255, 255, 255, 0.05);
+  filter: saturate(0.4) brightness(0.75);
 }
 
-.work-tab:not(.active):hover p {
-  color: #e5e5e5;
+.work-tab:not(.active):hover {
+  transform: rotateY(20deg) translateZ(-6px);
+  opacity: 0.72;
+  filter: saturate(0.7) brightness(0.9);
 }
 
 .work-tab.active {
-  background: rgba(232, 164, 68, 0.06);
+  transform: rotateY(0deg) translateZ(0px);
+  background: rgba(232, 164, 68, 0.05);
   border-color: rgba(232, 164, 68, 0.18);
+  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
-.role-panel {
-  display: none;
+.work-tab.active p.font-headline       { color: white; }
+.work-tab:not(.active) p.font-headline { color: rgb(115 115 115); }
+
+/* ── Role panels ─────────────────────────────────────────── */
+.role-panel        { display: none; }
+.role-panel.active { display: block; }
+
+@keyframes panelEnter {
+  from { opacity: 0; transform: translateY(-14px) scale(0.998); }
+  to   { opacity: 1; transform: translateY(0)      scale(1);    }
 }
 
-.role-panel.active {
-  display: block;
+@keyframes panelExit {
+  from { opacity: 1; transform: translateY(0)   scale(1);     }
+  to   { opacity: 0; transform: translateY(8px) scale(0.997); }
 }
 
-/* Only animates when JS adds this class on tab click — not on page load */
+@keyframes itemReveal {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.role-panel--exiting {
+  animation: panelExit 0.18s ease-in both;
+  pointer-events: none;
+}
+
 .role-panel--entering {
-  animation: fadeInUp 0.25s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: panelEnter 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.role-panel--entering [data-panel-item] {
+  animation: itemReveal 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+.role-panel--entering [data-panel-item="0"] { animation-delay: 0.05s; }
+.role-panel--entering [data-panel-item="1"] { animation-delay: 0.12s; }
+.role-panel--entering [data-panel-item="2"] { animation-delay: 0.19s; }
+.role-panel--entering [data-panel-item="3"] { animation-delay: 0.25s; }
+.role-panel--entering [data-panel-item="4"] { animation-delay: 0.31s; }
 
 /* ── Section ambient depth gradients ─────────────────────── */
 #work,

@@ -110,6 +110,35 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       observer.observe(el);
     });
   </script>
+  <script>
+    // Card tilt + spotlight
+    if (!window.matchMedia('(pointer: coarse)').matches) {
+      document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
+        const MAX = 8;
+
+        el.addEventListener('mouseenter', () => {
+          el.style.transition = 'transform 0s';
+        });
+
+        el.addEventListener('mousemove', (e) => {
+          const r = el.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width;
+          const y = (e.clientY - r.top)  / r.height;
+          const rx = (x - 0.5) * MAX * 2;
+          const ry = (y - 0.5) * MAX * 2;
+          el.style.transform = `perspective(900px) rotateY(${rx}deg) rotateX(${-ry}deg)`;
+          el.style.backgroundImage = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.05) 0%, transparent 60%)`;
+        });
+
+        el.addEventListener('mouseleave', () => {
+          el.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+          el.style.transform = '';
+          el.style.backgroundImage = '';
+        });
+      });
+    }
+  </script>
+
   <script is:inline>
     (function () {
       var el = document.getElementById('cursor-glass');

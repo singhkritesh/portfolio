@@ -43,7 +43,7 @@ const achievements: {
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {achievements.map((a, i) => (
         <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim flex flex-col gap-4"
-             data-reveal data-reveal-delay={i * 70}>
+             data-tilt data-reveal data-reveal-delay={i * 70}>
           <div class="flex items-center gap-3">
             <Image src={a.logo} alt={a.alt} width={144} height={144} loading="eager"
                    class={`w-9 h-9 object-contain flex-shrink-0 ${a.rounded ? 'rounded-lg' : ''}`} />

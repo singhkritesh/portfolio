@@ -108,6 +108,7 @@ const allProjects = [...independent, ...academic];
             class={`${p.span} bg-surface-mid rounded-xl border border-outline-dim flex flex-col text-left bento-card cursor-pointer group`}
             data-proj-open={i}
             aria-haspopup="dialog"
+            data-tilt
             data-reveal data-reveal-delay={i * 80}
           >
             <div class="p-8 flex flex-col flex-1 w-full">
@@ -146,6 +147,7 @@ const allProjects = [...independent, ...academic];
             class={`${p.span} bg-surface-mid rounded-xl border border-outline-dim flex flex-col text-left bento-card cursor-pointer group`}
             data-proj-open={independent.length + i}
             aria-haspopup="dialog"
+            data-tilt
             data-reveal data-reveal-delay={i * 80}
           >
             <div class="p-8 flex flex-col flex-1 w-full">

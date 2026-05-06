@@ -19,12 +19,11 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
 
       <!-- Left: company deck tabs -->
       <div class="lg:col-span-3">
-        <div class="lg:sticky lg:top-28 space-y-3" role="tablist" aria-label="Work experience">
+        <div class="lg:sticky lg:top-28 space-y-3 work-tablist" role="tablist" aria-label="Work experience">
 
           <!-- Care Health -->
           <button class="work-tab active w-full text-left" data-tab="care-health"
-                  role="tab" aria-selected="true" aria-controls="panel-care-health"
-                  data-stagger data-stagger-delay="0">
+                  role="tab" aria-selected="true" aria-controls="panel-care-health">
             <div class="flex items-center gap-5">
               <div class="w-14 h-14 flex items-center justify-center flex-shrink-0 overflow-hidden">
                 <Image src={careHealthImg} alt="Care Health" width={224} height={224} class="w-full h-full object-contain" />
@@ -38,8 +37,7 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
 
           <!-- Parsa National Park -->
           <button class="work-tab w-full text-left" data-tab="parsa"
-                  role="tab" aria-selected="false" aria-controls="panel-parsa"
-                  data-stagger data-stagger-delay="100">
+                  role="tab" aria-selected="false" aria-controls="panel-parsa">
             <div class="flex items-center gap-5">
               <div class="w-14 h-14 flex items-center justify-center flex-shrink-0 overflow-hidden">
                 <Image src={parsaImg} alt="Parsa" width={224} height={224} class="w-full h-full object-contain" />
@@ -61,14 +59,14 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
         <div class="role-panel active" data-role="care-health" id="panel-care-health" role="tabpanel">
 
           <!-- Role 1: PM AI Strategy (most recent) -->
-          <div class="mb-5" data-stagger data-stagger-delay="160">
+          <div class="mb-5" data-panel-item="0" data-stagger data-stagger-delay="160">
             <div class="flex flex-wrap justify-between items-baseline gap-x-4 gap-y-0.5 mb-1">
               <h3 class="font-headline text-xl md:text-2xl font-bold">Product Manager — AI Strategy</h3>
               <span class="text-neutral-300 font-body text-xs tracking-wide whitespace-nowrap">Apr 2023 – Jul 2025</span>
             </div>
             <p class="text-neutral-500 text-sm font-body">Care Health Insurance Ltd · India</p>
           </div>
-          <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim mb-8" data-stagger data-stagger-delay="260">
+          <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim mb-8" data-panel-item="1" data-stagger data-stagger-delay="260">
             <ul class="space-y-4">
               <li class="flex gap-3 border-l-2 border-primary/40 pl-3">
                 <span class="text-sm text-neutral-300">Architected and executed the strategic roadmap for AI portfolio of <strong class="text-primary">6 products</strong>, managing <strong class="text-primary">3 PMs</strong> and partnering across <strong class="text-primary">13 teams</strong> to align C-suite on long-term OKRs across fraud, document intelligence, medical data, KYC and CRM</span>
@@ -86,21 +84,21 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
           </div>
 
           <!-- Divider with progression indicator -->
-          <div class="flex items-center gap-3 mb-8" data-stagger data-stagger-delay="400">
+          <div class="flex items-center gap-3 mb-8" data-panel-item="2" data-stagger data-stagger-delay="400">
             <div class="h-px flex-1 bg-outline-dim"></div>
             <span class="text-[10px] font-headline uppercase tracking-widest text-neutral-400 px-2">Promoted</span>
             <div class="h-px flex-1 bg-outline-dim"></div>
           </div>
 
           <!-- Role 2: APM Claims -->
-          <div class="mb-5" data-stagger data-stagger-delay="500">
+          <div class="mb-5" data-panel-item="3" data-stagger data-stagger-delay="500">
             <div class="flex flex-wrap justify-between items-baseline gap-x-4 gap-y-0.5 mb-1">
               <h3 class="font-headline text-xl md:text-2xl font-bold">Associate Product Manager — Claims</h3>
               <span class="text-neutral-300 font-body text-xs tracking-wide whitespace-nowrap">Jun 2021 – Mar 2023</span>
             </div>
             <p class="text-neutral-500 text-sm font-body">Care Health Insurance Ltd · India</p>
           </div>
-          <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim" data-stagger data-stagger-delay="600">
+          <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim" data-panel-item="4" data-stagger data-stagger-delay="600">
             <ul class="space-y-4">
               <li class="flex gap-3 border-l-2 border-primary/40 pl-3">
                 <span class="text-sm text-neutral-300">Conducted <strong class="text-primary">40 customer interviews</strong>, analyzed <strong class="text-primary">200+ support tickets</strong>, and performed competitive analysis to uncover core user pain points; partnered with design and marketing to redesign the mobile journey, increasing completion and engagement by <strong class="text-primary">70%</strong></span>
@@ -121,12 +119,12 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
 
         <!-- Parsa panel -->
         <div class="role-panel" data-role="parsa" id="panel-parsa" role="tabpanel" style="display:none">
-          <div class="flex flex-wrap justify-between items-baseline gap-x-4 gap-y-0.5 mb-1">
+          <div class="flex flex-wrap justify-between items-baseline gap-x-4 gap-y-0.5 mb-1" data-panel-item="0">
             <h3 class="font-headline text-xl md:text-2xl font-bold">Volunteer — Conservation</h3>
             <span class="text-neutral-300 font-body text-xs tracking-wide whitespace-nowrap">Nov–Dec '23 · Sep–Oct '24</span>
           </div>
-          <p class="text-neutral-500 text-sm font-body mb-5">Parsa National Park · Nepal</p>
-          <div class="flex items-center gap-3 mb-5">
+          <p class="text-neutral-500 text-sm font-body mb-5" data-panel-item="1">Parsa National Park · Nepal</p>
+          <div class="flex items-center gap-3 mb-5" data-panel-item="2">
             <div class="w-9 h-9 flex items-center justify-center flex-shrink-0 overflow-hidden">
               <Image src={parsaImg} alt="Parsa" width={144} height={144} class="w-full h-full object-contain" />
             </div>
@@ -134,7 +132,7 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
               <Image src={dnpwcImg} alt="DNPWC" width={144} height={144} class="w-full h-full object-contain" />
             </div>
           </div>
-          <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim">
+          <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim" data-panel-item="3">
             <p class="text-neutral-400 text-sm leading-relaxed">
               Volunteered alongside conservationists to raise awareness about nature conservation
               to local communities in buffer zone areas surrounding the park, contributing to
@@ -221,37 +219,56 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
 
   // ── Tab navigation ────────────────────────────────────────────
   const tabs   = Array.from(document.querySelectorAll<HTMLButtonElement>('.work-tab'));
-  const panels = document.querySelectorAll<HTMLDivElement>('.role-panel');
+  const panels = Array.from(document.querySelectorAll<HTMLDivElement>('.role-panel'));
+
+  let isAnimating = false;
+
+  function setTabStates(activeTab: HTMLButtonElement) {
+    tabs.forEach((t) => {
+      t.classList.toggle('active', t === activeTab);
+      t.setAttribute('aria-selected', String(t === activeTab));
+    });
+  }
+
+  function enterPanel(panel: HTMLDivElement) {
+    // Strip stagger .in so itemReveal animation takes over cleanly
+    panel.querySelectorAll('[data-panel-item]').forEach(el => el.classList.remove('in'));
+    panel.style.display = '';
+    panel.classList.add('active', 'role-panel--entering');
+    // Unlock after panel itself has entered (380ms)
+    setTimeout(() => { isAnimating = false; }, 380);
+    // Remove entering class after all staggered items finish (last item: 310+450=760ms)
+    setTimeout(() => { panel.classList.remove('role-panel--entering'); }, 820);
+    const section = document.getElementById('work')!;
+    if (section.getBoundingClientRect().top < 80) {
+      window.scrollTo({ top: section.offsetTop, behavior: 'instant' });
+    }
+  }
 
   function activateTab(tab: HTMLButtonElement, animate = true) {
-    const target = tab.dataset.tab;
-    tabs.forEach((t) => {
-      t.classList.remove('active');
-      t.setAttribute('aria-selected', 'false');
-      t.querySelector('p.font-headline')?.classList.replace('text-white', 'text-neutral-400');
-    });
-    panels.forEach((p) => {
-      p.classList.remove('active', 'role-panel--entering');
-      (p as HTMLElement).style.display = 'none';
-    });
-    tab.classList.add('active');
-    tab.setAttribute('aria-selected', 'true');
-    tab.querySelector('p.font-headline')?.classList.replace('text-neutral-400', 'text-white');
-    const panel = document.querySelector<HTMLDivElement>(`.role-panel[data-role="${target}"]`);
-    if (panel) {
-      panel.style.display = '';
-      panel.classList.add('active');
-      if (animate) {
-        panel.classList.add('role-panel--entering');
-        panel.addEventListener('animationend', () => panel.classList.remove('role-panel--entering'), { once: true });
-      }
-      // If the section heading is above the viewport, snap back to section top.
-      // offsetTop is absolute and unaffected by reflow from the panel display change.
-      const section = document.getElementById('work')!;
-      if (section.getBoundingClientRect().top < 80) {
-        window.scrollTo({ top: section.offsetTop, behavior: 'instant' });
-      }
+    if (isAnimating) return;
+    const target       = tab.dataset.tab;
+    const currentPanel = panels.find(p => p.classList.contains('active'));
+    const nextPanel    = panels.find(p => p.dataset.role === target);
+
+    if (!nextPanel || currentPanel === nextPanel) return;
+
+    setTabStates(tab);
+
+    if (!animate || !currentPanel) {
+      panels.forEach(p => { p.classList.remove('active'); p.style.display = 'none'; });
+      enterPanel(nextPanel);
+      return;
     }
+
+    isAnimating = true;
+    currentPanel.classList.add('role-panel--exiting');
+
+    setTimeout(() => {
+      currentPanel.classList.remove('active', 'role-panel--exiting');
+      currentPanel.style.display = 'none';
+      enterPanel(nextPanel);
+    }, 180); // matches panelExit duration
   }
 
   tabs.forEach((tab, i) => {
