@@ -133,11 +133,11 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
             </div>
           </div>
           <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim" data-panel-item="3">
-            <p class="text-neutral-400 text-sm leading-relaxed">
-              Volunteered alongside conservationists to raise awareness about nature conservation
-              to local communities in buffer zone areas surrounding the park, contributing to
-              strategies that reduce human-animal conflict.
-            </p>
+            <ul class="space-y-4">
+              <li class="flex gap-3 border-l-2 border-primary/40 pl-3">
+                <span class="text-sm text-neutral-300">Volunteered alongside conservationists to raise awareness about nature conservation to local communities in buffer zone areas surrounding the park, contributing to strategies that reduce human-animal conflict.</span>
+              </li>
+            </ul>
           </div>
         </div>
 
@@ -238,7 +238,14 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
     // Unlock after panel itself has entered (380ms)
     setTimeout(() => { isAnimating = false; }, 380);
     // Remove entering class after all staggered items finish (last item: 310+450=760ms)
-    setTimeout(() => { panel.classList.remove('role-panel--entering'); }, 820);
+    // Then lock items visible so they don't fall back to [data-stagger]{opacity:0}
+    setTimeout(() => {
+      panel.classList.remove('role-panel--entering');
+      panel.querySelectorAll<HTMLElement>('[data-panel-item]').forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+    }, 820);
     const section = document.getElementById('work')!;
     if (section.getBoundingClientRect().top < 80) {
       window.scrollTo({ top: section.offsetTop, behavior: 'instant' });

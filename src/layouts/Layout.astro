@@ -20,6 +20,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
 
+  <!-- Cursor: none applied inline so it takes effect before any stylesheet loads,
+       eliminating the flash of native cursor on page reload. -->
+  <style>html, body, * { cursor: none !important; }</style>
+
   <!-- Font preloads — must come before any stylesheet so fonts are in-flight
        before the browser parses CSS. With swap, they'll be ready at first paint. -->
   <link rel="preload" href={`${base}/fonts/space-grotesk.woff2`} as="font" type="font/woff2" crossorigin />
@@ -144,9 +148,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       var el = document.getElementById('cursor-glass');
       if (!el || window.matchMedia('(pointer: coarse)').matches) return;
       document.addEventListener('mousemove', function (e) {
-        el.style.left = e.clientX + 'px';
-        el.style.top  = e.clientY + 'px';
+        el.style.transform = 'translate(calc(' + e.clientX + 'px - 50%), calc(' + e.clientY + 'px - 50%))';
       }, { passive: true });
+      document.addEventListener('mouseover', function (e) {
+        var t = e.target && e.target.closest && e.target.closest('a, button, [role="button"], [data-tilt], input, select, textarea, label');
+        el.classList.toggle('cursor-hover', !!t);
+      });
       document.addEventListener('mouseleave', function () { el.style.opacity = '0'; });
       document.addEventListener('mouseenter', function () { el.style.opacity = '1'; });
     })();

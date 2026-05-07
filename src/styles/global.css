@@ -111,11 +111,13 @@ section[id] {
   pointer: coarse check in JS disables on touch devices.
 */
 @media (pointer: fine) {
-  * { cursor: none !important; }
+  html, body, * { cursor: none !important; }
 }
 
 #cursor-glass {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -123,11 +125,12 @@ section[id] {
   mix-blend-mode: difference;
   pointer-events: none;
   z-index: 99999;
-  transform: translate(-50%, -50%);
-  top: -60px;
-  left: -60px;
-  will-change: top, left;
-  transition: opacity 0.2s ease;
+  transform: translate(-100vw, -100vh);
+  transition: opacity 0.2s ease, width 0.15s ease, height 0.15s ease;
+}
+#cursor-glass.cursor-hover {
+  width: 36px;
+  height: 36px;
 }
 
 /* ── Dot-grid hero texture ────────────────────────────────── */

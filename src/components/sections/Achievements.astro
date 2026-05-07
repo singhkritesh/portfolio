@@ -5,12 +5,23 @@ import cultfitImg  from '../../assets/images/cultfit.png';
 import mnnitImg    from '../../assets/images/mnnitlogo.png';
 
 const achievements: {
-  logo: ImageMetadata;
+  logo?: ImageMetadata;
+  logoSvg?: string;
   alt: string;
   rounded?: boolean;
   title: string;
   body: string;
 }[] = [
+  {
+    logoSvg: `<svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-9 h-9">
+      <text x="0" y="28" font-family="Arial Black, sans-serif" font-size="22" font-weight="900" fill="#FF9900">aws</text>
+      <path d="M14 36 Q40 44 66 36" stroke="#FF9900" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M62 32 L66 36 L62 38" stroke="#FF9900" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`,
+    alt: 'AWS',
+    title: 'Best Innovation Award — AWS AI Impact 2026',
+    body: 'The claims automation platform I built at Care Health Insurance was recognised with the Best Innovation Award at AWS AI Impact 2026 — awarded after my departure, a testament to the platform\'s impact at scale.',
+  },
   {
     logo: cultfitImg,
     alt: 'Cult.fit',
@@ -45,8 +56,11 @@ const achievements: {
         <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim flex flex-col gap-4"
              data-tilt data-reveal data-reveal-delay={i * 70}>
           <div class="flex items-center gap-3">
-            <Image src={a.logo} alt={a.alt} width={144} height={144} loading="eager"
-                   class={`w-9 h-9 object-contain flex-shrink-0 ${a.rounded ? 'rounded-lg' : ''}`} />
+            {a.logo
+              ? <Image src={a.logo} alt={a.alt} width={144} height={144} loading="eager"
+                       class={`w-9 h-9 object-contain flex-shrink-0 ${a.rounded ? 'rounded-lg' : ''}`} />
+              : <Fragment set:html={a.logoSvg} />
+            }
             <div class="flex-1 h-px bg-primary/30"></div>
           </div>
           <h3 class="font-headline text-base font-bold">{a.title}</h3>

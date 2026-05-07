@@ -15,6 +15,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <title>{title}</title>
 
+  <style>html, body, * { cursor: none !important; }</style>
+
   <link rel="preload" href={`${base}/fonts/space-grotesk.woff2`} as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={`${base}/fonts/inter-300.woff2`}     as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={`${base}/fonts/inter-400.woff2`}     as="font" type="font/woff2" crossorigin />
@@ -26,6 +28,23 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <link rel="stylesheet" href={`${base}/photography/assets/css/main.css`} />
 </head>
 <body class="is-preload">
+  <div id="cursor-glass" aria-hidden="true"></div>
   <slot />
+
+  <script is:inline>
+    (function () {
+      var el = document.getElementById('cursor-glass');
+      if (!el || window.matchMedia('(pointer: coarse)').matches) return;
+      document.addEventListener('mousemove', function (e) {
+        el.style.transform = 'translate(calc(' + e.clientX + 'px - 50%), calc(' + e.clientY + 'px - 50%))';
+      }, { passive: true });
+      document.addEventListener('mouseover', function (e) {
+        var t = e.target && e.target.closest && e.target.closest('a, button, [role="button"], input, select, textarea, label');
+        el.classList.toggle('cursor-hover', !!t);
+      });
+      document.addEventListener('mouseleave', function () { el.style.opacity = '0'; });
+      document.addEventListener('mouseenter', function () { el.style.opacity = '1'; });
+    })();
+  </script>
 </body>
 </html>

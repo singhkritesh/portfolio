@@ -16,8 +16,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="hidden md:flex items-center gap-8">
       <a href={`${base}/#home`}         class="nav-link active" data-section="home">Home</a>
       <a href={`${base}/#work`}         class="nav-link" data-section="work">Work</a>
-      <a href={`${base}/#education`}    class="nav-link" data-section="education">Education</a>
       <a href={`${base}/#projects`}     class="nav-link" data-section="projects">Projects</a>
+      <a href={`${base}/#education`}    class="nav-link" data-section="education">Education</a>
       <a href={`${base}/#achievements`} class="nav-link" data-section="achievements">Achievements</a>
       {/* <a href={`${base}/#blog`} class="nav-link" data-section="blog">Blog</a> */}
       <a href={`${base}/#contact`}      class="nav-link" data-section="contact">Contact</a>
@@ -63,8 +63,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <div class="px-6 pb-6 pt-2 flex flex-col gap-1 border-t border-white/5">
         <a href={`${base}/#home`}         class="mobile-nav-link" data-section="home">Home</a>
         <a href={`${base}/#work`}         class="mobile-nav-link" data-section="work">Work</a>
-        <a href={`${base}/#education`}    class="mobile-nav-link" data-section="education">Education</a>
         <a href={`${base}/#projects`}     class="mobile-nav-link" data-section="projects">Projects</a>
+        <a href={`${base}/#education`}    class="mobile-nav-link" data-section="education">Education</a>
         <a href={`${base}/#achievements`} class="mobile-nav-link" data-section="achievements">Achievements</a>
         {/* <a href={`${base}/#blog`} class="mobile-nav-link" data-section="blog">Blog</a> */}
         <a href={`${base}/#contact`}      class="mobile-nav-link" data-section="contact">Contact</a>
@@ -112,6 +112,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   // ── Nav highlight sync on load ──────────────────────────────
   function initActive() {
+    if (sections.length === 0) {
+      // Non-main page (e.g. photography) — clear all section-based actives
+      navLinks.forEach(l => l.classList.remove('active'));
+      const path = window.location.pathname;
+      if (path.includes('/photography')) {
+        document.querySelector<HTMLAnchorElement>('.nav-link[href*="photography"]')
+          ?.classList.add('active');
+      }
+      return;
+    }
     setNavActive(currentSectionId());
   }
   if (document.readyState === 'complete') initActive();
