@@ -115,19 +115,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     });
   </script>
   <script>
-    // Card tilt + spotlight
+    // Card tilt + spotlight — rect cached on enter so mousemove never forces layout
     if (!window.matchMedia('(pointer: coarse)').matches) {
       document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
         const MAX = 8;
+        let rect: DOMRect;
 
         el.addEventListener('mouseenter', () => {
+          rect = el.getBoundingClientRect();
           el.style.transition = 'transform 0s';
         });
 
         el.addEventListener('mousemove', (e) => {
-          const r = el.getBoundingClientRect();
-          const x = (e.clientX - r.left) / r.width;
-          const y = (e.clientY - r.top)  / r.height;
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top)  / rect.height;
           const rx = (x - 0.5) * MAX * 2;
           const ry = (y - 0.5) * MAX * 2;
           el.style.transform = `perspective(900px) rotateY(${rx}deg) rotateX(${-ry}deg)`;
@@ -147,16 +148,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     (function () {
       var el = document.getElementById('cursor-glass');
       if (!el || window.matchMedia('(pointer: coarse)').matches) return;
+
+      // Remove the init overlay on first mousemove — it exists only to own the
+      // cursor on page load so the browser fires cursor:none before JS runs.
+      var cx = -9999, cy = -9999;
+      var scale = 1, targetScale = 1;
+
+      // Single mousemove does both position + hover detection — no separate mouseover
       document.addEventListener('mousemove', function (e) {
-        el.style.transform = 'translate(calc(' + e.clientX + 'px - 50%), calc(' + e.clientY + 'px - 50%))';
-      }, { passive: true });
-      document.addEventListener('mouseover', function (e) {
+        cx = e.clientX;
+        cy = e.clientY;
         var t = e.target && e.target.closest && e.target.closest('a, button, [role="button"], [data-tilt], input, select, textarea, label');
-        el.classList.toggle('cursor-hover', !!t);
-      });
+        targetScale = t ? 1.5 : 1;
+      }, { passive: true });
+
       document.addEventListener('mouseleave', function () { el.style.opacity = '0'; });
       document.addEventListener('mouseenter', function () { el.style.opacity = '1'; });
-    })();
+
+      // RAF loop: position is instant, scale lerps smoothly — no layout-triggering transitions
+      (function loop() {
+        scale += (targetScale - scale) * 0.18;
+        el.style.transform = 'translate(calc(' + cx + 'px - 50%), calc(' + cy + 'px - 50%)) scale(' + scale.toFixed(3) + ')';
+        requestAnimationFrame(loop);
+      }());
+    }());
   </script>
 
   <!-- Inline restore — runs synchronously after all sections are in the DOM,

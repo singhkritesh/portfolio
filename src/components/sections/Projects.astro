@@ -14,6 +14,7 @@ const independent = [
       'Focused on enhancing user engagement through tailored content recommendations and iterative testing.',
     ],
     date: 'April 2026',
+    repo: 'https://github.com/singhkritesh/linkedin-content-gen',
   },
   {
     span: 'md:col-span-5',
@@ -28,6 +29,7 @@ const independent = [
       'Designed end-to-end user workflows enabling discovery of leads, auto drafting and sending emails, improving conversion potential.',
     ],
     date: 'March 2026',
+    repo: 'https://github.com/singhkritesh/reachout',
   },
   {
     span: 'md:col-span-12',
@@ -45,6 +47,7 @@ const independent = [
       'Engineered an interface featuring audio interaction and voice/text queries, enabling real-time course access to enhance the student education experience, powered by a local LLM (Qwen3.5 via Ollama), pgvector for retrieval, and containerized microservices.',
     ],
     date: 'February 2026',
+    repo: 'https://github.com/singhkritesh/blank-lms',
   },
 ];
 
@@ -64,6 +67,7 @@ const academic = [
       'Surfaced key cross-domain generalisation gap (F1 drop of -0.378), showing task-specific training outweighs model scale.',
     ],
     date: 'Dartmouth · 2025',
+    repo: 'https://github.com/singhkritesh/ml-assignment',
   },
   {
     span: 'md:col-span-6',
@@ -199,7 +203,16 @@ const allProjects = [...independent, ...academic];
       </button>
     </div>
     <ul id="proj-modal-bullets" class="space-y-4"></ul>
-    <div id="proj-modal-date" class="mt-8 pt-6 border-t border-outline-dim text-neutral-500 text-xs font-headline uppercase tracking-wider"></div>
+    <div class="mt-8 pt-6 border-t border-outline-dim flex items-center justify-between gap-4">
+      <div id="proj-modal-date" class="text-neutral-500 text-xs font-headline uppercase tracking-wider"></div>
+      <a id="proj-modal-repo" href="#" target="_blank" rel="noopener noreferrer"
+         class="hidden items-center gap-1.5 text-xs font-headline uppercase tracking-wider text-neutral-400 hover:text-white transition-colors">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        View Repo
+      </a>
+    </div>
   </div>
 </div>
 
@@ -208,54 +221,54 @@ const allProjects = [...independent, ...academic];
     {
       tags: [{ label: 'Gen AI', accent: true }, { label: 'Content Strategy', accent: false }],
       title: 'LinkedIn Content Generation App',
-      summary: 'Generative AI tool to create personalised LinkedIn content, optimising for audience engagement and content relevance. Designed prompt frameworks, content strategies, and iterative testing workflows.',
       bullets: [
         'Developed a generative AI tool to create personalized LinkedIn content, optimizing for audience engagement and content relevance.',
         'Designed prompt frameworks and content strategies to improve post quality, consistency, and user interaction.',
         'Focused on enhancing user engagement through tailored content recommendations and iterative testing.',
       ],
       date: 'April 2026',
+      repo: 'https://github.com/singhkritesh/linkedin-content-gen',
     },
     {
       tags: [{ label: 'AI Automation', accent: true }, { label: 'Lead Gen', accent: false }],
       title: 'AI Lead Generation Platform',
-      summary: 'AI-driven platform using Exa APIs to identify high-intent prospects, auto-draft personalised emails, and score leads through intelligent workflow automation.',
       bullets: [
         'Built an AI-driven lead generation application to identify and prioritize high-intent prospects using automated data from Exa APIs.',
         'Designed end-to-end user workflows enabling discovery of leads, auto drafting and sending emails, improving conversion potential.',
       ],
       date: 'March 2026',
+      repo: 'https://github.com/singhkritesh/reachout',
     },
     {
       tags: [{ label: 'Local LLM', accent: true }, { label: 'EdTech', accent: false }, { label: 'Full PRD', accent: false }, { label: 'Microservices', accent: false }],
       title: 'AI-First Learning Management System',
-      summary: 'Authored a full PRD covering user personas, system architecture, guardrails, and non-functional requirements, then prototyped the system. Features audio interaction and voice/text queries for real-time course access.',
       bullets: [
         'Authored PRD for user personas, system architecture, guardrails, and non-functional requirements, and prototyped using Antigravity.',
         'Engineered an interface featuring audio interaction and voice/text queries, enabling real-time course access to enhance the student education experience, powered by a local LLM (Qwen3.5 via Ollama), pgvector for retrieval, and containerized microservices.',
       ],
       date: 'February 2026',
+      repo: 'https://github.com/singhkritesh/blank-lms',
     },
     {
       tags: [{ label: 'AI Research', accent: true }, { label: 'Fine-tuning', accent: false }, { label: 'Python', accent: false }],
       title: 'LLM Hallucination Detection — FastHalluCheck',
-      summary: 'Research project evaluating hallucination detection models on QA benchmarks using threshold optimisation and supervised fine-tuning. Explored ensemble approaches across in-domain and cross-domain datasets.',
       bullets: [
         'Evaluated Vectara HHEM v2 and DeBERTa-v3-small on HaluEval and PHANTOM Financial benchmarks using PyTorch and Hugging Face.',
         'Achieved 98.2% accuracy (F1: 0.9818) with ensemble method on in-domain dataset.',
         'Surfaced key cross-domain generalisation gap (F1 drop of -0.378), showing task-specific training outweighs model scale.',
       ],
       date: 'Dartmouth · 2025',
+      repo: 'https://github.com/singhkritesh/ml-assignment',
     },
     {
       tags: [{ label: 'Market Analysis', accent: true }, { label: 'GTM Strategy', accent: false }, { label: 'Consulting', accent: false }],
       title: 'Graduate Student Consultant — Cisco Spaces',
-      summary: 'Consulted on product strategy in the $20B Smart Buildings industry, identifying high-potential launch opportunities across 5 venue types and informing go-to-market and partner prioritisation for Cisco Spaces.',
       bullets: [
         'Conducted market analysis across 5 venue types in the Smart Buildings industry to identify high-potential product launch opportunities.',
         'Aligned customer needs with market trends to inform go-to-market strategy and partner prioritisation for Cisco Spaces.',
       ],
       date: 'Sep – Nov 2025',
+      repo: '',
     },
   ];
 
@@ -266,6 +279,7 @@ const allProjects = [...independent, ...academic];
   const tagsEl    = document.getElementById('proj-modal-tags')!;
   const bulletsEl = document.getElementById('proj-modal-bullets')!;
   const dateEl    = document.getElementById('proj-modal-date')!;
+  const repoLink  = document.getElementById('proj-modal-repo') as HTMLAnchorElement;
 
   function openModal(index: number) {
     const p = projectData[index];
@@ -278,6 +292,15 @@ const allProjects = [...independent, ...academic];
 
     titleEl.textContent = p.title;
     dateEl.textContent  = p.date;
+
+    if (p.repo) {
+      repoLink.href = p.repo;
+      repoLink.classList.remove('hidden');
+      repoLink.classList.add('flex');
+    } else {
+      repoLink.classList.add('hidden');
+      repoLink.classList.remove('flex');
+    }
 
     bulletsEl.innerHTML = p.bullets.map((b, i) =>
       `<li class="text-sm text-neutral-300 leading-relaxed border-l-2 border-primary/40 pl-3"

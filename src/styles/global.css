@@ -125,12 +125,8 @@ section[id] {
   mix-blend-mode: difference;
   pointer-events: none;
   z-index: 99999;
-  transform: translate(-100vw, -100vh);
-  transition: opacity 0.2s ease, width 0.15s ease, height 0.15s ease;
-}
-#cursor-glass.cursor-hover {
-  width: 36px;
-  height: 36px;
+  transform: translate(-9999px, -9999px);
+  transition: opacity 0.2s ease;
 }
 
 /* ── Dot-grid hero texture ────────────────────────────────── */

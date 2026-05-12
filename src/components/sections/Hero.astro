@@ -46,8 +46,8 @@ import Icon from '../Icon.astro';
         <div class="font-body text-[10px] uppercase tracking-widest text-neutral-400 mt-1">Annual Savings Delivered</div>
       </div>
       <div>
-        <div class="font-headline text-4xl font-bold stat-number">3</div>
-        <div class="font-body text-[10px] uppercase tracking-widest text-neutral-400 mt-1">PMs Managed</div>
+        <div class="font-headline text-4xl font-bold stat-number">6</div>
+        <div class="font-body text-[10px] uppercase tracking-widest text-neutral-400 mt-1">AI Product Portfolio</div>
       </div>
       <div>
         <div class="font-headline text-4xl font-bold stat-number">Dartmouth</div>
@@ -88,6 +88,8 @@ import Icon from '../Icon.astro';
   const MAX_DISP = 38;
   const DOT_R    = 0.8;
 
+  let rafId = 0;
+
   function draw() {
     const w = canvas.width  / dpr;
     const h = canvas.height / dpr;
@@ -112,8 +114,18 @@ import Icon from '../Icon.astro';
       }
     }
 
-    requestAnimationFrame(draw);
+    rafId = requestAnimationFrame(draw);
   }
 
-  draw();
+  // Pause the loop when hero is off-screen to save CPU
+  const heroObs = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) {
+      if (!rafId) draw();
+    } else {
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+  }, { threshold: 0 });
+
+  heroObs.observe(canvas);
 </script>
