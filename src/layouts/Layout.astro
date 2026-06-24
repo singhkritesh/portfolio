@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 interface Props {
   title?: string;
   description?: string;
@@ -77,12 +79,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   </script>
 
 </head>
-<body class="bg-background text-neutral-200 antialiased">
+<body class="bg-background text-[#1a1a1a] antialiased">
   <!-- Grain overlay — fixed, pointer-events off, above everything except modals -->
   <div class="grain-overlay" aria-hidden="true"></div>
   <!-- X-ray cursor — mix-blend-mode:difference inverts colors beneath it -->
   <div id="cursor-glass" aria-hidden="true"></div>
-<a href="#home"
+<a href="#main-content"
      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100]
             focus:px-4 focus:py-2 focus:bg-primary focus:text-[#131313] focus:rounded-lg
             focus:font-headline focus:text-xs focus:font-bold focus:uppercase focus:tracking-wider">
@@ -132,7 +134,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           const rx = (x - 0.5) * MAX * 2;
           const ry = (y - 0.5) * MAX * 2;
           el.style.transform = `perspective(900px) rotateY(${rx}deg) rotateX(${-ry}deg)`;
-          el.style.backgroundImage = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.05) 0%, transparent 60%)`;
+          el.style.backgroundImage = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(232,164,68,0.06) 0%, transparent 60%)`;
         });
 
         el.addEventListener('mouseleave', () => {
@@ -180,6 +182,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     (function () {
       var id = sessionStorage.getItem('_sk');
       if (!id || id === 'home') {
+        document.documentElement.style.visibility = '';
+      } else if (id === 'photography') {
+        // Restore photography gallery view: show the section, hide others.
+        // Only applies when #photography exists (index page), not the standalone page.
+        var photoEl = document.getElementById('photography');
+        if (photoEl) document.body.classList.add('show-photography');
+        window.scrollTo(0, 0);
         document.documentElement.style.visibility = '';
       } else {
         var el = document.getElementById(id);

@@ -1,0 +1,133 @@
+---
+interface Props {
+  items: Array<{ id: string; img: string; url?: string; height: number; title?: string }>;
+  stagger?: number;
+  blurToFocus?: boolean;
+  scaleOnHover?: boolean;
+  hoverScale?: number;
+}
+
+const {
+  items,
+  stagger = 0.04,
+  blurToFocus = true,
+  scaleOnHover = true,
+  hoverScale = 0.97,
+} = Astro.props;
+---
+
+<div class="masonry-list">
+  {items.map((item, i) => (
+    <div
+      class="masonry-item"
+      data-key={item.id}
+      data-url={item.url ?? ''}
+      data-title={item.title ?? ''}
+      data-index={String(i)}
+    >
+      <div
+        class="masonry-img"
+        style={`background-image:url('${item.img}');height:${item.height / 2}px`}
+      ></div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .masonry-list {
+    columns: 4 200px;
+    column-gap: 10px;
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 10px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.5s ease, transform 0.5s ease, scale 0.25s ease;
+  }
+
+  .masonry-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .masonry-img {
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    border-radius: 8px;
+    display: block;
+    box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.1), 0 1px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s ease, filter 0.5s ease;
+  }
+
+  .masonry-item:hover .masonry-img {
+    box-shadow: 0 8px 28px -6px rgba(0, 0, 0, 0.16), 0 2px 8px -2px rgba(0, 0, 0, 0.08);
+  }
+</style>
+
+<script define:vars={{ stagger, blurToFocus, scaleOnHover, hoverScale }}>
+  const items = Array.from(document.querySelectorAll('.masonry-item'));
+
+  // Reveal items with staggered delay
+  function revealAll() {
+    items.forEach((el, i) => {
+      setTimeout(() => {
+        el.classList.add('visible');
+        if (blurToFocus && el.querySelector) {
+          const img = el.querySelector('.masonry-img');
+          if (img) img.style.filter = 'blur(0px)';
+        }
+      }, i * stagger * 1000);
+    });
+  }
+
+  // Apply initial blur if needed
+  if (blurToFocus) {
+    items.forEach(el => {
+      const img = el.querySelector ? el.querySelector('.masonry-img') : null;
+      if (img) img.style.filter = 'blur(8px)';
+    });
+  }
+
+  // Hover scale via CSS custom property
+  if (scaleOnHover) {
+    items.forEach(el => {
+      el.addEventListener('mouseenter', () => { el.style.scale = String(hoverScale); });
+      el.addEventListener('mouseleave', () => { el.style.scale = '1'; });
+    });
+  }
+
+  const list = document.querySelector('.masonry-list');
+
+  // When masonry is inside a hidden section (display:none), IO never fires and the
+  // 200ms fallback would reveal items before the user opens the gallery.
+  // Instead, wait for the photography:show event dispatched by Nav when the section opens.
+  const parentSection = list ? list.closest('section') : null;
+  const isHidden = parentSection && getComputedStyle(parentSection).display === 'none';
+
+  if (isHidden) {
+    document.addEventListener('photography:show', () => {
+      // Small delay so the section is fully painted before animations start
+      setTimeout(revealAll, 60);
+    }, { once: true });
+  } else {
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        revealAll();
+        io.disconnect();
+      }
+    }, { threshold: 0.02 });
+
+    if (list) io.observe(list);
+
+    // Fallback: if already in viewport at load time IO may not fire
+    setTimeout(() => {
+      if (items.length > 0 && !items[0].classList.contains('visible')) {
+        revealAll();
+      }
+    }, 200);
+  }
+</script>

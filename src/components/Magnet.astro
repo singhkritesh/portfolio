@@ -1,0 +1,86 @@
+---
+interface Props {
+  padding?: number;
+  disabled?: boolean;
+  magnetStrength?: number;
+  maxDisplacement?: number;
+  activeTransition?: string;
+  inactiveTransition?: string;
+  class?: string;
+  innerClass?: string;
+}
+
+const {
+  padding = 100,
+  disabled = false,
+  magnetStrength = 2,
+  maxDisplacement = 999,
+  activeTransition = 'transform 0.3s ease-out',
+  inactiveTransition = 'transform 0.5s ease-in-out',
+  class: wrapperClass = '',
+  innerClass = '',
+} = Astro.props;
+---
+
+<div
+  class={`magnet-wrap ${wrapperClass}`}
+  style="position:relative;display:inline-block;"
+  data-magnet
+  data-padding={padding}
+  data-disabled={disabled ? 'true' : 'false'}
+  data-strength={magnetStrength}
+  data-max-disp={maxDisplacement}
+  data-active-t={activeTransition}
+  data-inactive-t={inactiveTransition}
+>
+  <div class={`magnet-inner ${innerClass}`} style="will-change:transform;">
+    <slot />
+  </div>
+</div>
+
+<script>
+  function clamp(v: number, max: number) {
+    return Math.max(-max, Math.min(max, v));
+  }
+
+  function initMagnets() {
+    const magnets = document.querySelectorAll<HTMLElement>('[data-magnet]');
+
+    magnets.forEach((wrap) => {
+      if (wrap.dataset.magnetInit) return;
+      wrap.dataset.magnetInit = '1';
+
+      const inner    = wrap.querySelector<HTMLElement>('.magnet-inner')!;
+      const padding  = Number(wrap.dataset.padding  ?? 100);
+      const strength = Number(wrap.dataset.strength ?? 2);
+      const maxDisp  = Number(wrap.dataset.maxDisp  ?? 999);
+      const activeT   = wrap.dataset.activeT   ?? 'transform 0.3s ease-out';
+      const inactiveT = wrap.dataset.inactiveT ?? 'transform 0.5s ease-in-out';
+
+      if (wrap.dataset.disabled === 'true') return;
+
+      function onMove(e: MouseEvent) {
+        const { left, top, width, height } = wrap.getBoundingClientRect();
+        const cx = left + width  / 2;
+        const cy = top  + height / 2;
+        const dx = Math.abs(cx - e.clientX);
+        const dy = Math.abs(cy - e.clientY);
+
+        if (dx < width / 2 + padding && dy < height / 2 + padding) {
+          const ox = clamp((e.clientX - cx) / strength, maxDisp);
+          const oy = clamp((e.clientY - cy) / strength, maxDisp);
+          inner.style.transition = activeT;
+          inner.style.transform  = `translate3d(${ox}px,${oy}px,0)`;
+        } else {
+          inner.style.transition = inactiveT;
+          inner.style.transform  = 'translate3d(0,0,0)';
+        }
+      }
+
+      window.addEventListener('mousemove', onMove, { passive: true });
+    });
+  }
+
+  initMagnets();
+  document.addEventListener('astro:page-load', initMagnets);
+</script>

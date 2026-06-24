@@ -1,0 +1,316 @@
+---
+import Masonry from '../Masonry.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const photos = [
+  { id: '1',  title: 'The Watcher',         img: `${base}/photography/photographs/thumbs/DSC3064.webp`,                     url: `${base}/photography/photographs/DSC3064.jpg`,                     height: 920 },
+  { id: '2',  title: 'The Witness',          img: `${base}/photography/photographs/thumbs/DSC3042.webp`,                     url: `${base}/photography/photographs/DSC3042.jpg`,                     height: 840 },
+  { id: '3',  title: 'Kingdom of the Wind',  img: `${base}/photography/photographs/thumbs/DSC3120.webp`,                     url: `${base}/photography/photographs/DSC3120.jpg`,                     height: 580 },
+  { id: '4',  title: 'Different.',           img: `${base}/photography/photographs/thumbs/DSC3127.webp`,                     url: `${base}/photography/photographs/DSC3127.jpg`,                     height: 980 },
+  { id: '5',  title: 'Elysium',              img: `${base}/photography/photographs/thumbs/DSC3143.webp`,                     url: `${base}/photography/photographs/DSC3143.jpg`,                     height: 620 },
+  { id: '6',  title: 'The Contemplation',    img: `${base}/photography/photographs/thumbs/DSC_0013.webp`,                    url: `${base}/photography/photographs/DSC_0013.jpg`,                    height: 960 },
+  { id: '7',  title: 'The Protector',        img: `${base}/photography/photographs/thumbs/AMN_1896-2.webp`,                  url: `${base}/photography/photographs/AMN_1896-2.jpg`,                  height: 820 },
+  { id: '8',  title: 'The Intent',           img: `${base}/photography/photographs/thumbs/AMN_1804-2.webp`,                  url: `${base}/photography/photographs/AMN_1804-2.jpg`,                  height: 900 },
+  { id: '9',  title: 'Kingdom of Snow',      img: `${base}/photography/photographs/thumbs/IMG_20191103_192250_252_4.webp`,   url: `${base}/photography/photographs/IMG_20191103_192250_252_4.jpg`,   height: 600 },
+  { id: '10', title: 'The Cloudy Horizon',   img: `${base}/photography/photographs/thumbs/LRM_EXPORT_20191106_161452.webp`,  url: `${base}/photography/photographs/LRM_EXPORT_20191106_161452.jpg`,  height: 560 },
+  { id: '11', title: 'The Spectators',       img: `${base}/photography/photographs/thumbs/LRM_EXPORT_20200206_120246.webp`,  url: `${base}/photography/photographs/LRM_EXPORT_20200206_120246.jpg`,  height: 620 },
+  { id: '12', title: 'Sunset',               img: `${base}/photography/photographs/thumbs/DSC3031.webp`,                     url: `${base}/photography/photographs/DSC3031.jpg`,                     height: 580 },
+  { id: '13', title: 'The Shades of Man',    img: `${base}/photography/photographs/thumbs/IMG_0071.webp`,                    url: `${base}/photography/photographs/IMG_0071.jpg`,                    height: 900 },
+  { id: '14', title: 'Stargazer',            img: `${base}/photography/photographs/thumbs/LRM_EXPORT_20191028_021029.webp`,  url: `${base}/photography/photographs/LRM_EXPORT_20191028_021029.jpg`,  height: 640 },
+  { id: '15', title: 'The Pathfinder',       img: `${base}/photography/photographs/thumbs/DSC_8836.webp`,                    url: `${base}/photography/photographs/DSC_8836.jpg`,                    height: 720 },
+  { id: '16', title: 'The Guide',            img: `${base}/photography/photographs/thumbs/IMG_1110.webp`,                    url: `${base}/photography/photographs/IMG_1110.jpg`,                    height: 620 },
+  { id: '17', title: 'The Pursuit',          img: `${base}/photography/photographs/thumbs/AMN_2122.webp`,                    url: `${base}/photography/photographs/AMN_2122.jpg`,                    height: 660 },
+  { id: '18', title: 'The Gathering',        img: `${base}/photography/photographs/thumbs/AMN_1827.webp`,                    url: `${base}/photography/photographs/AMN_1827.jpg`,                    height: 820 },
+  { id: '19', title: 'The Moment',           img: `${base}/photography/photographs/thumbs/AMN_1908.webp`,                    url: `${base}/photography/photographs/AMN_1908.jpg`,                    height: 780 },
+  { id: '20', title: 'The Frame',            img: `${base}/photography/photographs/thumbs/IMG_8386.webp`,                    url: `${base}/photography/photographs/IMG_8386.jpg`,                    height: 600 },
+  { id: '21', title: "Winter's Edge",        img: `${base}/photography/photographs/thumbs/LRM_EXPORT_20191206_015955.webp`,  url: `${base}/photography/photographs/LRM_EXPORT_20191206_015955.jpg`,  height: 580 },
+  { id: '22', title: 'The Distance',         img: `${base}/photography/photographs/thumbs/LRM_EXPORT_20200112_033950.webp`,  url: `${base}/photography/photographs/LRM_EXPORT_20200112_033950.jpg`,  height: 620 },
+];
+---
+
+<section id="photography" class="bg-background">
+
+  <!-- Hero -->
+  <div class="pt-24 md:pt-28 pb-12 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-12" data-reveal>
+        <h1 class="font-headline text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6">
+          The Darkroom.
+        </h1>
+        <p class="text-neutral-600 text-base leading-relaxed max-w-sm">
+          Take a look at the world through my lens.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Masonry gallery -->
+  <div class="px-3 md:px-6 pb-32">
+    <Masonry items={photos} stagger={0.04} blurToFocus={true} scaleOnHover={true} hoverScale={0.97} />
+  </div>
+
+</section>
+
+<!-- Lightbox — rendered outside the section so display:none on section doesn't trap it -->
+<div id="lb" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Photo viewer">
+  <div id="lb-backdrop"></div>
+  <button id="lb-close" aria-label="Close">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <button id="lb-prev" aria-label="Previous photo">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div id="lb-center">
+    <div id="lb-img-wrap">
+      <div id="lb-spinner"></div>
+      <img id="lb-img" src="" alt="" />
+    </div>
+    <div id="lb-meta">
+      <p id="lb-title"></p>
+      <p id="lb-count"></p>
+    </div>
+  </div>
+  <button id="lb-next" aria-label="Next photo">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</div>
+
+<style is:global>
+  /* ── Lightbox ──────────────────────────────────────────── */
+  #lb {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  #lb.open { display: flex; }
+  body.lb-open { overflow: hidden; }
+
+  #lb-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 8, 8, 0.96);
+    cursor: pointer;
+  }
+
+  #lb-center {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    max-width: calc(100vw - 160px);
+    max-height: calc(100vh - 80px);
+  }
+
+  #lb-img-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #lb-img {
+    display: block;
+    max-width: calc(100vw - 160px);
+    max-height: calc(100vh - 140px);
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border-radius: 4px;
+  }
+  #lb-img.loaded { opacity: 1; }
+
+  #lb-spinner {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 2px solid rgba(255,255,255,0.08);
+    border-top-color: #E8A444;
+    border-radius: 50%;
+    animation: lb-spin 0.65s linear infinite;
+    display: none;
+  }
+  #lb-spinner.visible { display: block; }
+  @keyframes lb-spin { to { transform: rotate(360deg); } }
+
+  #lb-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  #lb-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin: 0;
+  }
+
+  #lb-count {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.2);
+    margin: 0;
+  }
+
+  #lb-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 2;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  #lb-close:hover { background: rgba(255,255,255,0.11); color: #fff; }
+
+  #lb-prev, #lb-next {
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  #lb-prev:hover, #lb-next:hover { background: rgba(255,255,255,0.11); color: #fff; }
+  #lb-prev:disabled, #lb-next:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
+
+  @media (max-width: 640px) {
+    #lb-center { max-width: calc(100vw - 24px); }
+    #lb-img { max-width: calc(100vw - 24px); max-height: calc(100vh - 120px); }
+    #lb-prev, #lb-next { display: none; }
+  }
+</style>
+
+<script>
+  const lb        = document.getElementById('lb')!;
+  const lbImg     = document.getElementById('lb-img') as HTMLImageElement;
+  const lbTitle   = document.getElementById('lb-title')!;
+  const lbCount   = document.getElementById('lb-count')!;
+  const lbSpinner = document.getElementById('lb-spinner')!;
+  const lbClose   = document.getElementById('lb-close')!;
+  const lbPrev    = document.getElementById('lb-prev') as HTMLButtonElement;
+  const lbNext    = document.getElementById('lb-next') as HTMLButtonElement;
+  const lbBackdrop = document.getElementById('lb-backdrop')!;
+
+  type Photo = { url: string; title: string };
+  let photos: Photo[] = [];
+  let current = 0;
+
+  function buildPhotoList() {
+    photos = Array.from(document.querySelectorAll<HTMLElement>('#photography .masonry-item')).map(el => ({
+      url:   el.dataset.url   ?? '',
+      title: el.dataset.title ?? '',
+    }));
+  }
+
+  let lastFocusedEl: HTMLElement | null = null;
+  const lbFocusable = [lbClose, lbPrev, lbNext];
+
+  function openLightbox(idx: number) {
+    if (photos.length === 0) buildPhotoList();
+    current = idx;
+    lastFocusedEl = document.activeElement as HTMLElement;
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lb-open');
+    showPhoto(idx);
+    requestAnimationFrame(() => lbClose.focus());
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lb-open');
+    lbImg.classList.remove('loaded');
+    lbImg.src = '';
+    lastFocusedEl?.focus();
+  }
+
+  function showPhoto(idx: number) {
+    const photo = photos[idx];
+    lbTitle.textContent = photo.title;
+    lbCount.textContent = `${idx + 1} / ${photos.length}`;
+    lbImg.classList.remove('loaded');
+    lbSpinner.classList.add('visible');
+
+    const tmp = new Image();
+    tmp.src = photo.url;
+    tmp.onload = () => {
+      lbImg.src = photo.url;
+      lbImg.alt = photo.title;
+      lbSpinner.classList.remove('visible');
+      lbImg.classList.add('loaded');
+    };
+    tmp.onerror = () => lbSpinner.classList.remove('visible');
+
+    lbPrev.disabled = idx === 0;
+    lbNext.disabled = idx === photos.length - 1;
+  }
+
+  document.querySelector('#photography .masonry-list')?.addEventListener('click', (e) => {
+    const items = Array.from(document.querySelectorAll<HTMLElement>('#photography .masonry-item'));
+    const item  = (e.target as HTMLElement).closest<HTMLElement>('.masonry-item');
+    if (!item) return;
+    e.stopPropagation();
+    const idx = items.indexOf(item);
+    if (idx >= 0) openLightbox(idx);
+  }, true);
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbBackdrop.addEventListener('click', closeLightbox);
+
+  lbPrev.addEventListener('click', () => { if (current > 0) { current--; showPhoto(current); } });
+  lbNext.addEventListener('click', () => { if (current < photos.length - 1) { current++; showPhoto(current); } });
+
+  let touchX = 0;
+  lb.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) < 40) return;
+    if (dx < 0 && current < photos.length - 1) { current++; showPhoto(current); }
+    if (dx > 0 && current > 0) { current--; showPhoto(current); }
+  }, { passive: true });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') { closeLightbox(); return; }
+    if (e.key === 'ArrowLeft'  && current > 0) { current--; showPhoto(current); }
+    if (e.key === 'ArrowRight' && current < photos.length - 1) { current++; showPhoto(current); }
+    if (e.key === 'Tab') {
+      const visible = lbFocusable.filter(el => !el.disabled);
+      const first = visible[0];
+      const last  = visible[visible.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+      }
+    }
+  });
+</script>

@@ -1,6 +1,18 @@
 ---
 import Icon from './Icon.astro';
+import Magnet from './Magnet.astro';
+import GooeyNav from './GooeyNav.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const gooeyItems = [
+  { label: 'Home',         href: `${base}/#home`,         section: 'home' },
+  { label: 'Work',         href: `${base}/#work`,         section: 'work' },
+  { label: 'Projects',     href: `${base}/#projects`,     section: 'projects' },
+  { label: 'Education',    href: `${base}/#education`,    section: 'education' },
+  { label: 'Achievements', href: `${base}/#achievements`, section: 'achievements' },
+  { label: 'Contact',      href: `${base}/#contact`,      section: 'contact' },
+  { label: 'Photography',  href: `${base}/#photography` },
+];
 ---
 
 <nav class="fixed top-0 w-full z-50 glass-nav">
@@ -13,37 +25,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </a>
 
     <!-- Desktop nav -->
-    <div class="hidden md:flex items-center gap-8">
-      <a href={`${base}/#home`}         class="nav-link active" data-section="home">Home</a>
-      <a href={`${base}/#work`}         class="nav-link" data-section="work">Work</a>
-      <a href={`${base}/#projects`}     class="nav-link" data-section="projects">Projects</a>
-      <a href={`${base}/#education`}    class="nav-link" data-section="education">Education</a>
-      <a href={`${base}/#achievements`} class="nav-link" data-section="achievements">Achievements</a>
-      {/* <a href={`${base}/#blog`} class="nav-link" data-section="blog">Blog</a> */}
-      <a href={`${base}/#contact`}      class="nav-link" data-section="contact">Contact</a>
-      <a href={`${base}/photography/`}
-         class="nav-link" style="display:inline-flex;align-items:center;gap:5px;">
-        <Icon name="photo_camera" size={14} />
-        Photography
-      </a>
+    <div class="hidden md:flex items-center">
+      <GooeyNav items={gooeyItems} particleCount={12} animationTime={500} />
     </div>
 
     <div class="flex items-center gap-3">
-      <a href="https://github.com/singhkritesh" target="_blank" rel="noopener noreferrer"
-         class="github-btn hidden md:inline-flex items-center justify-center w-9 h-9 rounded-lg border border-neutral-700
-                text-neutral-400">
-        <Icon name="github" size={16} />
-      </a>
-      <a
-        href={`${base}/Resume/Resume_Kritesh_Singh.pdf`}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="resume-btn inline-flex items-center gap-1.5 px-5 py-2 bg-primary text-[#131313]
-               rounded-lg font-headline text-xs font-bold uppercase tracking-wider"
-      >
-        <Icon name="download" size={15} />
-        Resume
-      </a>
+      <Magnet padding={36} magnetStrength={6} maxDisplacement={4} class="hidden md:inline-flex">
+        <a href="https://github.com/singhkritesh" target="_blank" rel="noopener noreferrer"
+           class="github-btn inline-flex items-center justify-center w-9 h-9 rounded-lg border border-neutral-300
+                  text-neutral-500">
+          <Icon name="github" size={16} />
+        </a>
+      </Magnet>
+      <Magnet padding={36} magnetStrength={6} maxDisplacement={4}>
+        <a
+          href={`${base}/Resume/Resume_Kritesh_Singh.pdf`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="resume-btn inline-flex items-center gap-1.5 px-5 py-2 bg-primary text-[#131313]
+                 rounded-lg font-headline text-xs font-bold uppercase tracking-wider"
+        >
+          <Icon name="download" size={15} />
+          Resume
+        </a>
+      </Magnet>
 
       <!-- Hamburger (mobile only) -->
       <button id="mobile-menu-btn"
@@ -60,7 +65,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <!-- Mobile drawer -->
   <div id="mobile-menu" class="mobile-menu md:hidden">
     <div class="mobile-menu-inner">
-      <div class="px-6 pb-6 pt-2 flex flex-col gap-1 border-t border-white/5">
+      <div class="px-6 pb-6 pt-2 flex flex-col gap-1 border-t border-black/[0.06]">
         <a href={`${base}/#home`}         class="mobile-nav-link" data-section="home">Home</a>
         <a href={`${base}/#work`}         class="mobile-nav-link" data-section="work">Work</a>
         <a href={`${base}/#projects`}     class="mobile-nav-link" data-section="projects">Projects</a>
@@ -68,8 +73,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <a href={`${base}/#achievements`} class="mobile-nav-link" data-section="achievements">Achievements</a>
         {/* <a href={`${base}/#blog`} class="mobile-nav-link" data-section="blog">Blog</a> */}
         <a href={`${base}/#contact`}      class="mobile-nav-link" data-section="contact">Contact</a>
-        <a href={`${base}/photography/`}
-           class="mobile-nav-link" style="display:inline-flex;align-items:center;gap:6px;">
+        <a href={`${base}/#photography`}
+           class="mobile-nav-link inline-flex items-center gap-1.5">
           <Icon name="photo_camera" size={14} />
           Photography
         </a>
@@ -79,55 +84,56 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 </nav>
 
 <script>
-  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-link[data-section]');
-  const sections  = Array.from(document.querySelectorAll<HTMLElement>('section[id]'));
-
-  // ── Helpers ────────────────────────────────────────────────
-  function setNavActive(id: string) {
-    if (!id) return;
-    navLinks.forEach((l) => l.classList.remove('active'));
-    document.querySelector<HTMLAnchorElement>(`.nav-link[data-section="${id}"]`)
-      ?.classList.add('active');
-  }
-
+  // ── Section tracker (excludes hidden photography when not shown) ──
   function currentSectionId(): string {
-    if (sections.length === 0) return '';
+    const showingPhoto = document.body.classList.contains('show-photography');
+    const allSections = Array.from(document.querySelectorAll<HTMLElement>('section[id]'));
+    const visible = allSections.filter(s =>
+      s.id === 'photography' ? showingPhoto : !showingPhoto
+    );
+    if (visible.length === 0) return '';
     const threshold = window.innerHeight * 0.4;
-    let current = sections[0];
-    for (const s of sections) {
+    let current = visible[0];
+    for (const s of visible) {
       if (s.getBoundingClientRect().top < threshold) current = s;
       else break;
     }
     return current.id;
   }
 
-  // ── Scrollspy (nav highlight) ──────────────────────────────
-  // Scroll-based detection: always picks the single most-visible section
-  // directly — no flickering through intermediate sections as you scroll.
-  let scrollRafId: number;
-  window.addEventListener('scroll', () => {
-    if (scrollRafId) cancelAnimationFrame(scrollRafId);
-    scrollRafId = requestAnimationFrame(() => setNavActive(currentSectionId()));
-  }, { passive: true });
-
-  // ── Nav highlight sync on load ──────────────────────────────
-  function initActive() {
-    if (sections.length === 0) {
-      // Non-main page (e.g. photography) — clear all section-based actives
-      navLinks.forEach(l => l.classList.remove('active'));
-      const path = window.location.pathname;
-      if (path.includes('/photography')) {
-        document.querySelector<HTMLAnchorElement>('.nav-link[href*="photography"]')
-          ?.classList.add('active');
-      }
-      return;
-    }
-    setNavActive(currentSectionId());
+  // ── Photography show/hide ──────────────────────────────────
+  function showPhotography() {
+    document.body.classList.add('show-photography');
+    sessionStorage.setItem('_sk', 'photography');
+    window.scrollTo(0, 0);
+    document.dispatchEvent(new CustomEvent('photography:show'));
+    // Nudge data-reveal elements in photography section in case IO already fired
+    document.querySelectorAll<HTMLElement>('#photography [data-reveal]').forEach(el => {
+      el.classList.add('revealed');
+    });
   }
-  if (document.readyState === 'complete') initActive();
-  else window.addEventListener('load', initActive);
 
-  // ── Shrink nav on scroll ────────────────────────────────────
+  function hidePhotography() {
+    document.body.classList.remove('show-photography');
+  }
+
+  // ── Hover prefetch: warm browser cache before click ────────
+  let prefetched = false;
+  function prefetchPhotos() {
+    if (prefetched) return;
+    prefetched = true;
+    document.querySelectorAll<HTMLElement>('#photography .masonry-img').forEach(el => {
+      const bg = el.style.backgroundImage;
+      const src = bg.replace(/^url\(['"]?/, '').replace(/['"]?\)$/, '');
+      if (src) { const img = new Image(); img.src = src; }
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('a[href$="#photography"], a[href*="/#photography"]').forEach(a => {
+    a.addEventListener('mouseenter', prefetchPhotos, { once: true });
+  });
+
+  // ── Shrink nav on scroll ───────────────────────────────────
   const nav = document.querySelector<HTMLElement>('nav')!;
   function updateScrolled() {
     nav.classList.toggle('scrolled', window.scrollY > 60);
@@ -136,13 +142,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   updateScrolled();
 
   // ── Persist current section for scroll restoration ─────────
-  // sessionStorage survives reload and hard reload within the same tab.
-  // Written on scroll (debounced) and immediately on nav click so the
-  // value is always current when a reload happens.
-  // The actual restoration is done by the inline script in Layout.astro
-  // which runs synchronously before first paint.
   let saveTimer: number;
   window.addEventListener('scroll', () => {
+    if (document.body.classList.contains('show-photography')) return;
     clearTimeout(saveTimer);
     saveTimer = window.setTimeout(() => {
       const id = currentSectionId();
@@ -150,10 +152,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }, 150);
   }, { passive: true });
 
-  // ── Smooth scroll ──────────────────────────────────────────
-  // Works with both relative (#section) and absolute (/base/#section) hrefs.
-  // Only intercepts when the target element exists on the current page;
-  // otherwise lets the browser navigate normally (e.g. photography → home).
+  // ── Smooth scroll / photography toggle ────────────────────
   document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       const href = a.getAttribute('href')!;
@@ -161,11 +160,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       if (hashIdx === -1) return;
       const id = href.substring(hashIdx + 1);
       const target = document.getElementById(id);
-      if (!target) return; // section not on this page — browser navigates normally
+      if (!target) return;
       e.preventDefault();
       closeMobileMenu();
+
+      if (id === 'photography') {
+        showPhotography();
+        return;
+      }
+
+      if (document.body.classList.contains('show-photography')) {
+        hidePhotography();
+      }
+
       sessionStorage.setItem('_sk', id);
-      setNavActive(id);
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
@@ -192,12 +200,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     menu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
   });
 
-  // Close on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && menu.classList.contains('open')) closeMobileMenu();
   });
 
-  // Close when clicking outside
   document.addEventListener('click', (e) => {
     const nav = document.querySelector('nav')!;
     if (!nav.contains(e.target as Node)) closeMobileMenu();
