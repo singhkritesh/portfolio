@@ -1,0 +1,35 @@
+---
+import Lanyard from './Lanyard.jsx';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<div class="lanyard-container">
+  <Lanyard
+    position={[0, 0, 20]}
+    gravity={[0, -40, 0]}
+    fov={15}
+    frontImage={`${base}/card-face.svg`}
+    lanyardImage={`${base}/lanyard-band.svg`}
+    lanyardWidth={3}
+    client:only="react"
+  />
+</div>
+
+<style>
+  .lanyard-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 33vw;
+    max-width: 500px;
+    min-width: 280px;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 40;
+  }
+
+  .lanyard-container :global(.lanyard-wrapper) {
+    pointer-events: all;
+    height: 100%;
+  }
+</style>

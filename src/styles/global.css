@@ -194,6 +194,11 @@ section[id] {
   transform: translateY(-7px) rotate(-45deg);
 }
 
+/* ── ID card ──────────────────────────────────────────────── */
+.id-card-shadow {
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3), 0 8px 10px -6px rgba(0,0,0,0.2);
+}
+
 /* ── Glassmorphic nav ─────────────────────────────────────── */
 .glass-nav {
   background: rgba(255, 255, 255, 0.92);

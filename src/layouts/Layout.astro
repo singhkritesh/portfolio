@@ -33,6 +33,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <link rel="preload" href={`${base}/fonts/inter-400.woff2`}     as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={`${base}/fonts/inter-500.woff2`}     as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={`${base}/fonts/inter-600.woff2`}     as="font" type="font/woff2" crossorigin />
+  <!-- Newsreader serif — used by the intro loading screen -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet" />
+
   <meta name="description" content={description} />
   <link rel="icon" type="image/x-icon" href={`${base}/images/favicon.ico`} />
 

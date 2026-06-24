@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="400" viewBox="0 0 100 400">
+  <defs>
+    <!-- Horizontal stripe texture: 3px transparent + 1px at 4.5% white (exact reference values) -->
+    <pattern id="h-stripes" x="0" y="0" width="100" height="4" patternUnits="userSpaceOnUse">
+      <rect width="100" height="3" fill="transparent"/>
+      <rect y="3" width="100" height="1" fill="rgba(255,255,255,0.045)"/>
+    </pattern>
+    <!-- 1px vertical edge highlights (reference: rgba(255,255,255,0.03)) -->
+    <pattern id="v-edge" x="0" y="0" width="100" height="1" patternUnits="userSpaceOnUse">
+      <rect x="0" width="1" height="1" fill="rgba(255,255,255,0.03)"/>
+    </pattern>
+    <!-- Inset side shadows (reference: inset 5px 0 8px rgba(0,0,0,0.5)) -->
+    <linearGradient id="left-shadow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0"   stop-color="rgba(0,0,0,0.5)"/>
+      <stop offset="1"   stop-color="rgba(0,0,0,0)"/>
+    </linearGradient>
+    <linearGradient id="right-shadow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0"   stop-color="rgba(0,0,0,0)"/>
+      <stop offset="1"   stop-color="rgba(0,0,0,0.5)"/>
+    </linearGradient>
+    <!-- Very thin white rim (reference: inset 0 0 0 1px rgba(255,255,255,0.04)) -->
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0"   stop-color="rgba(255,255,255,0.04)"/>
+      <stop offset="0.02" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="0.98" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="1"   stop-color="rgba(255,255,255,0.04)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base colour (#111113) -->
+  <rect width="100" height="400" fill="#111113"/>
+  <!-- Horizontal stripes -->
+  <rect width="100" height="400" fill="url(#h-stripes)"/>
+  <!-- Vertical edge line -->
+  <rect width="100" height="400" fill="url(#v-edge)"/>
+  <!-- Rim highlight -->
+  <rect width="100" height="400" fill="url(#rim)"/>
+  <!-- Left inset shadow -->
+  <rect x="0"  width="20" height="400" fill="url(#left-shadow)"/>
+  <!-- Right inset shadow -->
+  <rect x="80" width="20" height="400" fill="url(#right-shadow)"/>
+
+  <!--
+    Text: reference is 8px in a 32px band = 25% of band width.
+    SVG is 100px wide → font-size 25 to match that ratio.
+    writing-mode: vertical-lr + rotate(180deg) = reads bottom-to-top.
+    Rotated -90° here achieves the same: text along rope length, reading upward.
+  -->
+  <text
+    x="50" y="200"
+    font-family="'Courier New', Courier, monospace"
+    font-size="22"
+    font-weight="600"
+    fill="#c0c0c8"
+    text-anchor="middle"
+    dominant-baseline="central"
+    letter-spacing="6"
+    transform="rotate(-90 50 200)">KRITESH SINGH</text>
+</svg>

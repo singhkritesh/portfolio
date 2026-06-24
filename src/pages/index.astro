@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
+import IDCard from '../components/IDCard.astro';
 import Footer from '../components/Footer.astro';
 import Hero from '../components/sections/Hero.astro';
 import Work from '../components/sections/Work.astro';
@@ -15,7 +16,127 @@ import '../styles/global.css';
 ---
 
 <Layout>
+  <!-- Two panels for the split reveal — top overlaps by 1px to kill sub-pixel gap at zoom levels -->
+  <div id="intro-top" aria-hidden="true" style="
+    position: fixed; top: 0; left: 0; right: 0; height: calc(50vh + 1px);
+    z-index: 9999; background: #18181b; pointer-events: none;
+  "></div>
+  <div id="intro-bottom" aria-hidden="true" style="
+    position: fixed; top: 50vh; left: 0; right: 0; height: 50vh;
+    z-index: 9999; background: #18181b; pointer-events: none;
+  "></div>
+
+  <!-- Name floats above both panels, fades out before split -->
+  <div id="intro-name-wrap" aria-hidden="true" style="
+    position: fixed; inset: 0; z-index: 10000;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 28px;
+    pointer-events: none;
+  ">
+    <div id="intro-name" style="
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: clamp(2.8rem, 7.5vw, 5.5rem);
+      font-weight: 400;
+      color: #fafaf9;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    "></div>
+    <div id="intro-subtitle" style="
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      font-weight: 400;
+      color: #fafaf9;
+      opacity: 0;
+      letter-spacing: 0.04em;
+    ">कृतेश सिंह</div>
+  </div>
+
+  <script is:inline>
+  (function () {
+    var introTop  = document.getElementById('intro-top');
+    var introBot  = document.getElementById('intro-bottom');
+    var nameWrap  = document.getElementById('intro-name-wrap');
+    var nameEl    = document.getElementById('intro-name');
+    var subtitle  = document.getElementById('intro-subtitle');
+
+    function fireReady() {
+      document.dispatchEvent(new CustomEvent('page-ready'));
+    }
+
+    function splitAndReveal() {
+      nameWrap.animate(
+        [{ opacity: 1 }, { opacity: 0 }],
+        { duration: 380, easing: 'cubic-bezier(0.4,0,1,1)', fill: 'forwards' }
+      ).onfinish = function () {
+        nameWrap.remove();
+        var opts = { duration: 700, easing: 'cubic-bezier(0.76,0,0.24,1)', fill: 'forwards' };
+        introTop.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-100%)' }], opts);
+        introBot.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(100%)' }], opts)
+          .onfinish = function () {
+            introTop.remove();
+            introBot.remove();
+          };
+      };
+    }
+
+    nameEl.style.transform = 'scale(1.45)';
+    nameEl.style.transformOrigin = 'center center';
+
+    var text = 'Kritesh Singh';
+    var spans = text.split('').map(function (char) {
+      var s = document.createElement('span');
+      s.textContent = char === ' ' ? ' ' : char;
+      s.style.display = 'inline-block';
+      s.style.opacity = '0';
+      if (char === ' ') s.style.width = '0.28em';
+      nameEl.appendChild(s);
+      return s;
+    });
+
+    var STAGGER  = 80;
+    var DURATION = 500;
+    var START    = 200;
+
+    spans.forEach(function (span, i) {
+      span.animate(
+        [
+          { opacity: 0, transform: 'translateY(-52px)' },
+          { opacity: 1, transform: 'translateY(0)'     }
+        ],
+        {
+          duration: DURATION,
+          delay: START + i * STAGGER,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+          fill: 'both'
+        }
+      );
+    });
+
+    var allDone = START + (spans.length - 1) * STAGGER + DURATION + 120;
+
+    setTimeout(function () {
+      // Etch the name to rest size
+      nameEl.animate(
+        [{ transform: 'scale(1.45)' }, { transform: 'scale(1)' }],
+        { duration: 650, easing: 'cubic-bezier(0.4,0,0.2,1)', fill: 'forwards' }
+      ).onfinish = function () {
+        // Subtitle fades in as name settles
+        subtitle.animate(
+          [{ opacity: 0 }, { opacity: 0.55 }],
+          { duration: 400, easing: 'ease-out', fill: 'forwards' }
+        ).onfinish = function () {
+          setTimeout(function () {
+            fireReady();
+            splitAndReveal();
+          }, 250);
+        };
+      };
+    }, allDone);
+  })();
+  </script>
+
   <Nav />
+  <IDCard />
   <main>
     <Hero />
     <Work />
