@@ -98,14 +98,14 @@ const allProjects = [...independent, ...academic];
           Projects
         </h2>
       </div>
-      <p class="text-neutral-500 text-sm max-w-xs leading-relaxed">
+      <p class="text-neutral-600 text-sm max-w-xs leading-relaxed">
         Personal builds and academic work at the intersection of AI, product thinking, and engineering.
       </p>
     </div>
 
     <!-- Independent Builds -->
     <div class="mb-16">
-      <p class="font-headline text-lg font-semibold tracking-tight text-neutral-300 mb-6" data-reveal>Personal Ventures</p>
+      <p class="font-headline text-lg font-semibold tracking-tight text-neutral-700 mb-6" data-reveal>Personal Ventures</p>
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
         {independent.map((p, i) => (
           <button
@@ -118,7 +118,7 @@ const allProjects = [...independent, ...academic];
             <div class="p-8 flex flex-col flex-1 w-full">
               <div class="flex flex-wrap items-center gap-2 mb-6">
                 {p.tags.map(t => (
-                  <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-400'}`}>
+                  <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-600'}`}>
                     {t.label}
                   </span>
                 ))}
@@ -126,7 +126,7 @@ const allProjects = [...independent, ...academic];
               </div>
               <div class="flex flex-col flex-1">
                 <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
-                <p class="text-neutral-400 text-sm leading-relaxed">{p.summary}</p>
+                <p class="text-neutral-600 text-sm leading-relaxed">{p.summary}</p>
               </div>
               <!-- Hover hint -->
               <div class="mt-5 flex items-center gap-1.5 text-primary/70 text-xs font-headline uppercase tracking-wider
@@ -144,7 +144,7 @@ const allProjects = [...independent, ...academic];
 
     <!-- Academic Projects -->
     <div>
-      <p class="font-headline text-lg font-semibold tracking-tight text-neutral-300 mb-6" data-reveal>Academic Projects</p>
+      <p class="font-headline text-lg font-semibold tracking-tight text-neutral-700 mb-6" data-reveal>Academic Projects</p>
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
         {academic.map((p, i) => (
           <button
@@ -157,7 +157,7 @@ const allProjects = [...independent, ...academic];
             <div class="p-8 flex flex-col flex-1 w-full">
               <div class="flex flex-wrap items-center gap-2 mb-6">
                 {p.tags.map(t => (
-                  <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-400'}`}>
+                  <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-600'}`}>
                     {t.label}
                   </span>
                 ))}
@@ -165,7 +165,7 @@ const allProjects = [...independent, ...academic];
               </div>
               <div class="flex flex-col flex-1">
                 <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
-                <p class="text-neutral-400 text-sm leading-relaxed">{p.summary}</p>
+                <p class="text-neutral-600 text-sm leading-relaxed">{p.summary}</p>
               </div>
               <!-- Hover hint -->
               <div class="mt-5 flex items-center gap-1.5 text-primary/70 text-xs font-headline uppercase tracking-wider
@@ -195,7 +195,7 @@ const allProjects = [...independent, ...academic];
       </div>
       <button id="proj-modal-close" aria-label="Close"
               class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg
-                     bg-surface-high hover:bg-surface-highest text-neutral-500 hover:text-white
+                     bg-surface-high hover:bg-surface-highest text-neutral-500 hover:text-neutral-900
                      transition-colors duration-150 mt-1">
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
           <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
@@ -206,7 +206,7 @@ const allProjects = [...independent, ...academic];
     <div class="mt-8 pt-6 border-t border-outline-dim flex items-center justify-between gap-4">
       <div id="proj-modal-date" class="text-neutral-500 text-xs font-headline uppercase tracking-wider"></div>
       <a id="proj-modal-repo" href="#" target="_blank" rel="noopener noreferrer"
-         class="hidden items-center gap-1.5 text-xs font-headline uppercase tracking-wider text-neutral-400 hover:text-white transition-colors">
+         class="hidden items-center gap-1.5 text-xs font-headline uppercase tracking-wider text-neutral-500 hover:text-neutral-900 transition-colors">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
         </svg>
@@ -240,7 +240,7 @@ const allProjects = [...independent, ...academic];
       repo: 'https://github.com/singhkritesh/reachout',
     },
     {
-      tags: [{ label: 'Local LLM', accent: true }, { label: 'EdTech', accent: false }, { label: 'Full PRD', accent: false }, { label: 'Microservices', accent: false }],
+      tags: [{ label: 'Local LLM', accent: true }, { label: 'EdTech', accent: false }, { label: 'Full PRD', accent: false }, { label: 'Microservices', accent: false }, { label: 'Privacy-First', accent: false }],
       title: 'AI-First Learning Management System',
       bullets: [
         'Authored PRD for user personas, system architecture, guardrails, and non-functional requirements, and prototyped using Antigravity.',
@@ -281,12 +281,20 @@ const allProjects = [...independent, ...academic];
   const dateEl    = document.getElementById('proj-modal-date')!;
   const repoLink  = document.getElementById('proj-modal-repo') as HTMLAnchorElement;
 
+  let lastFocused: Element | null = null;
+
+  function getFocusable() {
+    return Array.from(modal.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), a[href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
+    )).filter(el => !el.closest('.proj-modal-backdrop'));
+  }
+
   function openModal(index: number) {
     const p = projectData[index];
 
     tagsEl.innerHTML = p.tags.map(t =>
       `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-        t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-400'
+        t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-600'
       }">${t.label}</span>`
     ).join('');
 
@@ -303,10 +311,11 @@ const allProjects = [...independent, ...academic];
     }
 
     bulletsEl.innerHTML = p.bullets.map((b, i) =>
-      `<li class="text-sm text-neutral-300 leading-relaxed border-l-2 border-primary/40 pl-3"
+      `<li class="text-sm text-neutral-700 leading-relaxed border-l-2 border-primary/40 pl-3"
            style="animation: bulletIn 0.3s ease both; animation-delay: ${i * 70}ms">${b}</li>`
     ).join('');
 
+    lastFocused = document.activeElement;
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
     requestAnimationFrame(() => closeBtn.focus());
@@ -315,6 +324,7 @@ const allProjects = [...independent, ...academic];
   function closeModal() {
     modal.classList.remove('open');
     document.body.style.overflow = '';
+    (lastFocused as HTMLElement)?.focus();
   }
 
   document.querySelectorAll<HTMLButtonElement>('[data-proj-open]').forEach((btn) => {
@@ -325,7 +335,18 @@ const allProjects = [...independent, ...academic];
   backdrop.addEventListener('click', closeModal);
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') { closeModal(); return; }
+    if (e.key === 'Tab') {
+      const focusable = getFocusable();
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+      }
+    }
   });
 </script>
 

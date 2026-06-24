@@ -22,29 +22,29 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
         <div class="lg:sticky lg:top-28 space-y-3 work-tablist" role="tablist" aria-label="Work experience">
 
           <!-- Care Health -->
-          <button class="work-tab active w-full text-left" data-tab="care-health"
+          <button id="tab-care-health" class="work-tab active w-full text-left" data-tab="care-health"
                   role="tab" aria-selected="true" aria-controls="panel-care-health">
             <div class="flex items-center gap-5">
               <div class="w-14 h-14 flex items-center justify-center flex-shrink-0 overflow-hidden">
                 <Image src={careHealthImg} alt="Care Health" width={224} height={224} class="w-full h-full object-contain" />
               </div>
               <div class="min-w-0">
-                <p class="font-headline text-base font-semibold text-white">Care Health Insurance</p>
+                <p class="font-headline text-base font-semibold text-[#131313]">Care Health Insurance</p>
                 <p class="font-body text-xs text-neutral-500 mt-0.5">Jun 2021 – Aug 2025</p>
               </div>
             </div>
           </button>
 
           <!-- Parsa National Park -->
-          <button class="work-tab w-full text-left" data-tab="parsa"
+          <button id="tab-parsa" class="work-tab w-full text-left" data-tab="parsa"
                   role="tab" aria-selected="false" aria-controls="panel-parsa">
             <div class="flex items-center gap-5">
               <div class="w-14 h-14 flex items-center justify-center flex-shrink-0 overflow-hidden">
                 <Image src={parsaImg} alt="Parsa" width={224} height={224} class="w-full h-full object-contain" />
               </div>
               <div class="min-w-0">
-                <p class="font-headline text-base font-semibold text-neutral-400">Parsa National Park</p>
-                <p class="font-body text-xs text-neutral-400 mt-0.5">Nov 2023 – Oct 2024</p>
+                <p class="font-headline text-base font-semibold text-neutral-500">Parsa National Park</p>
+                <p class="font-body text-xs text-neutral-500 mt-0.5">Nov 2023 – Oct 2024</p>
               </div>
             </div>
           </button>
@@ -56,29 +56,29 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
       <div class="lg:col-span-9">
 
         <!-- Care Health panel: two roles stacked -->
-        <div class="role-panel active" data-role="care-health" id="panel-care-health" role="tabpanel">
+        <div class="role-panel active" data-role="care-health" id="panel-care-health" role="tabpanel" aria-labelledby="tab-care-health">
 
           <!-- Role 1: PM AI Strategy (most recent) -->
           <div class="mb-5" data-panel-item="0" data-stagger data-stagger-delay="160">
             <div class="flex flex-wrap justify-between items-baseline gap-x-4 gap-y-0.5 mb-1">
               <h3 class="font-headline text-xl md:text-2xl font-bold">Product Manager — AI Strategy</h3>
-              <span class="text-neutral-300 font-body text-xs tracking-wide whitespace-nowrap">Apr 2023 – Aug 2025</span>
+              <span class="text-neutral-600 font-body text-xs tracking-wide whitespace-nowrap">Apr 2023 – Aug 2025</span>
             </div>
             <p class="text-neutral-500 text-sm font-body">Care Health Insurance Ltd · India</p>
           </div>
           <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim mb-8" data-panel-item="1" data-stagger data-stagger-delay="260">
             <ul class="space-y-4">
               <li class="flex gap-3 border-l-2 border-primary/40 pl-3">
-                <span class="text-sm text-neutral-300">Architected and executed the strategic roadmap for AI portfolio of <strong class="text-primary">6 products</strong>, managing <strong class="text-primary">3 PMs</strong> and partnering across <strong class="text-primary">13 teams</strong> to align C-suite on long-term OKRs across fraud, document intelligence, medical data, KYC and CRM</span>
+                <span class="text-sm text-neutral-700">Architected and executed the strategic roadmap for AI portfolio of <strong class="text-primary">6 products</strong>, managing <strong class="text-primary">3 PMs</strong> and partnering across <strong class="text-primary">13 teams</strong> to align C-suite on long-term OKRs across fraud, document intelligence, medical data, KYC and CRM</span>
               </li>
               <li class="flex gap-3 border-l-2 border-primary/40 pl-3">
-                <span class="text-sm text-neutral-300">Launched a 0 to 1 AI native claims automation platform, leading problem discovery, model selection, and production rollout, then scaled to <strong class="text-primary">1M+ cases</strong>, reduced latency <strong class="text-primary">20%</strong>, and generated <strong class="text-primary">$1.1M+ in savings</strong> (Best Innovation Award, AWS AI Impact 2026)</span>
+                <span class="text-sm text-neutral-700">Launched a 0 to 1 AI native claims automation platform, leading problem discovery, model selection, and production rollout, then scaled to <strong class="text-primary">1M+ cases</strong>, reduced latency <strong class="text-primary">20%</strong>, and generated <strong class="text-primary">$1.1M+ in savings</strong> (Best Innovation Award, AWS AI Impact 2026)</span>
               </li>
               <li class="flex gap-3 border-l-2 border-primary/40 pl-3">
-                <span class="text-sm text-neutral-300">Analyzed customer insights and developed prototype for grievance summarization, using Claude API, Python, and prompt engineering to reduce case resolution time by <strong class="text-primary">45%</strong>, with planned integration to CRM, improving customer satisfaction</span>
+                <span class="text-sm text-neutral-700">Analyzed customer insights and developed prototype for grievance summarization, using Claude API, Python, and prompt engineering to reduce case resolution time by <strong class="text-primary">45%</strong>, with planned integration to CRM, improving customer satisfaction</span>
               </li>
               <li class="flex gap-3 border-l-2 border-primary/40 pl-3">
-                <span class="text-sm text-neutral-300">Led enterprise wide identification and evaluation of AI opportunities across all business verticals in a highly regulated environment, partnering with business, engineering, and compliance teams to enable responsible governance and adoption</span>
+                <span class="text-sm text-neutral-700">Led enterprise wide identification and evaluation of AI opportunities across all business verticals in a highly regulated environment, partnering with business, engineering, and compliance teams to enable responsible governance and adoption</span>
               </li>
             </ul>
           </div>
@@ -86,7 +86,7 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
           <!-- Divider with progression indicator -->
           <div class="flex items-center gap-3 mb-8" data-panel-item="2" data-stagger data-stagger-delay="400">
             <div class="h-px flex-1 bg-outline-dim"></div>
-            <span class="text-[10px] font-headline uppercase tracking-widest text-neutral-400 px-2">Promoted</span>
+            <span class="text-[10px] font-headline uppercase tracking-widest text-neutral-500 px-2">Promoted</span>
             <div class="h-px flex-1 bg-outline-dim"></div>
           </div>
 
@@ -94,23 +94,23 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
           <div class="mb-5" data-panel-item="3" data-stagger data-stagger-delay="500">
             <div class="flex flex-wrap justify-between items-baseline gap-x-4 gap-y-0.5 mb-1">
               <h3 class="font-headline text-xl md:text-2xl font-bold">Associate Product Manager — Claims</h3>
-              <span class="text-neutral-300 font-body text-xs tracking-wide whitespace-nowrap">Jun 2021 – Mar 2023</span>
+              <span class="text-neutral-600 font-body text-xs tracking-wide whitespace-nowrap">Jun 2021 – Mar 2023</span>
             </div>
             <p class="text-neutral-500 text-sm font-body">Care Health Insurance Ltd · India</p>
           </div>
           <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim" data-panel-item="4" data-stagger data-stagger-delay="600">
             <ul class="space-y-4">
               <li class="flex gap-3 border-l-2 border-primary/40 pl-3">
-                <span class="text-sm text-neutral-300">Conducted <strong class="text-primary">40 customer interviews</strong>, analyzed <strong class="text-primary">200+ support tickets</strong>, and performed competitive analysis to uncover core user pain points; partnered with design and marketing to redesign the mobile journey, increasing completion and engagement by <strong class="text-primary">70%</strong></span>
+                <span class="text-sm text-neutral-700">Conducted <strong class="text-primary">40 customer interviews</strong>, analyzed <strong class="text-primary">200+ support tickets</strong>, and performed competitive analysis to uncover core user pain points; partnered with design and marketing to redesign the mobile journey, increasing completion and engagement by <strong class="text-primary">70%</strong></span>
               </li>
               <li class="flex gap-3 border-l-2 border-primary/40 pl-3">
-                <span class="text-sm text-neutral-300">Reviewed claims payment processes with finance team, identified bottlenecks, and designed a new payment engine leading 3 engineers and 2 business analysts, cutting payout time from <strong class="text-primary">2 days to 5 secs</strong>, enabling <strong class="text-primary">$15M+ disbursements</strong></span>
+                <span class="text-sm text-neutral-700">Reviewed claims payment processes with finance team, identified bottlenecks, and designed a new payment engine leading 3 engineers and 2 business analysts, cutting payout time from <strong class="text-primary">2 days to 5 secs</strong>, enabling <strong class="text-primary">$15M+ disbursements</strong></span>
               </li>
               <li class="flex gap-3 border-l-2 border-primary/40 pl-3">
-                <span class="text-sm text-neutral-300">Conducted product discovery and authored PRD to ship an MVP for data extraction from health reports and integrated a prediction model with 2 engineers to proactively identify high-risk customers, reducing financial risk for the company</span>
+                <span class="text-sm text-neutral-700">Conducted product discovery and authored PRD to ship an MVP for data extraction from health reports and integrated a prediction model with 2 engineers to proactively identify high-risk customers, reducing financial risk for the company</span>
               </li>
               <li class="flex gap-3 border-l-2 border-primary/40 pl-3">
-                <span class="text-sm text-neutral-300">Scaled the digital ecosystem by leading the integration of <strong class="text-primary">96+ APIs</strong> across partner and hospital networks, reducing claims processing time by <strong class="text-primary">75%</strong> and increasing digital engagement by <strong class="text-primary">18%</strong></span>
+                <span class="text-sm text-neutral-700">Scaled the digital ecosystem by leading the integration of <strong class="text-primary">96+ APIs</strong> across partner and hospital networks, reducing claims processing time by <strong class="text-primary">75%</strong> and increasing digital engagement by <strong class="text-primary">18%</strong></span>
               </li>
             </ul>
           </div>
@@ -118,10 +118,10 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
         </div>
 
         <!-- Parsa panel -->
-        <div class="role-panel" data-role="parsa" id="panel-parsa" role="tabpanel" style="display:none">
+        <div class="role-panel" data-role="parsa" id="panel-parsa" role="tabpanel" aria-labelledby="tab-parsa" style="display:none">
           <div class="flex flex-wrap justify-between items-baseline gap-x-4 gap-y-0.5 mb-1" data-panel-item="0">
             <h3 class="font-headline text-xl md:text-2xl font-bold">Volunteer — Conservation</h3>
-            <span class="text-neutral-300 font-body text-xs tracking-wide whitespace-nowrap">Nov–Dec '23 · Sep–Oct '24</span>
+            <span class="text-neutral-600 font-body text-xs tracking-wide whitespace-nowrap">Nov–Dec '23 · Sep–Oct '24</span>
           </div>
           <p class="text-neutral-500 text-sm font-body mb-5" data-panel-item="1">Parsa National Park · Nepal</p>
           <div class="flex items-center gap-3 mb-5" data-panel-item="2">
@@ -135,7 +135,7 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
           <div class="bg-surface-mid p-6 rounded-xl border border-outline-dim" data-panel-item="3">
             <ul class="space-y-4">
               <li class="flex gap-3 border-l-2 border-primary/40 pl-3">
-                <span class="text-sm text-neutral-300">Volunteered alongside conservationists to raise awareness about nature conservation to local communities in buffer zone areas surrounding the park, contributing to strategies that reduce human-animal conflict.</span>
+                <span class="text-sm text-neutral-700">Volunteered alongside conservationists to raise awareness about nature conservation to local communities in buffer zone areas surrounding the park, contributing to strategies that reduce human-animal conflict.</span>
               </li>
             </ul>
           </div>
@@ -153,7 +153,7 @@ import dnpwcImg     from '../../assets/images/dnpwc.png';
             {['PRD','Product Roadmaps','Go-to-Market (GTM)','Platform Thinking',
               'Customer Journey Mapping','Backlog Prioritization','A/B Testing',
               'Success Metrics (OKRs, NPS, Engagement)','JIRA','Figma','Lovable'].map(s => (
-              <span class="px-2.5 py-1 bg-surface-high text-neutral-300 rounded-full text-[11px]">{s}</span>
+              <span class="px-2.5 py-1 bg-surface-high text-neutral-600 rounded-full text-[11px]">{s}</span>
             ))}
           </div>
         </div>

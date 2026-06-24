@@ -1,265 +1,336 @@
 ---
-import PhotoLayout from '../../layouts/PhotoLayout.astro';
+import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Masonry from '../../components/Masonry.astro';
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const photos = [
+  { id: '1',  title: 'The Watcher',         img: `${base}/photography/photographs/thumbs/DSC3064.webp`,                     url: `${base}/photography/photographs/DSC3064.jpg`,                     height: 920 },
+  { id: '2',  title: 'The Witness',          img: `${base}/photography/photographs/thumbs/DSC3042.webp`,                     url: `${base}/photography/photographs/DSC3042.jpg`,                     height: 840 },
+  { id: '3',  title: 'Kingdom of the Wind',  img: `${base}/photography/photographs/thumbs/DSC3120.webp`,                     url: `${base}/photography/photographs/DSC3120.jpg`,                     height: 580 },
+  { id: '4',  title: 'Different.',           img: `${base}/photography/photographs/thumbs/DSC3127.webp`,                     url: `${base}/photography/photographs/DSC3127.jpg`,                     height: 980 },
+  { id: '5',  title: 'Elysium',              img: `${base}/photography/photographs/thumbs/DSC3143.webp`,                     url: `${base}/photography/photographs/DSC3143.jpg`,                     height: 620 },
+  { id: '6',  title: 'The Contemplation',    img: `${base}/photography/photographs/thumbs/DSC_0013.webp`,                    url: `${base}/photography/photographs/DSC_0013.jpg`,                    height: 960 },
+  { id: '7',  title: 'The Protector',        img: `${base}/photography/photographs/thumbs/AMN_1896-2.webp`,                  url: `${base}/photography/photographs/AMN_1896-2.jpg`,                  height: 820 },
+  { id: '8',  title: 'The Intent',           img: `${base}/photography/photographs/thumbs/AMN_1804-2.webp`,                  url: `${base}/photography/photographs/AMN_1804-2.jpg`,                  height: 900 },
+  { id: '9',  title: 'Kingdom of Snow',      img: `${base}/photography/photographs/thumbs/IMG_20191103_192250_252_4.webp`,   url: `${base}/photography/photographs/IMG_20191103_192250_252_4.jpg`,   height: 600 },
+  { id: '10', title: 'The Cloudy Horizon',   img: `${base}/photography/photographs/thumbs/LRM_EXPORT_20191106_161452.webp`,  url: `${base}/photography/photographs/LRM_EXPORT_20191106_161452.jpg`,  height: 560 },
+  { id: '11', title: 'The Spectators',       img: `${base}/photography/photographs/thumbs/LRM_EXPORT_20200206_120246.webp`,  url: `${base}/photography/photographs/LRM_EXPORT_20200206_120246.jpg`,  height: 620 },
+  { id: '12', title: 'Sunset',               img: `${base}/photography/photographs/thumbs/DSC3031.webp`,                     url: `${base}/photography/photographs/DSC3031.jpg`,                     height: 580 },
+  { id: '13', title: 'The Shades of Man',    img: `${base}/photography/photographs/thumbs/IMG_0071.webp`,                    url: `${base}/photography/photographs/IMG_0071.jpg`,                    height: 900 },
+  { id: '14', title: 'Stargazer',            img: `${base}/photography/photographs/thumbs/LRM_EXPORT_20191028_021029.webp`,  url: `${base}/photography/photographs/LRM_EXPORT_20191028_021029.jpg`,  height: 640 },
+  { id: '15', title: 'The Pathfinder',       img: `${base}/photography/photographs/thumbs/DSC_8836.webp`,                    url: `${base}/photography/photographs/DSC_8836.jpg`,                    height: 720 },
+  { id: '16', title: 'The Guide',            img: `${base}/photography/photographs/thumbs/IMG_1110.webp`,                    url: `${base}/photography/photographs/IMG_1110.jpg`,                    height: 620 },
+  { id: '17', title: 'The Pursuit',          img: `${base}/photography/photographs/thumbs/AMN_2122.webp`,                    url: `${base}/photography/photographs/AMN_2122.jpg`,                    height: 660 },
+  { id: '18', title: 'The Gathering',        img: `${base}/photography/photographs/thumbs/AMN_1827.webp`,                    url: `${base}/photography/photographs/AMN_1827.jpg`,                    height: 820 },
+  { id: '19', title: 'The Moment',           img: `${base}/photography/photographs/thumbs/AMN_1908.webp`,                    url: `${base}/photography/photographs/AMN_1908.jpg`,                    height: 780 },
+  { id: '20', title: 'The Frame',            img: `${base}/photography/photographs/thumbs/IMG_8386.webp`,                    url: `${base}/photography/photographs/IMG_8386.jpg`,                    height: 600 },
+  { id: '21', title: "Winter's Edge",        img: `${base}/photography/photographs/thumbs/LRM_EXPORT_20191206_015955.webp`,  url: `${base}/photography/photographs/LRM_EXPORT_20191206_015955.jpg`,  height: 580 },
+  { id: '22', title: 'The Distance',         img: `${base}/photography/photographs/thumbs/LRM_EXPORT_20200112_033950.webp`,  url: `${base}/photography/photographs/LRM_EXPORT_20200112_033950.jpg`,  height: 620 },
+];
 ---
-<PhotoLayout title="The Darkroom | Kritesh Singh">
+
+<Layout title="The Darkroom | Kritesh Singh">
   <Nav />
 
-  <style is:global>
-    /* ── Body offset & background ──────────────────────────── */
-    body { padding-top: 74px; background-color: #000; }
+  <main class="bg-background">
 
-    /* ── Gallery intro font override ───────────────────────── */
-    #main .items .item.intro {
-      font-family: 'Space Grotesk', sans-serif !important;
-    }
-    #main .items .item.intro h1 {
-      font-family: 'Space Grotesk', sans-serif !important;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-    }
-    #main .items .item.intro p {
-      font-family: 'Inter', sans-serif !important;
-      font-weight: 300;
-      color: #9ca3af;
-    }
-
-    /* ── Footer ─────────────────────────────────────────────── */
-    .ks-footer {
-      background: #141414;
-      border-top: 1px solid #2a2a2a;
-      padding: 2rem 3rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      font-family: 'Space Grotesk', sans-serif;
-    }
-    .ks-footer__brand {
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: #fff;
-      text-decoration: none;
-    }
-    .ks-footer__copy {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: #4b5563;
-    }
-    .ks-footer__links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .ks-footer__links a {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #4b5563;
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-    .ks-footer__links a:hover { color: #E8A444; }
-    @media (max-width: 700px) {
-      .ks-footer { padding: 1.5rem 1.25rem; }
-    }
-
-    /* ── Lightbox ───────────────────────────────────────────── */
-    #ks-lb {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 10000;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-    }
-    #ks-lb.open { display: flex; }
-
-    .lb-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(13, 13, 13, 0.95);
-    }
-
-    .lb-stage {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      max-width: calc(100vw - 4rem);
-      max-height: calc(100vh - 8rem);
-    }
-
-    .lb-img-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .lb-img {
-      display: block;
-      max-width: calc(100vw - 10rem);
-      max-height: calc(100vh - 8rem);
-      object-fit: contain;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-
-    .lb-spinner {
-      position: absolute;
-      width: 28px;
-      height: 28px;
-      border: 2.5px solid rgba(255,255,255,0.15);
-      border-top-color: #E8A444;
-      border-radius: 50%;
-      animation: lb-spin 0.7s linear infinite;
-      display: none;
-    }
-    @keyframes lb-spin { to { transform: rotate(360deg); } }
-
-    .lb-caption {
-      position: relative;
-      z-index: 1;
-      margin-top: 1rem;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-    }
-
-    .lb-btn {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.7);
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s;
-      flex-shrink: 0;
-    }
-    .lb-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
-
-    .lb-close {
-      position: absolute;
-      top: 1.25rem;
-      right: 1.25rem;
-      z-index: 2;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 0.5rem;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.6);
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s;
-    }
-    .lb-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
-
-    body.lb-open { overflow: hidden; }
-  </style>
-
-  <!-- ── Gallery (HTML5UP Parallelism) ─────────────────────────── -->
-  <div id="bg">
-    <div class="overlay"></div>
-  </div>
-
-  <div id="wrapper">
-    <header id="main">
-
-      <div class="items">
-
-        <div class="item intro span-2">
-          <h1>The Darkroom</h1>
-          <p>Take a look at the world through my lens</p>
+    <!-- Hero -->
+    <section id="main-content" class="pt-24 md:pt-28 pb-12 px-6 md:px-12 bg-background">
+      <div class="max-w-7xl mx-auto">
+        <div class="mb-12" data-reveal>
+          <h1 class="font-headline text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6">
+            The Darkroom.
+          </h1>
+          <p class="text-neutral-600 text-base leading-relaxed max-w-sm">
+            Take a look at the world through my lens.
+          </p>
         </div>
-
-        <article class="item thumb span-1">
-          <h2>The Watcher</h2>
-          <a href={`${base}/photography/photographs/DSC3064.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC3064.webp`} alt="The Watcher" loading="lazy" /></a>
-        </article>
-
-        <article class="item thumb span-1">
-          <h2>The Witness</h2>
-          <a href={`${base}/photography/photographs/DSC3042.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC3042.webp`} alt="The Witness" loading="lazy" /></a>
-        </article>
-
-        <article class="item thumb span-2">
-          <h2>Kingdom of the Wind</h2>
-          <a href={`${base}/photography/photographs/DSC3120.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC3120.webp`} alt="Kingdom of the Wind" loading="lazy" /></a>
-        </article>
-
-        <article class="item thumb span-1">
-          <h2>Different.</h2>
-          <a href={`${base}/photography/photographs/DSC3127.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC3127.webp`} alt="Different." loading="lazy" /></a>
-        </article>
-
-        <article class="item thumb span-2">
-          <h2>Elysium</h2>
-          <a href={`${base}/photography/photographs/DSC3143.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC3143.webp`} alt="Elysium" loading="lazy" /></a>
-        </article>
-
-        <article class="item thumb span-3">
-          <h2>The Contemplation</h2>
-          <a href={`${base}/photography/photographs/DSC_0013.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC_0013.webp`} alt="The Contemplation" loading="lazy" /></a>
-        </article>
-
-        <article class="item thumb span-1">
-          <h2>The Protector</h2>
-          <a href={`${base}/photography/photographs/AMN_1896-2.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/AMN_1896-2.webp`} alt="The Protector" loading="lazy" /></a>
-        </article>
-
-        <article class="item thumb span-2">
-          <h2>The Intent</h2>
-          <a href={`${base}/photography/photographs/AMN_1804-2.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/AMN_1804-2.webp`} alt="The Intent" loading="lazy" /></a>
-        </article>
-
       </div>
+    </section>
 
-      <div class="items">
-        <article class="item thumb span-3"><h2>Kingdom of Snow</h2><a href={`${base}/photography/photographs/IMG_20191103_192250_252_4.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/IMG_20191103_192250_252_4.webp`} alt="Kingdom of Snow" loading="lazy" /></a></article>
-        <article class="item thumb span-2"><h2>The Cloudy Horizon</h2><a href={`${base}/photography/photographs/LRM_EXPORT_20191106_161452.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/LRM_EXPORT_20191106_161452.webp`} alt="The Cloudy Horizon" loading="lazy" /></a></article>
-        <article class="item thumb span-2"><h2>The Spectators</h2><a href={`${base}/photography/photographs/LRM_EXPORT_20200206_120246.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/LRM_EXPORT_20200206_120246.webp`} alt="The Spectators" loading="lazy" /></a></article>
-        <article class="item thumb span-1"><h2>Sunset</h2><a href={`${base}/photography/photographs/DSC3031.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC3031.webp`} alt="Sunset" loading="lazy" /></a></article>
-        <article class="item thumb span-1"><h2>The Shades of Man</h2><a href={`${base}/photography/photographs/IMG_0071.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/IMG_0071.webp`} alt="The Shades of Man" loading="lazy" /></a></article>
-        <article class="item thumb span-2"><h2>Stargazer</h2><a href={`${base}/photography/photographs/LRM_EXPORT_20191028_021029.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/LRM_EXPORT_20191028_021029.webp`} alt="Stargazer" loading="lazy" /></a></article>
-        <article class="item thumb span-1"><h2>The Pathfinder</h2><a href={`${base}/photography/photographs/DSC_8836.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/DSC_8836.webp`} alt="The Pathfinder" loading="lazy" /></a></article>
-        <article class="item thumb span-2"><h2>The Guide</h2><a href={`${base}/photography/photographs/IMG_1110.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/IMG_1110.webp`} alt="The Guide" loading="lazy" /></a></article>
-        <article class="item thumb span-1"><h2>The Pursuit</h2><a href={`${base}/photography/photographs/AMN_2122.jpg`} class="image"><img src={`${base}/photography/photographs/thumbs/AMN_2122.webp`} alt="The Pursuit" loading="lazy" /></a></article>
+    <!-- Masonry gallery -->
+    <section class="px-3 md:px-6 pb-32 bg-background" id="masonry-wrap">
+      <Masonry
+        items={photos}
+        animateFrom="bottom"
+        stagger={0.04}
+        blurToFocus={true}
+        scaleOnHover={true}
+        hoverScale={0.97}
+      />
+    </section>
+
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lb" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Photo viewer">
+    <div id="lb-backdrop"></div>
+    <button id="lb-close" aria-label="Close">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <button id="lb-prev" aria-label="Previous photo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div id="lb-center">
+      <div id="lb-img-wrap">
+        <div id="lb-spinner"></div>
+        <img id="lb-img" src="" alt="" />
       </div>
-
-    </header>
+      <div id="lb-meta">
+        <p id="lb-title"></p>
+        <p id="lb-count"></p>
+      </div>
+    </div>
+    <button id="lb-next" aria-label="Next photo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
   </div>
 
-  <!-- ── Footer ─────────────────────────────────────────────────── -->
-  <footer class="ks-footer">
-    <a href={`${base}/`} class="ks-footer__brand">Kritesh Singh</a>
-    <p class="ks-footer__copy">© 2026 · The Darkroom</p>
-    <ul class="ks-footer__links">
-      <li><a href={`${base}/`}>Portfolio</a></li>
-      <li><a href={`${base}/#contact`}>Contact</a></li>
-      <li><a href={`${base}/Resume/Resume_Kritesh_Singh.pdf`} target="_blank" rel="noopener noreferrer">Resume</a></li>
-    </ul>
-  </footer>
+  <Footer />
+</Layout>
 
-  <script src={`${base}/photography/assets/js/gallery.js`}></script>
-</PhotoLayout>
+<style is:global>
+  /* ── Lightbox ──────────────────────────────────────────── */
+  #lb {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  #lb.open { display: flex; }
+  body.lb-open { overflow: hidden; }
+
+  #lb-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 8, 8, 0.96);
+    cursor: pointer;
+  }
+
+  #lb-center {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    max-width: calc(100vw - 160px);
+    max-height: calc(100vh - 80px);
+  }
+
+  #lb-img-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #lb-img {
+    display: block;
+    max-width: calc(100vw - 160px);
+    max-height: calc(100vh - 140px);
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border-radius: 4px;
+  }
+  #lb-img.loaded { opacity: 1; }
+
+  #lb-spinner {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 2px solid rgba(255,255,255,0.08);
+    border-top-color: #E8A444;
+    border-radius: 50%;
+    animation: lb-spin 0.65s linear infinite;
+    display: none;
+  }
+  #lb-spinner.visible { display: block; }
+  @keyframes lb-spin { to { transform: rotate(360deg); } }
+
+  #lb-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  #lb-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin: 0;
+  }
+
+  #lb-count {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.2);
+    margin: 0;
+  }
+
+  #lb-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 2;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  #lb-close:hover { background: rgba(255,255,255,0.11); color: #fff; }
+
+  #lb-prev, #lb-next {
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  #lb-prev:hover, #lb-next:hover { background: rgba(255,255,255,0.11); color: #fff; }
+  #lb-prev:disabled, #lb-next:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
+
+  @media (max-width: 640px) {
+    #lb-center { max-width: calc(100vw - 24px); }
+    #lb-img { max-width: calc(100vw - 24px); max-height: calc(100vh - 120px); }
+    #lb-prev, #lb-next { display: none; }
+  }
+</style>
+
+<script>
+  const lb       = document.getElementById('lb')!;
+  const lbImg    = document.getElementById('lb-img') as HTMLImageElement;
+  const lbTitle  = document.getElementById('lb-title')!;
+  const lbCount  = document.getElementById('lb-count')!;
+  const lbSpinner = document.getElementById('lb-spinner')!;
+  const lbClose  = document.getElementById('lb-close')!;
+  const lbPrev   = document.getElementById('lb-prev') as HTMLButtonElement;
+  const lbNext   = document.getElementById('lb-next') as HTMLButtonElement;
+  const lbBackdrop = document.getElementById('lb-backdrop')!;
+
+  type Photo = { url: string; title: string };
+  let photos: Photo[] = [];
+  let current = 0;
+
+  function buildPhotoList() {
+    photos = Array.from(document.querySelectorAll<HTMLElement>('.masonry-item')).map(el => ({
+      url:   el.dataset.url   ?? '',
+      title: el.dataset.title ?? '',
+    }));
+  }
+
+  let lastFocusedEl: HTMLElement | null = null;
+  const lbFocusable = [lbClose, lbPrev, lbNext];
+
+  function openLightbox(idx: number) {
+    if (photos.length === 0) buildPhotoList();
+    current = idx;
+    lastFocusedEl = document.activeElement as HTMLElement;
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lb-open');
+    showPhoto(idx);
+    requestAnimationFrame(() => lbClose.focus());
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lb-open');
+    lbImg.classList.remove('loaded');
+    lbImg.src = '';
+    lastFocusedEl?.focus();
+  }
+
+  function showPhoto(idx: number) {
+    const photo = photos[idx];
+    lbTitle.textContent = photo.title;
+    lbCount.textContent = `${idx + 1} / ${photos.length}`;
+    lbImg.classList.remove('loaded');
+    lbSpinner.classList.add('visible');
+
+    const tmp = new Image();
+    tmp.src = photo.url;
+    tmp.onload = () => {
+      lbImg.src = photo.url;
+      lbImg.alt = photo.title;
+      lbSpinner.classList.remove('visible');
+      lbImg.classList.add('loaded');
+    };
+    tmp.onerror = () => lbSpinner.classList.remove('visible');
+
+    lbPrev.disabled = idx === 0;
+    lbNext.disabled = idx === photos.length - 1;
+  }
+
+  // Capture-phase interception: fires before Masonry's bubble-phase click (which opens a new tab).
+  // stopPropagation here prevents the event from reaching masonry-item's own listeners.
+  document.querySelector('.masonry-list')?.addEventListener('click', (e) => {
+    const items = Array.from(document.querySelectorAll<HTMLElement>('.masonry-item'));
+    const item  = (e.target as HTMLElement).closest<HTMLElement>('.masonry-item');
+    if (!item) return;
+    e.stopPropagation();
+    const idx = items.indexOf(item);
+    if (idx >= 0) openLightbox(idx);
+  }, true);
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbBackdrop.addEventListener('click', closeLightbox);
+
+  lbPrev.addEventListener('click', () => { if (current > 0) { current--; showPhoto(current); } });
+  lbNext.addEventListener('click', () => { if (current < photos.length - 1) { current++; showPhoto(current); } });
+
+  // Touch swipe support
+  let touchX = 0;
+  lb.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) < 40) return;
+    if (dx < 0 && current < photos.length - 1) { current++; showPhoto(current); }
+    if (dx > 0 && current > 0) { current--; showPhoto(current); }
+  }, { passive: true });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') { closeLightbox(); return; }
+    if (e.key === 'ArrowLeft'  && current > 0) { current--; showPhoto(current); }
+    if (e.key === 'ArrowRight' && current < photos.length - 1) { current++; showPhoto(current); }
+    if (e.key === 'Tab') {
+      const visible = lbFocusable.filter(el => !el.disabled);
+      const first = visible[0];
+      const last  = visible[visible.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+      }
+    }
+  });
+</script>
