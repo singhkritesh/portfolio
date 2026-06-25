@@ -53,6 +53,9 @@ export default function Lanyard({
         dpr={[1, isMobile ? 1.5 : 2]}
         gl={{ alpha: transparent }}
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
+        eventSource={typeof document !== 'undefined' ? document.body : undefined}
+        eventPrefix="client"
+        style={{ pointerEvents: 'none' }}
       >
         <ambientLight intensity={Math.PI} />
         <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
@@ -192,6 +195,38 @@ function Band({
     }
   }, [hovered, dragged]);
 
+  useEffect(() => {
+    document.body.style.userSelect = dragged ? 'none' : '';
+    return () => void (document.body.style.userSelect = '');
+  }, [dragged]);
+
+  useEffect(() => {
+    // Group world origin: position={[2.5, 4.65, 0]} in JSX
+    const GX = 2.5, GY = 4.65;
+    function resetDrop() {
+      const joints = [
+        { ref: j1, ox: 0.5 },
+        { ref: j2, ox: 1.0 },
+        { ref: j3, ox: 1.5 },
+      ];
+      joints.forEach(({ ref, ox }) => {
+        if (!ref.current) return;
+        ref.current.setTranslation({ x: GX + ox, y: GY, z: 0 }, true);
+        ref.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
+        ref.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
+        if (ref.current.lerped) ref.current.lerped.set(GX + ox, GY, 0);
+      });
+      if (card.current) {
+        card.current.setTranslation({ x: GX + 2.0, y: GY, z: 0 }, true);
+        card.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
+        card.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
+        card.current.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true);
+      }
+    }
+    document.addEventListener('lanyard:drop', resetDrop);
+    return () => document.removeEventListener('lanyard:drop', resetDrop);
+  }, []);
+
   useFrame((state, delta) => {
     if (dragged) {
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
@@ -225,7 +260,7 @@ function Band({
 
   return (
     <>
-      <group position={[0, 4, 0]}>
+      <group position={[2.5, 4.65, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
@@ -269,10 +304,10 @@ function Band({
         <meshLineMaterial
           color="white"
           depthTest={false}
-          resolution={isMobile ? [1000, 2000] : [1000, 1000]}
+          resolution={[1000, 1000]}
           useMap
           map={texture}
-          repeat={[-4, 1]}
+          repeat={[1, 1]}
           lineWidth={lanyardWidth}
         />
       </mesh>

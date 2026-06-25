@@ -115,6 +115,7 @@ const gooeyItems = [
 
   function hidePhotography() {
     document.body.classList.remove('show-photography');
+    document.dispatchEvent(new CustomEvent('photography:hide'));
   }
 
   // ── Hover prefetch: warm browser cache before click ────────

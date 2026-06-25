@@ -10,26 +10,57 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     fov={15}
     frontImage={`${base}/card-face.svg`}
     lanyardImage={`${base}/lanyard-band.svg`}
-    lanyardWidth={3}
+    lanyardWidth={0.84}
     client:only="react"
   />
 </div>
 
 <style>
   .lanyard-container {
-    position: absolute;
+    position: fixed;
     top: 0;
-    right: 0;
-    width: 33vw;
-    max-width: 500px;
-    min-width: 280px;
+    left: 0;
+    width: 100vw;
     height: 100vh;
     pointer-events: none;
-    z-index: 40;
+    z-index: 9998;
+    will-change: transform;
   }
 
   .lanyard-container :global(.lanyard-wrapper) {
-    pointer-events: all;
+    pointer-events: none;
     height: 100%;
   }
 </style>
+
+<script>
+  const container = document.querySelector<HTMLElement>('.lanyard-container')!;
+
+  function hide() {
+    container.style.transform = `translateY(-${window.innerHeight}px)`;
+  }
+
+  function update() {
+    if (document.body.classList.contains('show-photography')) {
+      hide();
+      return;
+    }
+    const scrollY = window.scrollY;
+    container.style.transform = scrollY > 0 ? `translateY(-${scrollY}px)` : '';
+  }
+
+  function dropIn() {
+    container.style.transform = '';
+    // Signal Rapier to teleport bodies to starting positions — gravity does the rest
+    document.dispatchEvent(new CustomEvent('lanyard:drop'));
+    update();
+  }
+
+  // Initial load: hide until the loading screen panels finish opening, then let gravity pull the card in
+  hide();
+  document.addEventListener('loading:done', dropIn, { once: true });
+
+  document.addEventListener('photography:show', hide);
+  document.addEventListener('photography:hide', dropIn);
+  window.addEventListener('scroll', update, { passive: true });
+</script>

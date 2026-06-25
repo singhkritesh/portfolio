@@ -1,59 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100" height="400" viewBox="0 0 100 400">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="100" viewBox="0 0 1200 100">
   <defs>
-    <!-- Horizontal stripe texture: 3px transparent + 1px at 4.5% white (exact reference values) -->
-    <pattern id="h-stripes" x="0" y="0" width="100" height="4" patternUnits="userSpaceOnUse">
-      <rect width="100" height="3" fill="transparent"/>
-      <rect y="3" width="100" height="1" fill="rgba(255,255,255,0.045)"/>
+    <pattern id="h-stripes" x="0" y="0" width="1200" height="4" patternUnits="userSpaceOnUse">
+      <rect width="1200" height="3" fill="transparent"/>
+      <rect y="3" width="1200" height="1" fill="rgba(255,255,255,0.045)"/>
     </pattern>
-    <!-- 1px vertical edge highlights (reference: rgba(255,255,255,0.03)) -->
-    <pattern id="v-edge" x="0" y="0" width="100" height="1" patternUnits="userSpaceOnUse">
-      <rect x="0" width="1" height="1" fill="rgba(255,255,255,0.03)"/>
-    </pattern>
-    <!-- Inset side shadows (reference: inset 5px 0 8px rgba(0,0,0,0.5)) -->
-    <linearGradient id="left-shadow" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="top-shadow" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0"   stop-color="rgba(0,0,0,0.5)"/>
       <stop offset="1"   stop-color="rgba(0,0,0,0)"/>
     </linearGradient>
-    <linearGradient id="right-shadow" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="bottom-shadow" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0"   stop-color="rgba(0,0,0,0)"/>
       <stop offset="1"   stop-color="rgba(0,0,0,0.5)"/>
     </linearGradient>
-    <!-- Very thin white rim (reference: inset 0 0 0 1px rgba(255,255,255,0.04)) -->
-    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0"   stop-color="rgba(255,255,255,0.04)"/>
-      <stop offset="0.02" stop-color="rgba(255,255,255,0)"/>
-      <stop offset="0.98" stop-color="rgba(255,255,255,0)"/>
-      <stop offset="1"   stop-color="rgba(255,255,255,0.04)"/>
-    </linearGradient>
+    <filter id="deboss" x="-2%" y="-80%" width="104%" height="260%">
+      <feDropShadow dx="0" dy="1"  stdDeviation="0.4" flood-color="rgba(0,0,0,0.9)"/>
+      <feDropShadow dx="0" dy="-1" stdDeviation="0"   flood-color="rgba(255,255,255,0.07)"/>
+    </filter>
   </defs>
 
-  <!-- Base colour (#111113) -->
-  <rect width="100" height="400" fill="#111113"/>
-  <!-- Horizontal stripes -->
-  <rect width="100" height="400" fill="url(#h-stripes)"/>
-  <!-- Vertical edge line -->
-  <rect width="100" height="400" fill="url(#v-edge)"/>
-  <!-- Rim highlight -->
-  <rect width="100" height="400" fill="url(#rim)"/>
-  <!-- Left inset shadow -->
-  <rect x="0"  width="20" height="400" fill="url(#left-shadow)"/>
-  <!-- Right inset shadow -->
-  <rect x="80" width="20" height="400" fill="url(#right-shadow)"/>
+  <rect width="1200" height="100" fill="#111113"/>
+  <rect width="1200" height="100" fill="url(#h-stripes)"/>
+  <rect width="1200" height="22"        fill="url(#top-shadow)"/>
+  <rect y="78" width="1200" height="22" fill="url(#bottom-shadow)"/>
+  <rect width="1200" height="100" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="2"/>
 
-  <!--
-    Text: reference is 8px in a 32px band = 25% of band width.
-    SVG is 100px wide → font-size 25 to match that ratio.
-    writing-mode: vertical-lr + rotate(180deg) = reads bottom-to-top.
-    Rotated -90° here achieves the same: text along rope length, reading upward.
-  -->
-  <text
-    x="50" y="200"
-    font-family="'Courier New', Courier, monospace"
-    font-size="22"
-    font-weight="600"
-    fill="#c0c0c8"
-    text-anchor="middle"
-    dominant-baseline="central"
-    letter-spacing="6"
-    transform="rotate(-90 50 200)">KRITESH SINGH</text>
+  <g transform="translate(0,100) scale(1,-1)">
+    <text
+      x="215" y="50"
+      font-family="'Courier New', Courier, monospace"
+      font-size="29"
+      font-weight="400"
+      fill="#71717a"
+      text-anchor="middle"
+      dominant-baseline="central"
+      letter-spacing="1"
+      filter="url(#deboss)">KRITESH SINGH · PM</text>
+  </g>
 </svg>
