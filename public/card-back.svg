@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="720" viewBox="0 0 512 720">
+  <defs>
+    <pattern id="dots" x="0" y="0" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="13" cy="13" r="1.4" fill="rgba(255,255,255,0.06)"/>
+    </pattern>
+    <clipPath id="card-clip">
+      <rect width="512" height="720" rx="28"/>
+    </clipPath>
+  </defs>
+
+  <rect width="512" height="720" rx="28" fill="#07070a"/>
+  <rect width="512" height="720" fill="url(#dots)" clip-path="url(#card-clip)"/>
+  <rect x="1.5" y="1.5" width="509" height="717" rx="27" fill="none" stroke="#28282f" stroke-width="3"/>
+
+  <text
+    x="256" y="330"
+    font-family="'Courier New', Courier, monospace"
+    font-size="20"
+    font-weight="400"
+    fill="rgba(255,255,255,0.55)"
+    text-anchor="middle"
+    letter-spacing="4">KRITESH SINGH</text>
+
+  <text
+    x="256" y="380"
+    font-family="'Courier New', Courier, monospace"
+    font-size="38"
+    font-weight="400"
+    fill="rgba(255,255,255,0.55)"
+    text-anchor="middle"
+    letter-spacing="2">Product Manager</text>
+
+  <line x1="156" y1="410" x2="356" y2="410" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+</svg>

@@ -1,80 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="773" viewBox="0 0 512 773">
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="720" viewBox="0 0 512 720">
   <defs>
-    <!-- Dot grid — upper panel only -->
     <pattern id="dots" x="0" y="0" width="26" height="26" patternUnits="userSpaceOnUse">
       <circle cx="13" cy="13" r="1.4" fill="rgba(255,255,255,0.11)"/>
     </pattern>
-    <!-- Clip upper panel to card's rounded top corners -->
     <clipPath id="upper-clip">
-      <path d="M 28 0 L 484 0 Q 512 0 512 28 L 512 348 L 0 348 L 0 28 Q 0 0 28 0 Z"/>
+      <path d="M 28 0 L 484 0 Q 512 0 512 28 L 512 259 L 0 259 L 0 28 Q 0 0 28 0 Z"/>
     </clipPath>
-    <!-- Clip entire card shape for border -->
     <clipPath id="card-clip">
-      <rect width="512" height="773" rx="28"/>
+      <rect width="512" height="720" rx="28"/>
     </clipPath>
   </defs>
 
-  <!-- ── Lower photo section: very dark near-black ── -->
-  <rect width="512" height="773" rx="28" fill="#07070a"/>
+  <rect width="512" height="720" rx="28" fill="#07070a"/>
 
-  <!-- ── Upper text panel: clearly lighter, blue-grey dark ── -->
-  <path d="M 28 0 L 484 0 Q 512 0 512 28 L 512 348 L 0 348 L 0 28 Q 0 0 28 0 Z"
+  <path d="M 28 0 L 484 0 Q 512 0 512 28 L 512 259 L 0 259 L 0 28 Q 0 0 28 0 Z"
         fill="#16161e"/>
 
-  <!-- Dot texture clipped to upper panel -->
-  <rect width="512" height="348" fill="url(#dots)" clip-path="url(#upper-clip)"/>
+  <rect width="512" height="259" fill="url(#dots)" clip-path="url(#upper-clip)"/>
 
-  <!-- Section divider — visible separation line -->
-  <line x1="0" y1="348" x2="512" y2="348" stroke="#2a2a36" stroke-width="2"/>
+  <line x1="0" y1="259" x2="512" y2="259" stroke="#2a2a36" stroke-width="2"/>
 
-  <!-- Card border -->
-  <rect x="1.5" y="1.5" width="509" height="770" rx="27"
+  <rect x="1.5" y="1.5" width="509" height="717" rx="27"
         fill="none" stroke="#28282f" stroke-width="3"/>
 
-  <!-- Slot at top centre -->
-  <rect x="224" y="18" width="64" height="17" rx="8" fill="#030305"/>
-  <rect x="235" y="22" width="42" height="10" rx="4" fill="#0e0e16"/>
+  <rect x="224" y="17" width="64" height="16" rx="8" fill="#030305"/>
+  <rect x="235" y="21" width="42" height="9" rx="4" fill="#0e0e16"/>
 
-  <!-- ── Name ── -->
   <text
-    x="46" y="162"
+    x="82" y="151"
     font-family="'Kohinoor Devanagari','Noto Sans Devanagari','Devanagari MT',sans-serif"
-    font-size="90"
-    font-weight="800"
+    font-size="77"
+    font-weight="600"
     fill="#ffffff"
     text-anchor="start">कृतेश</text>
 
-  <!-- ── Tagline ── -->
   <text
-    x="46" y="218"
-    font-family="'Inter','SF Pro Text','Helvetica Neue',Arial,sans-serif"
-    font-size="20"
+    x="82" y="203"
+    font-family="'Courier New', Courier, monospace"
+    font-size="21"
     font-weight="400"
     fill="rgba(255,255,255,0.65)"
     text-anchor="start">Building AI-native products,</text>
   <text
-    x="46" y="248"
-    font-family="'Inter','SF Pro Text','Helvetica Neue',Arial,sans-serif"
-    font-size="20"
+    x="82" y="231"
+    font-family="'Courier New', Courier, monospace"
+    font-size="21"
     font-weight="400"
     fill="rgba(255,255,255,0.65)"
     text-anchor="start">that actually scale.</text>
 
-  <!--
-    ── Avatar circle ──
-    Lower panel: y=348 to y=773 → height=425px
-    Vertical centre of lower panel: 348 + 425/2 = 348 + 212 = 560
-    Horizontal centre: 512/2 = 256
-    Circle radius 168 → top at 560-168=392 (44px below divider), bottom at 560+168=728 (45px above card bottom)
-  -->
-  <circle cx="256" cy="560" r="172" fill="#0f0f16" stroke="#1e1e28" stroke-width="5"/>
-  <circle cx="256" cy="560" r="164" fill="#0c0c13"/>
+  <circle cx="256" cy="489.5" r="168" fill="#0c0c13" stroke="#1e1e28" stroke-width="8"/>
 
-  <!-- K monogram — centred at circle centre -->
   <text
-    x="256" y="560"
+    x="256" y="489.5"
     font-family="Georgia,'Times New Roman',serif"
-    font-size="148"
+    font-size="102"
     font-weight="400"
     fill="#3d4047"
     text-anchor="middle"
