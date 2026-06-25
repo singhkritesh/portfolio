@@ -72,6 +72,14 @@ section[id] {
   scroll-margin-top: 80px;
 }
 
+/* Projects is scroll-driven with a sticky panel — its sticky behaviour
+   only activates when the section top hits viewport top (top:0). Setting
+   scroll-margin-top to 0 ensures both nav-click and restore land the section
+   top exactly at viewport top so the panel is sticky from the first frame. */
+#projects {
+  scroll-margin-top: 0;
+}
+
 /* ── Global focus-visible ring ───────────────────────────── */
 :focus-visible {
   outline: 2px solid #E8A444;

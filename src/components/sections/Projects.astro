@@ -1,13 +1,14 @@
 ---
-const independent = [
+import ProjectsGallery from '../ProjectsGallery.jsx';
+
+const projects = [
   {
-    span: 'md:col-span-7',
+    category: 'Personal Ventures',
     tags: [
       { label: 'Gen AI', accent: true },
       { label: 'Content Strategy', accent: false },
     ],
     title: 'LinkedIn Content Generation App',
-    summary: 'Generative AI tool to create personalised LinkedIn content, optimising for audience engagement and content relevance. Designed prompt frameworks, content strategies, and iterative testing workflows.',
     bullets: [
       'Developed a generative AI tool to create personalized LinkedIn content, optimizing for audience engagement and content relevance.',
       'Designed prompt frameworks and content strategies to improve post quality, consistency, and user interaction.',
@@ -17,13 +18,12 @@ const independent = [
     repo: 'https://github.com/singhkritesh/linkedin-content-gen',
   },
   {
-    span: 'md:col-span-5',
+    category: 'Personal Ventures',
     tags: [
       { label: 'AI Automation', accent: true },
       { label: 'Lead Gen', accent: false },
     ],
     title: 'AI Lead Generation Platform',
-    summary: 'AI-driven platform using Exa APIs to identify high-intent prospects, auto-draft personalised emails, and score leads through intelligent workflow automation.',
     bullets: [
       'Built an AI-driven lead generation application to identify and prioritize high-intent prospects using automated data from Exa APIs.',
       'Designed end-to-end user workflows enabling discovery of leads, auto drafting and sending emails, improving conversion potential.',
@@ -32,35 +32,29 @@ const independent = [
     repo: 'https://github.com/singhkritesh/reachout',
   },
   {
-    span: 'md:col-span-12',
+    category: 'Personal Ventures',
     tags: [
       { label: 'Local LLM', accent: true },
       { label: 'EdTech', accent: false },
       { label: 'Full PRD', accent: false },
       { label: 'Microservices', accent: false },
-      { label: 'Privacy-First', accent: false },
     ],
     title: 'AI-First Learning Management System',
-    summary: 'Authored a full PRD covering user personas, system architecture, guardrails, and non-functional requirements, then prototyped the system. Features audio interaction and voice/text queries for real-time course access. Powered by Qwen 3.5 via Ollama, pgvector for retrieval, and containerised microservices.',
     bullets: [
       'Authored PRD for user personas, system architecture, guardrails, and non-functional requirements, and prototyped using Antigravity.',
-      'Engineered an interface featuring audio interaction and voice/text queries, enabling real-time course access to enhance the student education experience, powered by a local LLM (Qwen3.5 via Ollama), pgvector for retrieval, and containerized microservices.',
+      'Engineered an interface featuring audio interaction and voice/text queries, powered by a local LLM (Qwen3.5 via Ollama), pgvector for retrieval, and containerized microservices.',
     ],
     date: 'February 2026',
     repo: 'https://github.com/singhkritesh/blank-lms',
   },
-];
-
-const academic = [
   {
-    span: 'md:col-span-6',
+    category: 'Academic Projects',
     tags: [
       { label: 'AI Research', accent: true },
       { label: 'Fine-tuning', accent: false },
       { label: 'Python', accent: false },
     ],
     title: 'LLM Hallucination Detection — FastHalluCheck',
-    summary: 'Research project evaluating hallucination detection models on QA benchmarks using threshold optimisation and supervised fine-tuning. Explored ensemble approaches across in-domain and cross-domain datasets.',
     bullets: [
       'Evaluated Vectara HHEM v2 and DeBERTa-v3-small on HaluEval and PHANTOM Financial benchmarks using PyTorch and Hugging Face.',
       'Achieved 98.2% accuracy (F1: 0.9818) with ensemble method on in-domain dataset.',
@@ -70,14 +64,13 @@ const academic = [
     repo: 'https://github.com/singhkritesh/ml-assignment',
   },
   {
-    span: 'md:col-span-6',
+    category: 'Academic Projects',
     tags: [
       { label: 'Market Analysis', accent: true },
       { label: 'GTM Strategy', accent: false },
       { label: 'Consulting', accent: false },
     ],
     title: 'Graduate Student Consultant — Cisco Spaces',
-    summary: 'Consulted on product strategy in the $20B Smart Buildings industry, identifying high-potential launch opportunities across 5 venue types and informing go-to-market and partner prioritisation for Cisco Spaces.',
     bullets: [
       'Conducted market analysis across 5 venue types in the Smart Buildings industry to identify high-potential product launch opportunities.',
       'Aligned customer needs with market trends to inform go-to-market strategy and partner prioritisation for Cisco Spaces.',
@@ -86,262 +79,302 @@ const academic = [
     repo: '',
   },
 ];
+
+const N = projects.length;
 ---
 
-<section id="projects" class="pt-20 pb-32 px-6 md:px-12 bg-background">
-  <div class="max-w-7xl mx-auto">
-
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-20" data-reveal>
-      <div>
-        <h2 class="font-headline text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter">
-          Projects
-        </h2>
-      </div>
-      <p class="text-neutral-600 text-sm max-w-xs leading-relaxed">
-        Personal builds and academic work at the intersection of AI, product thinking, and engineering.
-      </p>
-    </div>
-
-    <!-- Independent Builds -->
-    <div class="mb-16">
-      <p class="font-headline text-lg font-semibold tracking-tight text-neutral-700 mb-6" data-reveal>Personal Ventures</p>
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-        {independent.map((p, i) => (
-          <div
-            class={`${p.span} card-flip-wrapper`}
-            data-reveal
-            data-reveal-delay={i * 80}
-          >
-            <div class="card-flip-inner">
-
-              <!-- Front -->
-              <div class="card-face card-front bg-surface-mid rounded-xl border border-outline-dim p-8 flex flex-col">
-                <div class="flex flex-wrap items-center gap-2 mb-6">
-                  {p.tags.map(t => (
-                    <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-600'}`}>
-                      {t.label}
-                    </span>
-                  ))}
-                  <span class="ml-auto text-[10px] font-headline uppercase tracking-wider text-neutral-500">{p.date}</span>
-                </div>
-                <div class="flex flex-col flex-1">
-                  <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
-                  <p class="text-neutral-600 text-sm leading-relaxed">{p.summary}</p>
-                </div>
-                <div class="flip-hint mt-5 flex items-center gap-1.5 text-primary/70 text-xs font-headline uppercase tracking-wider">
-                  <span>Details</span>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                    <path d="M3 3v5h5"/>
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Back -->
-              <div class="card-face card-back bg-surface-mid rounded-xl border border-outline-dim p-8 flex flex-col">
-                <div class="flex items-start justify-between gap-3 mb-5">
-                  <h4 class="font-headline text-xs font-bold text-neutral-500 uppercase tracking-wider leading-snug">{p.title}</h4>
-                  <button class="flip-back flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-surface-high hover:bg-surface-highest text-neutral-500 hover:text-neutral-300 transition-colors" aria-label="Flip back">
-                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-                      <path d="M2 2l8 8M10 2L2 10"/>
-                    </svg>
-                  </button>
-                </div>
-                <ul class="flex flex-col flex-1 space-y-3">
-                  {p.bullets.map(b => (
-                    <li class="text-sm text-neutral-400 leading-relaxed border-l-2 border-primary/40 pl-3">{b}</li>
-                  ))}
-                </ul>
-                <div class="mt-6 pt-5 border-t border-outline-dim flex items-center justify-between gap-4">
-                  <span class="text-neutral-500 text-xs font-headline uppercase tracking-wider">{p.date}</span>
-                  {p.repo && (
-                    <a href={p.repo} target="_blank" rel="noopener noreferrer"
-                       class="flex items-center gap-1.5 text-xs font-headline uppercase tracking-wider text-neutral-500 hover:text-neutral-300 transition-colors">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                      </svg>
-                      View Repo
-                    </a>
-                  )}
-                </div>
-              </div>
-
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    <!-- Academic Projects -->
-    <div>
-      <p class="font-headline text-lg font-semibold tracking-tight text-neutral-700 mb-6" data-reveal>Academic Projects</p>
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-        {academic.map((p, i) => (
-          <div
-            class={`${p.span} card-flip-wrapper`}
-            data-reveal
-            data-reveal-delay={i * 80}
-          >
-            <div class="card-flip-inner">
-
-              <!-- Front -->
-              <div class="card-face card-front bg-surface-mid rounded-xl border border-outline-dim p-8 flex flex-col">
-                <div class="flex flex-wrap items-center gap-2 mb-6">
-                  {p.tags.map(t => (
-                    <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-600'}`}>
-                      {t.label}
-                    </span>
-                  ))}
-                  <span class="ml-auto text-[10px] font-headline uppercase tracking-wider text-neutral-500">{p.date}</span>
-                </div>
-                <div class="flex flex-col flex-1">
-                  <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
-                  <p class="text-neutral-600 text-sm leading-relaxed">{p.summary}</p>
-                </div>
-                <div class="flip-hint mt-5 flex items-center gap-1.5 text-primary/70 text-xs font-headline uppercase tracking-wider">
-                  <span>Details</span>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                    <path d="M3 3v5h5"/>
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Back -->
-              <div class="card-face card-back bg-surface-mid rounded-xl border border-outline-dim p-8 flex flex-col">
-                <div class="flex items-start justify-between gap-3 mb-5">
-                  <h4 class="font-headline text-xs font-bold text-neutral-500 uppercase tracking-wider leading-snug">{p.title}</h4>
-                  <button class="flip-back flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-surface-high hover:bg-surface-highest text-neutral-500 hover:text-neutral-300 transition-colors" aria-label="Flip back">
-                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-                      <path d="M2 2l8 8M10 2L2 10"/>
-                    </svg>
-                  </button>
-                </div>
-                <ul class="flex flex-col flex-1 space-y-3">
-                  {p.bullets.map(b => (
-                    <li class="text-sm text-neutral-400 leading-relaxed border-l-2 border-primary/40 pl-3">{b}</li>
-                  ))}
-                </ul>
-                <div class="mt-6 pt-5 border-t border-outline-dim flex items-center justify-between gap-4">
-                  <span class="text-neutral-500 text-xs font-headline uppercase tracking-wider">{p.date}</span>
-                  {p.repo && (
-                    <a href={p.repo} target="_blank" rel="noopener noreferrer"
-                       class="flex items-center gap-1.5 text-xs font-headline uppercase tracking-wider text-neutral-500 hover:text-neutral-300 transition-colors">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                      </svg>
-                      View Repo
-                    </a>
-                  )}
-                </div>
-              </div>
-
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-
+<!--
+  The section is (N+1)×100vh tall to reserve scroll distance.
+  .pg-sticky pins to the viewport while the section's scroll space passes,
+  giving a natural in-flow entry (no fixed overlay, no fade-in delay).
+-->
+<section id="projects" class="projects-scroll-space">
+  <div class="pg-sticky">
+    <ProjectsGallery projects={projects} client:only="react" />
   </div>
 </section>
 
-<script>
-  document.querySelectorAll<HTMLElement>('.card-flip-wrapper').forEach(wrapper => {
-    const inner = wrapper.querySelector<HTMLElement>('.card-flip-inner');
-    const bullets = Array.from(wrapper.querySelectorAll<HTMLElement>('.card-back li'));
+<style>
+  .projects-scroll-space {
+    height: calc(var(--projects-n, 5) * 40vh + 100vh);
+    background: #ffffff;
+    position: relative;
+  }
+  .pg-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+</style>
 
-    function animateBulletsIn() {
-      bullets.forEach((li, i) => {
-        li.style.animation = 'none';
-        li.offsetHeight; // force reflow — resets the animation
-        li.style.animation = `bulletIn 0.32s ease both ${350 + i * 70}ms`;
-      });
-    }
-
-    function resetBullets() {
-      bullets.forEach(li => {
-        li.style.animation = 'none';
-        li.style.opacity = '0';
-      });
-    }
-
-    wrapper.addEventListener('click', e => {
-      const t = e.target as Element;
-      if (t.closest('a') || t.closest('.flip-back')) return;
-      const flipping = !inner?.classList.contains('flipped');
-      inner?.classList.toggle('flipped');
-      wrapper.classList.toggle('is-flipped');
-      if (flipping) animateBulletsIn(); else resetBullets();
-    });
-
-    wrapper.querySelector('.flip-back')?.addEventListener('click', e => {
-      e.stopPropagation();
-      inner?.classList.remove('flipped');
-      wrapper.classList.remove('is-flipped');
-      resetBullets();
-    });
-  });
+<script define:vars={{ N }}>
+  // Set the CSS variable for section height
+  document.getElementById('projects').style.height = `calc(${N} * 40vh + 100vh)`;
 </script>
 
-<style>
-  .card-flip-wrapper {
-    perspective: 1200px;
-    cursor: pointer;
-    transition: transform 0.25s ease;
-  }
-  .card-flip-wrapper:not(.is-flipped):hover {
-    transform: translateY(-2px);
-  }
-
-  .card-flip-inner {
-    display: grid;
-    transform-style: preserve-3d;
-    transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .card-flip-inner.flipped {
-    transform: rotateY(180deg);
+<style is:global>
+  /* ── Gallery (fills the sticky viewport) ─────────────────── */
+  .pg-gallery {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
   }
 
-  .card-face {
-    grid-area: 1 / 1;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transition: border-color 0.35s ease, box-shadow 0.35s ease;
-    box-shadow: inset 0 1px rgba(255, 255, 255, 0.06);
-    min-height: 260px;
-  }
-  .card-back {
-    transform: rotateY(180deg);
+  /* ── Meta row (top-left) ─────────────────────────────────── */
+  .pg-meta {
+    position: absolute;
+    top: 17vh;
+    left: 5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 
-  .card-flip-wrapper:not(.is-flipped):hover .card-front {
-    border-color: rgba(232, 164, 68, 0.22);
-    box-shadow:
-      0 0 0 1px rgba(232, 164, 68, 0.06),
-      0 8px 32px -8px rgba(232, 164, 68, 0.12),
-      0 2px 8px -2px rgba(0, 0, 0, 0.4),
-      inset 0 1px rgba(255, 255, 255, 0.06);
-  }
-  .card-flip-wrapper.is-flipped:hover .card-back {
-    border-color: rgba(232, 164, 68, 0.22);
+  .pg-label {
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: #131313;
   }
 
-  .card-back li {
+  @media (min-width: 768px) {
+    .pg-label { font-size: 3rem; }
+  }
+
+  @media (min-width: 1024px) {
+    .pg-label { font-size: 3.75rem; }
+  }
+
+  .pg-counter {
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .pg-counter-current {
+    color: rgba(0, 0, 0, 0.42);
+  }
+
+  .pg-counter-sep,
+  .pg-counter-total {
+    color: rgba(0, 0, 0, 0.28);
+  }
+
+  .pg-category {
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.28);
+    transition: color 0.4s ease;
+  }
+
+  /* ── Progress rail (left side) ───────────────────────────── */
+  .pg-rail {
+    position: absolute;
+    left: 5vw;
+    bottom: 10vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pg-rail-dot {
+    width: 28px;
+    height: 2px;
+    border-radius: 2px;
+    background: #e4e4e4;
+    transition: background 0.4s ease, width 0.3s ease;
+  }
+
+  .pg-rail-dot--done {
+    background: #d0d0d0;
+  }
+
+  .pg-rail-dot--active {
+    background: #E8A444;
+    width: 42px;
+  }
+
+  /* ── Card stack (centred) ────────────────────────────────── */
+  .pg-stack {
+    /* Extra right padding so the stacked cards don't clip */
+    padding-right: 80px;
+    /* Push card center to ~60% from top */
+    margin-top: min(18vh, calc(100vh - 480px), 300px);
+  }
+
+  /* ── Card content ────────────────────────────────────────── */
+  .pg-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 26px 28px;
+    box-sizing: border-box;
+  }
+
+  .pg-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .pg-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .pg-tag {
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: #f0f0f0;
+    color: #6b7280;
+    border: 1px solid #e4e4e4;
+  }
+
+  .pg-tag--accent {
+    background: rgba(232, 164, 68, 0.1);
+    border-color: rgba(232, 164, 68, 0.3);
+    color: #C98830;
+  }
+
+  .pg-date {
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #b0b0b0;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .pg-title {
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #131313;
+    margin: 0 0 14px;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  .pg-bullets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .pg-bullets li {
+    font-family: Inter, sans-serif;
+    font-size: 0.76rem;
+    color: #6b7280;
+    line-height: 1.6;
+    padding-left: 12px;
+    border-left: 2px solid rgba(232, 164, 68, 0.4);
+  }
+
+  .pg-footer {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #e4e4e4;
+  }
+
+  .pg-repo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .pg-repo:hover {
+    color: #131313;
+  }
+
+  /* ── Scroll cue ──────────────────────────────────────────── */
+  .pg-cue {
+    position: absolute;
+    bottom: 10vh;
+    right: 5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #c0c0c0;
+    transition: opacity 0.5s ease;
+  }
+
+  .pg-cue--hidden {
     opacity: 0;
+    pointer-events: none;
   }
 
-  @keyframes bulletIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  /* ── Mobile ──────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .pg-meta {
+      top: 14vh;
+      left: 24px;
+    }
 
-  .flip-hint {
-    opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 0.2s ease, transform 0.2s ease;
-  }
-  .card-flip-wrapper:not(.is-flipped):hover .flip-hint {
-    opacity: 1;
-    transform: translateY(0);
+
+    .pg-rail {
+      flex-direction: row;
+      left: 24px;
+      bottom: 6vh;
+    }
+
+    .pg-rail-dot--active {
+      width: 28px;
+      height: 3px;
+    }
+
+    .pg-stack {
+      padding-right: 40px;
+      margin-top: 0;
+      transform: scale(0.78);
+      transform-origin: center center;
+    }
+
+    .pg-cue {
+      right: 24px;
+      bottom: 6vh;
+    }
   }
 </style>
