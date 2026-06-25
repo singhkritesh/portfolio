@@ -179,6 +179,8 @@ function Band({
   );
   const [dragged, drag] = useState(false);
   const [hovered, hover] = useState(false);
+  const postDropTimer = useRef(-1); // counts up after drop; triggers sway when >= 1.5s
+  const swayPhase = useRef(-1);     // seconds since sway started; -1 = inactive
 
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
@@ -222,6 +224,8 @@ function Band({
         card.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
         card.current.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true);
       }
+      postDropTimer.current = 0;
+      swayPhase.current = -1;
     }
     document.addEventListener('lanyard:drop', resetDrop);
     return () => document.removeEventListener('lanyard:drop', resetDrop);
@@ -252,6 +256,25 @@ function Band({
       ang.copy(card.current.angvel());
       rot.copy(card.current.rotation());
       card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
+
+      // Settle timer — start sway 1.5s after drop so the fall finishes first
+      if (postDropTimer.current >= 0) {
+        postDropTimer.current += delta;
+        if (postDropTimer.current >= 1.5) {
+          postDropTimer.current = -1;
+          swayPhase.current = 0;
+        }
+      }
+
+      // Pendulum sway: move the fixed pivot sinusoidally; card hangs below and follows
+      // Amplitude ramps from 0 → 0.12 over 2s so the sway grows in gradually
+      if (swayPhase.current >= 0 && !dragged) {
+        swayPhase.current += delta;
+        const ramp = Math.min(1, swayPhase.current / 2.0);
+        const newX = 2.5 + Math.sin(swayPhase.current * (2 * Math.PI / 3.5)) * 0.12 * ramp;
+        fixed.current.setTranslation({ x: newX, y: 4.65, z: 0 }, true);
+        [j1, j2, j3, card].forEach(ref => ref.current?.wakeUp());
+      }
     }
   });
 
