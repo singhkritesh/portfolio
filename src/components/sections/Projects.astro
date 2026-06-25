@@ -83,10 +83,9 @@ const academic = [
       'Aligned customer needs with market trends to inform go-to-market strategy and partner prioritisation for Cisco Spaces.',
     ],
     date: 'Sep – Nov 2025',
+    repo: '',
   },
 ];
-
-const allProjects = [...independent, ...academic];
 ---
 
 <section id="projects" class="pt-20 pb-32 px-6 md:px-12 bg-background">
@@ -108,36 +107,67 @@ const allProjects = [...independent, ...academic];
       <p class="font-headline text-lg font-semibold tracking-tight text-neutral-700 mb-6" data-reveal>Personal Ventures</p>
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
         {independent.map((p, i) => (
-          <button
-            class={`${p.span} bg-surface-mid rounded-xl border border-outline-dim flex flex-col text-left bento-card cursor-pointer group`}
-            data-proj-open={i}
-            aria-haspopup="dialog"
-            data-tilt
-            data-reveal data-reveal-delay={i * 80}
+          <div
+            class={`${p.span} card-flip-wrapper`}
+            data-reveal
+            data-reveal-delay={i * 80}
           >
-            <div class="p-8 flex flex-col flex-1 w-full">
-              <div class="flex flex-wrap items-center gap-2 mb-6">
-                {p.tags.map(t => (
-                  <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-600'}`}>
-                    {t.label}
-                  </span>
-                ))}
-                <span class="ml-auto text-[10px] font-headline uppercase tracking-wider text-neutral-500">{p.date}</span>
+            <div class="card-flip-inner">
+
+              <!-- Front -->
+              <div class="card-face card-front bg-surface-mid rounded-xl border border-outline-dim p-8 flex flex-col">
+                <div class="flex flex-wrap items-center gap-2 mb-6">
+                  {p.tags.map(t => (
+                    <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-600'}`}>
+                      {t.label}
+                    </span>
+                  ))}
+                  <span class="ml-auto text-[10px] font-headline uppercase tracking-wider text-neutral-500">{p.date}</span>
+                </div>
+                <div class="flex flex-col flex-1">
+                  <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
+                  <p class="text-neutral-600 text-sm leading-relaxed">{p.summary}</p>
+                </div>
+                <div class="flip-hint mt-5 flex items-center gap-1.5 text-primary/70 text-xs font-headline uppercase tracking-wider">
+                  <span>Details</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                    <path d="M3 3v5h5"/>
+                  </svg>
+                </div>
               </div>
-              <div class="flex flex-col flex-1">
-                <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
-                <p class="text-neutral-600 text-sm leading-relaxed">{p.summary}</p>
+
+              <!-- Back -->
+              <div class="card-face card-back bg-surface-mid rounded-xl border border-outline-dim p-8 flex flex-col">
+                <div class="flex items-start justify-between gap-3 mb-5">
+                  <h4 class="font-headline text-xs font-bold text-neutral-500 uppercase tracking-wider leading-snug">{p.title}</h4>
+                  <button class="flip-back flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-surface-high hover:bg-surface-highest text-neutral-500 hover:text-neutral-300 transition-colors" aria-label="Flip back">
+                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                      <path d="M2 2l8 8M10 2L2 10"/>
+                    </svg>
+                  </button>
+                </div>
+                <ul class="flex flex-col flex-1 space-y-3">
+                  {p.bullets.map(b => (
+                    <li class="text-sm text-neutral-400 leading-relaxed border-l-2 border-primary/40 pl-3">{b}</li>
+                  ))}
+                </ul>
+                <div class="mt-6 pt-5 border-t border-outline-dim flex items-center justify-between gap-4">
+                  <span class="text-neutral-500 text-xs font-headline uppercase tracking-wider">{p.date}</span>
+                  {p.repo && (
+                    <a href={p.repo} target="_blank" rel="noopener noreferrer"
+                       class="flex items-center gap-1.5 text-xs font-headline uppercase tracking-wider text-neutral-500 hover:text-neutral-300 transition-colors">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                      </svg>
+                      View Repo
+                    </a>
+                  )}
+                </div>
               </div>
-              <!-- Hover hint -->
-              <div class="mt-5 flex items-center gap-1.5 text-primary/70 text-xs font-headline uppercase tracking-wider
-                          opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0">
-                <span>View details</span>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
+
             </div>
-          </button>
+          </div>
         ))}
       </div>
     </div>
@@ -147,36 +177,67 @@ const allProjects = [...independent, ...academic];
       <p class="font-headline text-lg font-semibold tracking-tight text-neutral-700 mb-6" data-reveal>Academic Projects</p>
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
         {academic.map((p, i) => (
-          <button
-            class={`${p.span} bg-surface-mid rounded-xl border border-outline-dim flex flex-col text-left bento-card cursor-pointer group`}
-            data-proj-open={independent.length + i}
-            aria-haspopup="dialog"
-            data-tilt
-            data-reveal data-reveal-delay={i * 80}
+          <div
+            class={`${p.span} card-flip-wrapper`}
+            data-reveal
+            data-reveal-delay={i * 80}
           >
-            <div class="p-8 flex flex-col flex-1 w-full">
-              <div class="flex flex-wrap items-center gap-2 mb-6">
-                {p.tags.map(t => (
-                  <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-600'}`}>
-                    {t.label}
-                  </span>
-                ))}
-                <span class="ml-auto text-[10px] font-headline uppercase tracking-wider text-neutral-500">{p.date}</span>
+            <div class="card-flip-inner">
+
+              <!-- Front -->
+              <div class="card-face card-front bg-surface-mid rounded-xl border border-outline-dim p-8 flex flex-col">
+                <div class="flex flex-wrap items-center gap-2 mb-6">
+                  {p.tags.map(t => (
+                    <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-600'}`}>
+                      {t.label}
+                    </span>
+                  ))}
+                  <span class="ml-auto text-[10px] font-headline uppercase tracking-wider text-neutral-500">{p.date}</span>
+                </div>
+                <div class="flex flex-col flex-1">
+                  <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
+                  <p class="text-neutral-600 text-sm leading-relaxed">{p.summary}</p>
+                </div>
+                <div class="flip-hint mt-5 flex items-center gap-1.5 text-primary/70 text-xs font-headline uppercase tracking-wider">
+                  <span>Details</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                    <path d="M3 3v5h5"/>
+                  </svg>
+                </div>
               </div>
-              <div class="flex flex-col flex-1">
-                <h3 class="font-headline text-xl md:text-2xl font-bold mb-3">{p.title}</h3>
-                <p class="text-neutral-600 text-sm leading-relaxed">{p.summary}</p>
+
+              <!-- Back -->
+              <div class="card-face card-back bg-surface-mid rounded-xl border border-outline-dim p-8 flex flex-col">
+                <div class="flex items-start justify-between gap-3 mb-5">
+                  <h4 class="font-headline text-xs font-bold text-neutral-500 uppercase tracking-wider leading-snug">{p.title}</h4>
+                  <button class="flip-back flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-surface-high hover:bg-surface-highest text-neutral-500 hover:text-neutral-300 transition-colors" aria-label="Flip back">
+                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                      <path d="M2 2l8 8M10 2L2 10"/>
+                    </svg>
+                  </button>
+                </div>
+                <ul class="flex flex-col flex-1 space-y-3">
+                  {p.bullets.map(b => (
+                    <li class="text-sm text-neutral-400 leading-relaxed border-l-2 border-primary/40 pl-3">{b}</li>
+                  ))}
+                </ul>
+                <div class="mt-6 pt-5 border-t border-outline-dim flex items-center justify-between gap-4">
+                  <span class="text-neutral-500 text-xs font-headline uppercase tracking-wider">{p.date}</span>
+                  {p.repo && (
+                    <a href={p.repo} target="_blank" rel="noopener noreferrer"
+                       class="flex items-center gap-1.5 text-xs font-headline uppercase tracking-wider text-neutral-500 hover:text-neutral-300 transition-colors">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                      </svg>
+                      View Repo
+                    </a>
+                  )}
+                </div>
               </div>
-              <!-- Hover hint -->
-              <div class="mt-5 flex items-center gap-1.5 text-primary/70 text-xs font-headline uppercase tracking-wider
-                          opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0">
-                <span>View details</span>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
+
             </div>
-          </button>
+          </div>
         ))}
       </div>
     </div>
@@ -184,175 +245,103 @@ const allProjects = [...independent, ...academic];
   </div>
 </section>
 
-<!-- Modal -->
-<div id="proj-modal" class="proj-modal" role="dialog" aria-modal="true" aria-labelledby="proj-modal-title">
-  <div class="proj-modal-backdrop"></div>
-  <div class="proj-modal-card">
-    <div class="flex items-start justify-between gap-4 mb-6">
-      <div>
-        <div id="proj-modal-tags" class="flex flex-wrap gap-2 mb-3"></div>
-        <h3 id="proj-modal-title" class="font-headline text-2xl md:text-3xl font-bold"></h3>
-      </div>
-      <button id="proj-modal-close" aria-label="Close"
-              class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg
-                     bg-surface-high hover:bg-surface-highest text-neutral-500 hover:text-neutral-900
-                     transition-colors duration-150 mt-1">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        </svg>
-      </button>
-    </div>
-    <ul id="proj-modal-bullets" class="space-y-4"></ul>
-    <div class="mt-8 pt-6 border-t border-outline-dim flex items-center justify-between gap-4">
-      <div id="proj-modal-date" class="text-neutral-500 text-xs font-headline uppercase tracking-wider"></div>
-      <a id="proj-modal-repo" href="#" target="_blank" rel="noopener noreferrer"
-         class="hidden items-center gap-1.5 text-xs font-headline uppercase tracking-wider text-neutral-500 hover:text-neutral-900 transition-colors">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-        </svg>
-        View Repo
-      </a>
-    </div>
-  </div>
-</div>
-
 <script>
-  const projectData = [
-    {
-      tags: [{ label: 'Gen AI', accent: true }, { label: 'Content Strategy', accent: false }],
-      title: 'LinkedIn Content Generation App',
-      bullets: [
-        'Developed a generative AI tool to create personalized LinkedIn content, optimizing for audience engagement and content relevance.',
-        'Designed prompt frameworks and content strategies to improve post quality, consistency, and user interaction.',
-        'Focused on enhancing user engagement through tailored content recommendations and iterative testing.',
-      ],
-      date: 'April 2026',
-      repo: 'https://github.com/singhkritesh/linkedin-content-gen',
-    },
-    {
-      tags: [{ label: 'AI Automation', accent: true }, { label: 'Lead Gen', accent: false }],
-      title: 'AI Lead Generation Platform',
-      bullets: [
-        'Built an AI-driven lead generation application to identify and prioritize high-intent prospects using automated data from Exa APIs.',
-        'Designed end-to-end user workflows enabling discovery of leads, auto drafting and sending emails, improving conversion potential.',
-      ],
-      date: 'March 2026',
-      repo: 'https://github.com/singhkritesh/reachout',
-    },
-    {
-      tags: [{ label: 'Local LLM', accent: true }, { label: 'EdTech', accent: false }, { label: 'Full PRD', accent: false }, { label: 'Microservices', accent: false }, { label: 'Privacy-First', accent: false }],
-      title: 'AI-First Learning Management System',
-      bullets: [
-        'Authored PRD for user personas, system architecture, guardrails, and non-functional requirements, and prototyped using Antigravity.',
-        'Engineered an interface featuring audio interaction and voice/text queries, enabling real-time course access to enhance the student education experience, powered by a local LLM (Qwen3.5 via Ollama), pgvector for retrieval, and containerized microservices.',
-      ],
-      date: 'February 2026',
-      repo: 'https://github.com/singhkritesh/blank-lms',
-    },
-    {
-      tags: [{ label: 'AI Research', accent: true }, { label: 'Fine-tuning', accent: false }, { label: 'Python', accent: false }],
-      title: 'LLM Hallucination Detection — FastHalluCheck',
-      bullets: [
-        'Evaluated Vectara HHEM v2 and DeBERTa-v3-small on HaluEval and PHANTOM Financial benchmarks using PyTorch and Hugging Face.',
-        'Achieved 98.2% accuracy (F1: 0.9818) with ensemble method on in-domain dataset.',
-        'Surfaced key cross-domain generalisation gap (F1 drop of -0.378), showing task-specific training outweighs model scale.',
-      ],
-      date: 'Dartmouth · 2025',
-      repo: 'https://github.com/singhkritesh/ml-assignment',
-    },
-    {
-      tags: [{ label: 'Market Analysis', accent: true }, { label: 'GTM Strategy', accent: false }, { label: 'Consulting', accent: false }],
-      title: 'Graduate Student Consultant — Cisco Spaces',
-      bullets: [
-        'Conducted market analysis across 5 venue types in the Smart Buildings industry to identify high-potential product launch opportunities.',
-        'Aligned customer needs with market trends to inform go-to-market strategy and partner prioritisation for Cisco Spaces.',
-      ],
-      date: 'Sep – Nov 2025',
-      repo: '',
-    },
-  ];
+  document.querySelectorAll<HTMLElement>('.card-flip-wrapper').forEach(wrapper => {
+    const inner = wrapper.querySelector<HTMLElement>('.card-flip-inner');
+    const bullets = Array.from(wrapper.querySelectorAll<HTMLElement>('.card-back li'));
 
-  const modal     = document.getElementById('proj-modal')!;
-  const backdrop  = modal.querySelector('.proj-modal-backdrop')!;
-  const closeBtn  = document.getElementById('proj-modal-close')!;
-  const titleEl   = document.getElementById('proj-modal-title')!;
-  const tagsEl    = document.getElementById('proj-modal-tags')!;
-  const bulletsEl = document.getElementById('proj-modal-bullets')!;
-  const dateEl    = document.getElementById('proj-modal-date')!;
-  const repoLink  = document.getElementById('proj-modal-repo') as HTMLAnchorElement;
-
-  let lastFocused: Element | null = null;
-
-  function getFocusable() {
-    return Array.from(modal.querySelectorAll<HTMLElement>(
-      'button:not([disabled]), a[href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
-    )).filter(el => !el.closest('.proj-modal-backdrop'));
-  }
-
-  function openModal(index: number) {
-    const p = projectData[index];
-
-    tagsEl.innerHTML = p.tags.map(t =>
-      `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-        t.accent ? 'bg-primary/10 border border-primary/20 text-primary' : 'bg-surface-high text-neutral-600'
-      }">${t.label}</span>`
-    ).join('');
-
-    titleEl.textContent = p.title;
-    dateEl.textContent  = p.date;
-
-    if (p.repo) {
-      repoLink.href = p.repo;
-      repoLink.classList.remove('hidden');
-      repoLink.classList.add('flex');
-    } else {
-      repoLink.classList.add('hidden');
-      repoLink.classList.remove('flex');
+    function animateBulletsIn() {
+      bullets.forEach((li, i) => {
+        li.style.animation = 'none';
+        li.offsetHeight; // force reflow — resets the animation
+        li.style.animation = `bulletIn 0.32s ease both ${350 + i * 70}ms`;
+      });
     }
 
-    bulletsEl.innerHTML = p.bullets.map((b, i) =>
-      `<li class="text-sm text-neutral-700 leading-relaxed border-l-2 border-primary/40 pl-3"
-           style="animation: bulletIn 0.3s ease both; animation-delay: ${i * 70}ms">${b}</li>`
-    ).join('');
-
-    lastFocused = document.activeElement;
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    requestAnimationFrame(() => closeBtn.focus());
-  }
-
-  function closeModal() {
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-    (lastFocused as HTMLElement)?.focus();
-  }
-
-  document.querySelectorAll<HTMLButtonElement>('[data-proj-open]').forEach((btn) => {
-    btn.addEventListener('click', () => openModal(Number(btn.dataset.projOpen)));
-  });
-
-  closeBtn.addEventListener('click', closeModal);
-  backdrop.addEventListener('click', closeModal);
-
-  document.addEventListener('keydown', (e) => {
-    if (!modal.classList.contains('open')) return;
-    if (e.key === 'Escape') { closeModal(); return; }
-    if (e.key === 'Tab') {
-      const focusable = getFocusable();
-      const first = focusable[0];
-      const last  = focusable[focusable.length - 1];
-      if (e.shiftKey) {
-        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-      } else {
-        if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
-      }
+    function resetBullets() {
+      bullets.forEach(li => {
+        li.style.animation = 'none';
+        li.style.opacity = '0';
+      });
     }
+
+    wrapper.addEventListener('click', e => {
+      const t = e.target as Element;
+      if (t.closest('a') || t.closest('.flip-back')) return;
+      const flipping = !inner?.classList.contains('flipped');
+      inner?.classList.toggle('flipped');
+      wrapper.classList.toggle('is-flipped');
+      if (flipping) animateBulletsIn(); else resetBullets();
+    });
+
+    wrapper.querySelector('.flip-back')?.addEventListener('click', e => {
+      e.stopPropagation();
+      inner?.classList.remove('flipped');
+      wrapper.classList.remove('is-flipped');
+      resetBullets();
+    });
   });
 </script>
 
 <style>
+  .card-flip-wrapper {
+    perspective: 1200px;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+  }
+  .card-flip-wrapper:not(.is-flipped):hover {
+    transform: translateY(-2px);
+  }
+
+  .card-flip-inner {
+    display: grid;
+    transform-style: preserve-3d;
+    transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .card-flip-inner.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .card-face {
+    grid-area: 1 / 1;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: border-color 0.35s ease, box-shadow 0.35s ease;
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.06);
+    min-height: 260px;
+  }
+  .card-back {
+    transform: rotateY(180deg);
+  }
+
+  .card-flip-wrapper:not(.is-flipped):hover .card-front {
+    border-color: rgba(232, 164, 68, 0.22);
+    box-shadow:
+      0 0 0 1px rgba(232, 164, 68, 0.06),
+      0 8px 32px -8px rgba(232, 164, 68, 0.12),
+      0 2px 8px -2px rgba(0, 0, 0, 0.4),
+      inset 0 1px rgba(255, 255, 255, 0.06);
+  }
+  .card-flip-wrapper.is-flipped:hover .card-back {
+    border-color: rgba(232, 164, 68, 0.22);
+  }
+
+  .card-back li {
+    opacity: 0;
+  }
+
   @keyframes bulletIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .flip-hint {
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .card-flip-wrapper:not(.is-flipped):hover .flip-hint {
+    opacity: 1;
+    transform: translateY(0);
   }
 </style>
