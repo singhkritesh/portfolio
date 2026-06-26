@@ -59,7 +59,7 @@ const {
     display: flex;
     position: relative;
     transform: translate3d(0, 0, 0.01px);
-    z-index: 1;
+    z-index: 2;
   }
 
   .gooey-nav-container nav ul {
@@ -145,7 +145,7 @@ const {
   }
 
   .gooey-nav-container .effect.active::after {
-    animation: gooey-pill 0.3s ease;
+    animation: gooey-pill 0.9s forwards;
   }
 
   /* Scroll position indicator — opaque dark pill behind nav text (DOM order keeps text on top) */
@@ -164,10 +164,14 @@ const {
     pointer-events: none;
     z-index: 0;
     transition: opacity 0.2s ease;
+    will-change: transform;
   }
 
   @keyframes gooey-pill {
-    to { transform: scale(1); opacity: 1; }
+    0%   { transform: scale(0);   opacity: 0; animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+    45%  { transform: scale(1);   opacity: 1; animation-timing-function: ease; }
+    55%  { transform: scale(1);   opacity: 1; animation-timing-function: ease-in; }
+    100% { transform: scale(0.7); opacity: 0; }
   }
 
   /* Particles */
@@ -266,11 +270,11 @@ const {
     element.style.setProperty('--time', `${animationTime * 2 + timeVariance}ms`);
     element.classList.remove('active');
 
-    for (let i = 0; i < particleCount; i++) {
-      const t = animationTime * 2 + noise(timeVariance * 2);
-      const p = createParticle(i, t, d, r);
+    requestAnimationFrame(() => {
+      for (let i = 0; i < particleCount; i++) {
+        const t = animationTime * 2 + noise(timeVariance * 2);
+        const p = createParticle(i, t, d, r);
 
-      setTimeout(() => {
         const particle = document.createElement('span');
         const point    = document.createElement('span');
         particle.classList.add('gooey-particle');
@@ -288,10 +292,10 @@ const {
         setTimeout(() => {
           try { element.removeChild(particle); } catch {}
         }, t);
-      }, 30);
-    }
+      }
 
-    setTimeout(() => requestAnimationFrame(() => element.classList.add('active')), 30);
+      requestAnimationFrame(() => element.classList.add('active'));
+    });
   }
 
   // ── Pill position ───────────────────────────────────────────
@@ -323,7 +327,7 @@ const {
     if (withParticles) {
       // Hide pill so the dark gooey burst isn't inverted to white by difference blend
       sliderPill.style.opacity = '0';
-      setTimeout(() => { sliderPill.style.opacity = ''; }, 420);
+      setTimeout(() => { sliderPill.style.opacity = ''; }, 490);
       filterEl.querySelectorAll('.gooey-particle').forEach(p => {
         try { filterEl.removeChild(p); } catch {}
       });
@@ -334,22 +338,29 @@ const {
   }
 
   // ── Click handlers ──────────────────────────────────────────
-  // scrollTarget: the nav index we're smooth-scrolling toward after a click.
-  // Scrollspy is suppressed until arrival so the animation can't revert it.
-  // -1 means idle. Only set for hash links that have a matching pageSections entry.
-  let scrollTarget = -1;
+  // isClickScrolling: true while a click-triggered smooth scroll is in flight.
+  // Scrollspy is suppressed for the duration so the pill stays at the clicked item.
+  // Cleared by scrollend (exact) or a 1500ms safety fallback (no-scroll edge case).
+  let isClickScrolling = false;
+  let clickScrollTimeout;
 
   listItems.forEach((li, i) => {
     const href = li.querySelector('a')?.getAttribute('href') ?? '';
     const isPageLink = !href.includes('#');
     li.addEventListener('click', () => {
-      // Only suppress scrollspy when the destination has a section element.
-      // Photography (#photography) has no pageSections entry so scrollTarget
-      // would never clear — leave it at -1 for those links.
-      if (!isPageLink && li.dataset.section) scrollTarget = i;
+      if (!isPageLink && li.dataset.section) {
+        isClickScrolling = true;
+        clearTimeout(clickScrollTimeout);
+        clickScrollTimeout = setTimeout(() => { isClickScrolling = false; }, 1500);
+      }
       activateItem(i, !isPageLink);
     });
   });
+
+  window.addEventListener('scrollend', () => {
+    isClickScrolling = false;
+    clearTimeout(clickScrollTimeout);
+  }, { passive: true });
 
   // ── Scrollspy + real-time pill scrubber ─────────────────────
   // pageSections: built in init rAF (IIFE runs before sections are in DOM)
@@ -385,10 +396,21 @@ const {
       return;
     }
 
+    // If the active item is not a section (e.g. Photography), all section items
+    // should stay inactive gray — the pill is outside the section range entirely.
+    const activeIsNonSection =
+      pageSections.length > 0 &&
+      pageSections.findIndex(s => s.index === activeIndex) === -1;
+
     listItems.forEach((li, i) => {
       const sectIdx = pageSections.findIndex(s => s.index === i);
       if (sectIdx < 0) {
         li.querySelector('a').style.color = interpolateColor(i === activeIndex ? 1 : 0);
+        return;
+      }
+
+      if (activeIsNonSection) {
+        li.querySelector('a').style.color = interpolateColor(0);
         return;
       }
 
@@ -412,7 +434,7 @@ const {
   }
 
   function setPill(pillLeft, pillWidth) {
-    sliderPill.style.left  = `${pillLeft}px`;
+    sliderPill.style.transform = `translateX(${pillLeft}px)`;
     sliderPill.style.width = `${pillWidth}px`;
     updateTextColors(pillLeft, pillWidth);
   }
@@ -429,11 +451,8 @@ const {
     }
     const navIdx = pageSections[cIdx].index;
 
-    // During click nav: pill stays at clicked item; release once we arrive
-    if (scrollTarget !== -1) {
-      if (navIdx === scrollTarget) scrollTarget = -1;
-      else return;
-    }
+    // Suppress scrollspy while a click-triggered scroll is in flight.
+    if (isClickScrolling) return;
 
     // Lerp pill toward next section — band scales with viewport so it's
     // proportional regardless of section height (fixes early trigger on tall sections)

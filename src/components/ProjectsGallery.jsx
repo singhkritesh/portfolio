@@ -1,60 +1,55 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CardSwap, { Card } from './CardSwap';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ProjectsGallery({ projects }) {
   const [cardIndex, setCardIndex] = useState(0);
   const [scrolled, setScrolled]   = useState(false);
 
-  const cardSwapRef   = useRef(null);
-  const cardIndexRef  = useRef(0);
-  const sectionTopRef = useRef(0);
-  const sectionHRef   = useRef(0);
+  const cardSwapRef  = useRef(null);
+  const cardIndexRef = useRef(0);
+  const scrolledRef  = useRef(false);
 
-  const syncToScroll = useCallback(() => {
-    const sy         = window.scrollY;
-    const top        = sectionTopRef.current;
-    const scrollable = sectionHRef.current - window.innerHeight;
-    if (scrollable <= 0) return;
-
-    const scrollWithin = sy - top;
-    if (scrollWithin < 0 || scrollWithin > scrollable) return;
-
-    if (scrollWithin > 80) setScrolled(true);
-
-    const sliceSize = scrollable / projects.length;
-    const newIndex  = Math.max(0, Math.min(projects.length - 1, Math.floor(scrollWithin / sliceSize)));
-
-    if (newIndex !== cardIndexRef.current) {
-      cardSwapRef.current?.goTo(newIndex);
-      cardIndexRef.current = newIndex;
-      setCardIndex(newIndex);
-    }
-  }, [projects.length]);
-
-  // Compute section bounds and immediately sync card to current scroll position.
-  // Runs on resize and load so images in preceding sections don't cause stale bounds.
   useEffect(() => {
-    function updateBounds() {
-      const el = document.getElementById('projects');
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      sectionTopRef.current = rect.top + window.scrollY;
-      sectionHRef.current   = el.offsetHeight;
-      syncToScroll();
-    }
-    updateBounds();
-    window.addEventListener('resize', updateBounds);
-    window.addEventListener('load',   updateBounds);
+    if (!cardSwapRef.current) return;
+    const section = document.getElementById('projects');
+    if (!section) return;
+
+    const N = projects.length;
+
+    // Build the flat master timeline (n-1 transitions, each 1 unit long)
+    const masterTl = cardSwapRef.current.buildMasterTimeline();
+    if (!masterTl) return;
+
+    // Pin the animation to the section's full scroll distance
+    const st = ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.5,
+      animation: masterTl,
+      onUpdate: (self) => {
+        // progress 0→1 spans N-1 transitions; round to nearest card index
+        const idx = Math.min(N - 1, Math.max(0, Math.round(self.progress * (N - 1))));
+        if (idx !== cardIndexRef.current) {
+          cardIndexRef.current = idx;
+          setCardIndex(idx);
+        }
+        if (!scrolledRef.current && self.progress > 0) {
+          scrolledRef.current = true;
+          setScrolled(true);
+        }
+      },
+    });
+
     return () => {
-      window.removeEventListener('resize', updateBounds);
-      window.removeEventListener('load',   updateBounds);
+      st.kill();
+      masterTl.kill();
     };
-  }, [syncToScroll]);
-
-  useEffect(() => {
-    window.addEventListener('scroll', syncToScroll, { passive: true });
-    return () => window.removeEventListener('scroll', syncToScroll);
-  }, [syncToScroll]);
+  }, [projects.length]);
 
   const current = projects[cardIndex] ?? projects[0];
 
@@ -89,13 +84,11 @@ export default function ProjectsGallery({ projects }) {
       <div className="pg-stack">
         <CardSwap
           ref={cardSwapRef}
-          autoPlay={false}
-          easing="linear"
           width={460}
           height={400}
           cardDistance={44}
           verticalDistance={52}
-          skewAmount={4}
+          skewAmount={0}
         >
           {projects.map((p, i) => (
             <Card
