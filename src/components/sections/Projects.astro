@@ -3,16 +3,44 @@ import ProjectsGallery from '../ProjectsGallery.jsx';
 
 const projects = [
   {
+    category: 'Ventures',
+    tags: [
+      { label: 'Climate Tech', accent: true },
+      { label: 'Platform Strategy', accent: false },
+      { label: 'Zero-to-One', accent: false },
+    ],
+    title: 'Kangen — Reverse Last-Mile Aggregation',
+    bullets: [
+      'Building a climate venture targeting the reverse last-mile gap — aggregating waste streams from businesses and municipalities into viable recycling supply chains.',
+      'Conducted techno-economic modeling and customer discovery across 20 businesses, 5 industry players, and a municipality pilot to validate unit economics.',
+    ],
+    date: 'Jan 2026 – Present',
+    repo: '',
+  },
+  {
+    category: 'Hackathon',
+    tags: [
+      { label: 'Growth Strategy', accent: true },
+      { label: 'Gen AI', accent: false },
+    ],
+    title: 'GNOMI — Gen Z Growth Strategy',
+    bullets: [
+      'Selected 1 of 20 teams at hackathon; designed a Gen Z growth strategy built on two zero-spend acquisition loops.',
+      'Prototyped a 10-day vector answer-cache to personalise onboarding and reduce churn at the activation step.',
+    ],
+    date: 'June 2026',
+    repo: '',
+  },
+  {
     category: 'Personal Ventures',
     tags: [
       { label: 'Gen AI', accent: true },
-      { label: 'Content Strategy', accent: false },
+      { label: 'Agentic', accent: false },
     ],
     title: 'LinkedIn Content Generation App',
     bullets: [
-      'Developed a generative AI tool to create personalized LinkedIn content, optimizing for audience engagement and content relevance.',
-      'Designed prompt frameworks and content strategies to improve post quality, consistency, and user interaction.',
-      'Focused on enhancing user engagement through tailored content recommendations and iterative testing.',
+      'Built an agentic content platform powered by Gemini and Tavily — researches topics in real-time, generates LinkedIn posts, and produces multimodal PPTX decks from a single prompt.',
+      'Designed a multi-agent pipeline with tool-calling, web search grounding, and iterative self-critique to improve post quality and audience relevance.',
     ],
     date: 'April 2026',
     repo: 'https://github.com/singhkritesh/linkedin-content-gen',
