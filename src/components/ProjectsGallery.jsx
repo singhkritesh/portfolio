@@ -45,9 +45,15 @@ export default function ProjectsGallery({ projects }) {
       },
     });
 
+    // Photography mode sets #projects to display:none, causing ScrollTrigger to
+    // cache position as 0/0. Refresh after photography exits so positions are correct.
+    const onPhotoHide = () => ScrollTrigger.refresh();
+    document.addEventListener('photography:hide', onPhotoHide);
+
     return () => {
       st.kill();
       masterTl.kill();
+      document.removeEventListener('photography:hide', onPhotoHide);
     };
   }, [projects.length]);
 
