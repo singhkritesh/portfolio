@@ -192,7 +192,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         // Restore photography gallery view: show the section, hide others.
         // Only applies when #photography exists (index page), not the standalone page.
         var photoEl = document.getElementById('photography');
-        if (photoEl) document.body.classList.add('show-photography');
+        if (photoEl) {
+          document.body.classList.add('show-photography');
+          // Nudge data-reveal elements — the IO may have already fired while the
+          // section was display:none and won't fire again, leaving images invisible.
+          document.querySelectorAll('#photography [data-reveal]').forEach(function (el) {
+            el.classList.add('revealed');
+          });
+          // Masonry's define:vars IIFE runs synchronously during HTML parsing, before
+          // this script fires. It sees display:none → sets isHidden=true → waits for
+          // photography:show. Dispatch it now so revealAll() actually runs on reload.
+          document.dispatchEvent(new CustomEvent('photography:show'));
+        }
         window.scrollTo(0, 0);
         document.documentElement.style.visibility = '';
       } else {

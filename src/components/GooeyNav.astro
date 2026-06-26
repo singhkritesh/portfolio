@@ -441,6 +441,7 @@ const {
 
   function scrubPill() {
     if (pageSections.length === 0 || navItemRects.length === 0) return;
+    if (document.body.classList.contains('show-photography')) return;
 
     const threshold = window.innerHeight * 0.18;
 
@@ -535,9 +536,17 @@ const {
         filterEl.style.height   = `${r.height}px`;
         sliderPill.style.top    = `${topPx}px`;
         sliderPill.style.height = `${r.height}px`;
-        // scrubPill sets left/width and correct li.active for current scroll position
-        scrubPill();
-        filterEl.classList.add('active');
+        if (document.body.classList.contains('show-photography')) {
+          // On photography reload all page sections are display:none — scrubPill would
+          // pick Contact (every hidden section has getBoundingClientRect top=0).
+          // Activate the Photography item directly instead.
+          const photoIdx = listItems.findIndex(li => !li.dataset.section);
+          activateItem(photoIdx >= 0 ? photoIdx : activeIndex, false);
+        } else {
+          // scrubPill sets left/width and correct li.active for current scroll position
+          scrubPill();
+          filterEl.classList.add('active');
+        }
       }
     });
   });
