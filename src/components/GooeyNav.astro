@@ -42,8 +42,8 @@ const {
       ))}
     </ul>
   </nav>
+  <div class="slider-pill" id="slider-pill"></div>
   <span class="effect filter" id="gooey-filter"></span>
-  <span class="effect text"   id="gooey-text"></span>
 </div>
 
 <style is:global>
@@ -59,6 +59,7 @@ const {
     display: flex;
     position: relative;
     transform: translate3d(0, 0, 0.01px);
+    z-index: 1;
   }
 
   .gooey-nav-container nav ul {
@@ -76,7 +77,7 @@ const {
     position: relative;
     cursor: pointer;
     color: #6b7280;
-    transition: color 0.3s ease, box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease;
     box-shadow: 0 0 0.5px 1.5px transparent;
   }
 
@@ -97,28 +98,6 @@ const {
     box-shadow: 0 0 0.5px 1.5px #E8A444;
   }
 
-  /* Static dark pill behind active item text */
-  .gooey-nav-container nav ul li::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 100vw;
-    background: #131313;
-    opacity: 0;
-    transform: scale(0);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: -1;
-  }
-
-  .gooey-nav-container nav ul li.active {
-    color: white;
-  }
-
-  .gooey-nav-container nav ul li.active::after {
-    opacity: 1;
-    transform: scale(1);
-  }
-
   /* Effect overlay elements */
   .gooey-nav-container .effect {
     position: absolute;
@@ -131,17 +110,7 @@ const {
     display: grid;
     place-items: center;
     z-index: 1;
-  }
-
-  .gooey-nav-container .effect.text {
-    color: white;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    z-index: 4;
+    /* No CSS transitions — pill position is set directly by the real-time scrubber */
   }
 
   /* Gooey filter: blur+contrast creates the blobby merge effect */
@@ -176,7 +145,25 @@ const {
   }
 
   .gooey-nav-container .effect.active::after {
-    animation: gooey-pill 0.3s ease both;
+    animation: gooey-pill 0.3s ease;
+  }
+
+  /* Scroll position indicator — opaque dark pill behind nav text (DOM order keeps text on top) */
+  .gooey-nav-container .slider-pill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-radius: 100vw;
+    background: linear-gradient(180deg, #252525 0%, #131313 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 1px 3px rgba(0, 0, 0, 0.35),
+      0 4px 16px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.2s ease;
   }
 
   @keyframes gooey-pill {
@@ -245,10 +232,10 @@ const {
 </style>
 
 <script define:vars={{ particleCount, particleDistances, particleR, animationTime, timeVariance, colors, initialActiveIndex }}>
-  const container = document.getElementById('gooey-nav');
-  const filterEl  = document.getElementById('gooey-filter');
-  const textEl    = document.getElementById('gooey-text');
-  const listItems = Array.from(container.querySelectorAll('.gooey-item'));
+  const container  = document.getElementById('gooey-nav');
+  const filterEl   = document.getElementById('gooey-filter');
+  const sliderPill = document.getElementById('slider-pill');
+  const listItems  = Array.from(container.querySelectorAll('.gooey-item'));
 
   let activeIndex = initialActiveIndex;
 
@@ -309,18 +296,13 @@ const {
 
   // ── Pill position ───────────────────────────────────────────
   function updateEffectPosition(li) {
-    if (!container || !filterEl || !textEl) return;
+    if (!container || !filterEl) return;
     const cRect = container.getBoundingClientRect();
     const pos   = li.getBoundingClientRect();
-    const styles = {
-      left:   `${pos.x - cRect.x}px`,
-      top:    `${pos.y - cRect.y}px`,
-      width:  `${pos.width}px`,
-      height: `${pos.height}px`,
-    };
-    Object.assign(filterEl.style, styles);
-    Object.assign(textEl.style,   styles);
-    textEl.innerText = li.querySelector('a').innerText;
+    filterEl.style.left   = `${pos.x - cRect.x}px`;
+    filterEl.style.top    = `${pos.y - cRect.y}px`;
+    filterEl.style.width  = `${pos.width}px`;
+    filterEl.style.height = `${pos.height}px`;
   }
 
   // ── Activate item ───────────────────────────────────────────
@@ -333,8 +315,15 @@ const {
 
     const activeLi = listItems[index];
     updateEffectPosition(activeLi);
+    // Snap slider pill to clicked item so it aligns with the gooey burst
+    const cRect = container.getBoundingClientRect();
+    const r = activeLi.getBoundingClientRect();
+    setPill(r.left - cRect.left, r.width);
 
     if (withParticles) {
+      // Hide pill so the dark gooey burst isn't inverted to white by difference blend
+      sliderPill.style.opacity = '0';
+      setTimeout(() => { sliderPill.style.opacity = ''; }, 420);
       filterEl.querySelectorAll('.gooey-particle').forEach(p => {
         try { filterEl.removeChild(p); } catch {}
       });
@@ -345,55 +334,170 @@ const {
   }
 
   // ── Click handlers ──────────────────────────────────────────
+  // scrollTarget: the nav index we're smooth-scrolling toward after a click.
+  // Scrollspy is suppressed until arrival so the animation can't revert it.
+  // -1 means idle. Only set for hash links that have a matching pageSections entry.
+  let scrollTarget = -1;
+
   listItems.forEach((li, i) => {
     const href = li.querySelector('a')?.getAttribute('href') ?? '';
     const isPageLink = !href.includes('#');
-    // Page links navigate immediately — particles would be cut off, so skip them.
-    // Hash links stay on the page and can show the full burst animation.
-    li.addEventListener('click', () => activateItem(i, !isPageLink));
+    li.addEventListener('click', () => {
+      // Only suppress scrollspy when the destination has a section element.
+      // Photography (#photography) has no pageSections entry so scrollTarget
+      // would never clear — leave it at -1 for those links.
+      if (!isPageLink && li.dataset.section) scrollTarget = i;
+      activateItem(i, !isPageLink);
+    });
   });
 
-  // ── Scrollspy ───────────────────────────────────────────────
-  const pageSections = listItems
-    .map((li, i) => ({
-      index: i,
-      el: li.dataset.section ? document.getElementById(li.dataset.section) : null,
-    }))
-    .filter(s => s.el);
+  // ── Scrollspy + real-time pill scrubber ─────────────────────
+  // pageSections: built in init rAF (IIFE runs before sections are in DOM)
+  // navItemRects: { left, width } per pageSections entry, relative to container
+  let pageSections = [];
+  let navItemRects = [];
 
-  function currentSectionIndex() {
-    if (pageSections.length === 0) return -1;
-    const threshold = window.innerHeight * 0.4;
-    let current = pageSections[0];
-    for (const s of pageSections) {
-      if (s.el.getBoundingClientRect().top < threshold) current = s;
-      else break;
+  function buildNavItemRects() {
+    const cRect = container.getBoundingClientRect();
+    navItemRects = pageSections.map(s => {
+      const r = listItems[s.index].getBoundingClientRect();
+      return { left: r.left - cRect.left, width: r.width };
+    });
+  }
+
+  function interpolateColor(t) {
+    return `rgb(${Math.round(107 + 148 * t)},${Math.round(114 + 141 * t)},${Math.round(128 + 127 * t)})`;
+  }
+
+  function smoothstep(a, b, x) {
+    const t = Math.max(0, Math.min(1, (x - a) / (b - a)));
+    return t * t * (3 - 2 * t);
+  }
+
+  function updateTextColors(pillLeft, pillWidth) {
+    const pillCenter = pillLeft + pillWidth / 2;
+    const ZONE = 10; // px — half-width of crossover zone
+
+    if (navItemRects.length === 0) {
+      listItems.forEach((li, i) => {
+        li.querySelector('a').style.color = interpolateColor(i === activeIndex ? 1 : 0);
+      });
+      return;
     }
-    return current.index;
+
+    listItems.forEach((li, i) => {
+      const sectIdx = pageSections.findIndex(s => s.index === i);
+      if (sectIdx < 0) {
+        li.querySelector('a').style.color = interpolateColor(i === activeIndex ? 1 : 0);
+        return;
+      }
+
+      const rect       = navItemRects[sectIdx];
+      const itemCenter = rect.left + rect.width / 2;
+      const prevCenter = sectIdx > 0
+        ? navItemRects[sectIdx - 1].left + navItemRects[sectIdx - 1].width / 2
+        : itemCenter - 9999;
+      const nextCenter = sectIdx < navItemRects.length - 1
+        ? navItemRects[sectIdx + 1].left + navItemRects[sectIdx + 1].width / 2
+        : itemCenter + 9999;
+
+      const leftBound  = (prevCenter + itemCenter) / 2;
+      const rightBound = (itemCenter + nextCenter) / 2;
+
+      const fromLeft = sectIdx === 0 ? 1 : smoothstep(leftBound - ZONE, leftBound + ZONE, pillCenter);
+      const toRight  = sectIdx === navItemRects.length - 1 ? 1 : 1 - smoothstep(rightBound - ZONE, rightBound + ZONE, pillCenter);
+
+      li.querySelector('a').style.color = interpolateColor(fromLeft * toRight);
+    });
+  }
+
+  function setPill(pillLeft, pillWidth) {
+    sliderPill.style.left  = `${pillLeft}px`;
+    sliderPill.style.width = `${pillWidth}px`;
+    updateTextColors(pillLeft, pillWidth);
+  }
+
+  function scrubPill() {
+    if (pageSections.length === 0 || navItemRects.length === 0) return;
+
+    const threshold = window.innerHeight * 0.18;
+
+    // Find current section (last entry whose top is above the threshold line)
+    let cIdx = 0;
+    for (let i = 0; i < pageSections.length; i++) {
+      if (pageSections[i].el.getBoundingClientRect().top < threshold) cIdx = i;
+    }
+    const navIdx = pageSections[cIdx].index;
+
+    // During click nav: pill stays at clicked item; release once we arrive
+    if (scrollTarget !== -1) {
+      if (navIdx === scrollTarget) scrollTarget = -1;
+      else return;
+    }
+
+    // Lerp pill toward next section — band scales with viewport so it's
+    // proportional regardless of section height (fixes early trigger on tall sections)
+    const band = window.innerHeight * 0.4;
+    const nIdx = cIdx + 1;
+    let pillLeft  = navItemRects[cIdx].left;
+    let pillWidth = navItemRects[cIdx].width;
+
+    if (nIdx < pageSections.length) {
+      const nextTop   = pageSections[nIdx].el.getBoundingClientRect().top;
+      const bandStart = threshold + band;
+      if (nextTop < bandStart) {
+        const t = Math.max(0, Math.min(1, (bandStart - nextTop) / band));
+        pillLeft  = navItemRects[cIdx].left  + (navItemRects[nIdx].left  - navItemRects[cIdx].left)  * t;
+        pillWidth = navItemRects[cIdx].width + (navItemRects[nIdx].width - navItemRects[cIdx].width) * t;
+      }
+    }
+
+    setPill(pillLeft, pillWidth);
+
+    if (navIdx !== activeIndex) {
+      listItems.forEach((li, i) => li.classList.toggle('active', i === navIdx));
+      activeIndex = navIdx;
+    }
   }
 
   let scrollRaf = 0;
   window.addEventListener('scroll', () => {
     if (document.body.classList.contains('show-photography')) return;
     if (scrollRaf) cancelAnimationFrame(scrollRaf);
-    scrollRaf = requestAnimationFrame(() => {
-      const idx = currentSectionIndex();
-      if (idx >= 0 && idx !== activeIndex) activateItem(idx, false);
-    });
+    scrollRaf = requestAnimationFrame(scrubPill);
   }, { passive: true });
 
-  // ── Resize: reposition pill ─────────────────────────────────
+  // ── Resize: rebuild rects and reposition pill ───────────────
   const ro = new ResizeObserver(() => {
-    if (listItems[activeIndex]) updateEffectPosition(listItems[activeIndex]);
+    if (pageSections.length === 0) {
+      if (listItems[activeIndex]) updateEffectPosition(listItems[activeIndex]);
+      return;
+    }
+    buildNavItemRects();
+    const cRect  = container.getBoundingClientRect();
+    const r      = listItems[pageSections[0].index].getBoundingClientRect();
+    const topPx  = r.top - cRect.top;
+    filterEl.style.top      = `${topPx}px`;
+    filterEl.style.height   = `${r.height}px`;
+    sliderPill.style.top    = `${topPx}px`;
+    sliderPill.style.height = `${r.height}px`;
+    scrubPill();
   });
   ro.observe(container);
 
   // ── Init ────────────────────────────────────────────────────
-  // Two rAF ticks so the nav has painted and getBoundingClientRect is valid.
+  // Two rAF ticks: nav has painted, all section elements are in the DOM.
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      // On non-section pages (e.g. photography), find matching item by href
+      pageSections = listItems
+        .map((li, i) => ({
+          index: i,
+          el: li.dataset.section ? document.getElementById(li.dataset.section) : null,
+        }))
+        .filter(s => s.el);
+
       if (pageSections.length === 0) {
+        // Non-section pages (e.g. standalone photography page)
         const path = window.location.pathname;
         const pageIdx = listItems.findIndex(li => {
           const href = li.querySelector('a')?.getAttribute('href') ?? '';
@@ -403,8 +507,18 @@ const {
         });
         activateItem(pageIdx >= 0 ? pageIdx : initialActiveIndex, false);
       } else {
-        const idx = currentSectionIndex();
-        activateItem(idx >= 0 ? idx : initialActiveIndex, false);
+        buildNavItemRects();
+        // Set top/height (all items share the same row; any item works as reference)
+        const cRect  = container.getBoundingClientRect();
+        const r      = listItems[pageSections[0].index].getBoundingClientRect();
+        const topPx  = r.top - cRect.top;
+        filterEl.style.top      = `${topPx}px`;
+        filterEl.style.height   = `${r.height}px`;
+        sliderPill.style.top    = `${topPx}px`;
+        sliderPill.style.height = `${r.height}px`;
+        // scrubPill sets left/width and correct li.active for current scroll position
+        scrubPill();
+        filterEl.classList.add('active');
       }
     });
   });
