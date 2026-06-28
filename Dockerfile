@@ -8,9 +8,6 @@ RUN npm install
 
 COPY . .
 
-# Copy static assets that Astro needs in public/ before building
-RUN cp -r photography public/photography
-
 RUN npm run build
 
 # ── Stage 2: Serve ────────────────────────────────────────────
