@@ -25,7 +25,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     height: 100vh;
     pointer-events: none;
     z-index: 9998;
-    will-change: transform;
   }
 
   .lanyard-container :global(.lanyard-wrapper) {
@@ -47,7 +46,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       return;
     }
     const scrollY = window.scrollY;
+    const offScreen = scrollY > window.innerHeight;
     container.style.transform = scrollY > 0 ? `translateY(-${scrollY}px)` : '';
+    container.style.willChange = offScreen ? '' : 'transform';
   }
 
   function dropIn() {
