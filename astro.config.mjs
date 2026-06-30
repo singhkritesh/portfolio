@@ -35,9 +35,11 @@ const rapierWasmFix = {
   },
 };
 
+const isVercel = !!process.env.VERCEL;
+
 export default defineConfig({
-  site: 'https://singhkritesh.github.io',
-  base: '/portfolio',
+  site: isVercel ? 'https://singhkritesh.vercel.app' : 'https://singhkritesh.github.io',
+  base: isVercel ? '/' : '/portfolio',
   integrations: [
     tailwind({ applyBaseStyles: false }),
     react(),

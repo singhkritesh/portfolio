@@ -11,9 +11,9 @@ const {
   description = 'Kritesh Singh — Product Manager with 4 years of experience building AI-driven, customer-centric solutions. Master of Engineering Management at Dartmouth.',
 } = Astro.props;
 
-const siteUrl = 'https://singhkritesh.github.io';
-const ogImage = `${siteUrl}/portfolio/images/og-image.png`;
+const siteUrl = import.meta.env.SITE.replace(/\/$/, '');
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const ogImage = `${siteUrl}${base}/images/og-image.png`;
 ---
 <!DOCTYPE html>
 <html lang="en">
