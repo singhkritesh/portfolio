@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
   title?: string;
@@ -96,6 +97,7 @@ const ogImage = `${siteUrl}${base}/images/og-image.png`;
     Skip to content
   </a>
   <slot />
+  <SpeedInsights />
 
   <script>
     const timers = new WeakMap<Element, ReturnType<typeof setTimeout>>();
